@@ -1,0 +1,487 @@
+/* ========================================
+   Professional Resume — Print Stylesheet
+   ======================================== */
+
+@media print {
+  /* Reset everything */
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+    border-color: #d0d0d0 !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 1.2cm 1.5cm;
+    size: A4;
+  }
+
+  html {
+    font-size: 10pt;
+    scroll-snap-type: none !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  body {
+    font-family: "Ubuntu", "IRANYekanX", Tahoma, Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    background: white !important;
+    color: #1a1a1a !important;
+    height: auto !important;
+    overflow: visible !important;
+    letter-spacing: 0;
+  }
+
+  [dir="rtl"] body,
+  html[lang="fa"] body {
+    font-family: "IRANYekanX", Tahoma, Arial, sans-serif;
+    line-height: 1.55;
+  }
+
+  /* Hide non-print elements */
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  /* Hide fixed/floating UI — but NOT section-snap wrappers */
+  .fixed,
+  nav,
+  [role="navigation"],
+  button[aria-label="Toggle theme"],
+  button[aria-label="Toggle language"],
+  button[aria-label="Open assistant"],
+  button[aria-label="Print resume"],
+  .section-divider {
+    display: none !important;
+  }
+
+  /* CRITICAL: Reset section-snap wrappers — show them as block, NOT hidden */
+  .section-snap {
+    display: block !important;
+    scroll-snap-align: none !important;
+    scroll-snap-stop: none !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  /* Reset layout */
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  section {
+    page-break-inside: avoid;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    min-height: auto !important;
+    display: block !important;
+  }
+
+  /* ========================================
+     Header / Hero — Compact
+     ======================================== */
+
+  section:first-of-type {
+    padding-bottom: 8pt !important;
+    border-bottom: 1.5pt solid #1a1a1a !important;
+    margin-bottom: 8pt !important;
+  }
+
+  section:first-of-type .section-divider,
+  section:first-of-type > div:first-child {
+    display: none !important;
+  }
+
+  h1 {
+    font-size: 18pt !important;
+    font-weight: 700 !important;
+    margin-bottom: 2pt !important;
+    color: #000 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Role subtitle */
+  section:first-of-type p.uppercase,
+  section:first-of-type p[class*="tracking-[0.3em]"] {
+    font-size: 8pt !important;
+    letter-spacing: 0.15em !important;
+    color: #555 !important;
+    margin-bottom: 6pt !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Description */
+  section:first-of-type .max-w-xl,
+  section:first-of-type p[class*="text-body"] {
+    font-size: 9pt !important;
+    color: #333 !important;
+    margin-bottom: 6pt !important;
+    max-width: 100% !important;
+  }
+
+  /* Stats row */
+  section:first-of-type .flex.items-center.gap-6,
+  section:first-of-type .flex.items-center.gap-6[class*="gap"] {
+    display: flex !important;
+    gap: 16pt !important;
+    margin-bottom: 4pt !important;
+  }
+
+  section:first-of-type .flex.items-center.gap-6 > div {
+    display: inline !important;
+  }
+
+  section:first-of-type .flex.items-center.gap-6 p:first-child {
+    font-size: 12pt !important;
+    font-weight: 700 !important;
+    display: inline !important;
+    color: #000 !important;
+  }
+
+  section:first-of-type .flex.items-center.gap-6 p:last-child {
+    font-size: 7pt !important;
+    color: #777 !important;
+    display: inline !important;
+    margin-left: 3pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  /* Portrait — small, left-aligned */
+  section:first-of-type img,
+  section:first-of-type [role="img"] {
+    width: 64pt !important;
+    height: 64pt !important;
+    border-radius: 50% !important;
+    float: left !important;
+    margin-right: 12pt !important;
+    margin-bottom: 6pt !important;
+    border: 1pt solid #ccc !important;
+    object-fit: cover !important;
+  }
+
+  /* CTAs — hide in print */
+  section:first-of-type a[href^="#work"],
+  section:first-of-type a[href^="mailto:"],
+  section:first-of-type .flex.items-center.gap-4 {
+    display: none !important;
+  }
+
+  /* ========================================
+     Section Labels
+     ======================================== */
+
+  p[class*="tracking-[0.3em]"] {
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.18em !important;
+    color: #555 !important;
+    margin-bottom: 6pt !important;
+    padding-bottom: 3pt !important;
+    border-bottom: 0.5pt solid #ddd !important;
+  }
+
+  /* ========================================
+     About Section
+     ======================================== */
+
+  p[class*="text-body"],
+  p[class*="leading"] {
+    font-size: 9pt !important;
+    color: #333 !important;
+    margin-bottom: 5pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ========================================
+     Work Section — Compact
+     ======================================== */
+
+  #work .relative.overflow-hidden {
+    display: none !important;
+  }
+
+  #work h3 {
+    font-size: 11pt !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    margin-bottom: 1pt !important;
+  }
+
+  #work span[class*="tabular-nums"] {
+    font-size: 8pt !important;
+    color: #777 !important;
+  }
+
+  #work p[class*="text-subtle"] {
+    font-size: 8pt !important;
+    color: #555 !important;
+    margin-bottom: 3pt !important;
+  }
+
+  #work p[class*="text-body"] {
+    font-size: 8.5pt !important;
+    color: #333 !important;
+    margin-bottom: 4pt !important;
+  }
+
+  /* Navigation / slider controls — hide */
+  #work .flex.items-center.gap-2,
+  #work .flex.gap-1\.5,
+  #work button[aria-label="Previous"],
+  #work button[aria-label="Next"],
+  #work button[aria-label^="Project"] {
+    display: none !important;
+  }
+
+  /* ========================================
+     Experience Section — Stacked Cards
+     ======================================== */
+
+  #experience .sticky {
+    position: static !important;
+    margin-bottom: 8pt !important;
+    page-break-inside: avoid;
+  }
+
+  #experience .sticky > div {
+    padding: 8pt 10pt !important;
+    border: 0.5pt solid #ddd !important;
+    border-radius: 4pt !important;
+    background: #fafafa !important;
+  }
+
+  #experience h3 {
+    font-size: 10pt !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    margin-bottom: 1pt !important;
+  }
+
+  #experience p[class*="text-subtle"] {
+    font-size: 8pt !important;
+    color: #555 !important;
+    margin-bottom: 3pt !important;
+  }
+
+  #experience p[class*="text-body"] {
+    font-size: 8.5pt !important;
+    color: #333 !important;
+    margin-bottom: 4pt !important;
+    line-height: 1.45 !important;
+  }
+
+  #experience span[class*="tabular-nums"] {
+    font-size: 8pt !important;
+    color: #777 !important;
+  }
+
+  #experience span[class*="text-faint"] {
+    font-size: 7pt !important;
+    color: #999 !important;
+  }
+
+  /* Client pills */
+  #experience span[class*="inline-flex"][class*="bg-surface"] {
+    display: inline-block !important;
+    padding: 1pt 5pt !important;
+    font-size: 7.5pt !important;
+    border: 0.5pt solid #ccc !important;
+    border-radius: 2pt !important;
+    background: #f0f0f0 !important;
+    color: #444 !important;
+    margin-right: 3pt !important;
+    margin-bottom: 2pt !important;
+  }
+
+  /* Skill tags */
+  #experience span[class*="bg-surface"][class*="border-border-subtle"] {
+    display: inline-block !important;
+    padding: 1pt 4pt !important;
+    font-size: 7pt !important;
+    border: 0.5pt solid #ddd !important;
+    border-radius: 2pt !important;
+    background: transparent !important;
+    color: #666 !important;
+    margin-right: 2pt !important;
+    margin-bottom: 2pt !important;
+  }
+
+  /* ========================================
+     Skills Section — Inline List
+     ======================================== */
+
+  #skills .flex.items-center.gap-1,
+  #skills .overflow-x-auto {
+    display: none !important;
+  }
+
+  #skills .grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4pt !important;
+  }
+
+  #skills .grid > div {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4pt !important;
+    padding: 2pt 6pt !important;
+    border: 0.5pt solid #ddd !important;
+    border-radius: 2pt !important;
+    background: #f8f8f8 !important;
+    page-break-inside: avoid;
+  }
+
+  #skills .grid > div div:first-child {
+    display: none !important;
+  }
+
+  #skills .grid > div span {
+    font-size: 8pt !important;
+    color: #333 !important;
+  }
+
+  /* ========================================
+     Contact Section
+     ======================================== */
+
+  #contact {
+    padding-top: 8pt !important;
+    margin-top: 8pt !important;
+    border-top: 0.5pt solid #ddd !important;
+  }
+
+  #contact h2 {
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    margin-bottom: 4pt !important;
+  }
+
+  #contact a {
+    font-size: 8.5pt !important;
+    color: #333 !important;
+    text-decoration: none !important;
+  }
+
+  #contact a[href]::after {
+    content: none !important;
+  }
+
+  /* Contact info as compact list */
+  #contact .space-y-4 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 3pt 16pt !important;
+    margin-bottom: 6pt !important;
+  }
+
+  #contact .space-y-4 > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4pt !important;
+  }
+
+  #contact .space-y-4 > a svg {
+    display: none !important;
+  }
+
+  /* Social links as inline text */
+  #contact .flex.flex-wrap {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 3pt 10pt !important;
+  }
+
+  #contact .flex.flex-wrap a {
+    font-size: 7.5pt !important;
+    color: #555 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+  }
+
+  #contact .flex.flex-wrap a svg {
+    display: none !important;
+  }
+
+  /* ========================================
+     Images
+     ======================================== */
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  [role="img"] {
+    border: 0.5pt solid #ddd !important;
+  }
+
+  /* ========================================
+     Links — Show URL
+     ======================================== */
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")" !important;
+    font-size: 6.5pt !important;
+    color: #888 !important;
+    word-break: break-all !important;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after,
+  a[href^="mailto:"]::after {
+    content: none !important;
+  }
+
+  /* ========================================
+     Page Breaks
+     ======================================== */
+
+  h2 {
+    page-break-after: avoid !important;
+  }
+
+  h3 {
+    page-break-after: avoid !important;
+  }
+
+  p {
+    orphans: 3 !important;
+    widows: 3 !important;
+  }
+}
+
+/* Screen-only: hide print-only elements */
+@media screen {
+  .print-only,
+  .print-header {
+    display: none !important;
+  }
+}

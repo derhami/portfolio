@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <script>
+      (function() {
+        var s = localStorage.getItem('theme');
+        var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Senior Product Designer. Six years designing enterprise platforms, consumer apps, and design systems for Daewoo, Snowa, Entekhab Holding, and others." />
+    <meta name="author" content="Hamidreza Derhami" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hamidreza Derhami — Senior Product Designer" />
+    <meta property="og:description" content="Six years designing enterprise platforms, consumer apps, and design systems." />
+    <meta property="og:url" content="https://hawid.ir" />
+    <meta property="og:site_name" content="Hamidreza Derhami" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Hamidreza Derhami",
+        "url": "https://hawid.ir",
+        "jobTitle": "Senior Product Designer",
+        "email": "hi@hawid.ir",
+        "sameAs": [
+          "https://linkedin.com/in/derhami",
+          "https://dribbble.com/derhami"
+        ]
+      }
+    </script>
+
+    <title>Hamidreza Derhami — Senior Product Designer</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
