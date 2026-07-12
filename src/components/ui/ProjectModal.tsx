@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef, useState } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
-import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ExternalLink } from "lucide-react";
 import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
@@ -11,6 +11,8 @@ interface ProjectModalProps {
   projectSlug: ProjectSlug;
 }
 
+const GALLERY_AUTOPLAY_INTERVAL = 4000;
+
 export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps) {
   const { t, locale, dir } = useTranslation();
   const projectContent = t.work.items[projectSlug];
@@ -18,9 +20,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
   const [activeImage, setActiveImage] = useState(0);
 
   const isRtl = dir === "rtl";
-  const PrevIcon = isRtl ? ChevronRight : ChevronLeft;
-  const NextIcon = isRtl ? ChevronLeft : ChevronRight;
-
   const gallery = projectMeta?.gallery || [];
 
   const prevImage = useCallback(() => {
@@ -31,33 +30,70 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
     setActiveImage((a) => (a + 1) % gallery.length);
   }, [gallery.length]);
 
-  // Touch swipe for gallery
-  const touchStart = useRef<number | null>(null);
-  const touchDelta = useRef(0);
+  // Autoplay gallery
+  const [galleryPaused, setGalleryPaused] = useState(false);
+  useEffect(() => {
+    if (!isOpen || galleryPaused || gallery.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveImage((a) => (a + 1) % gallery.length);
+    }, GALLERY_AUTOPLAY_INTERVAL);
+    return () => clearInterval(timer);
+  }, [isOpen, galleryPaused, gallery.length]);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = e.touches[0].clientX;
-    touchDelta.current = 0;
+  // Unified swipe handling (touch + mouse drag)
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const swipeDelta = useRef(0);
+  const isDragging = useRef(false);
+
+  const handleSwipeStart = (clientX: number, clientY: number) => {
+    swipeStart.current = { x: clientX, y: clientY };
+    swipeDelta.current = 0;
+    isDragging.current = true;
+    setGalleryPaused(true);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStart.current === null) return;
-    touchDelta.current = e.touches[0].clientX - touchStart.current;
+  const handleSwipeMove = (clientX: number, clientY: number) => {
+    if (!swipeStart.current || !isDragging.current) return;
+    const dx = clientX - swipeStart.current.x;
+    const dy = clientY - swipeStart.current.y;
+    if (Math.abs(dy) > Math.abs(dx)) {
+      isDragging.current = false;
+      return;
+    }
+    swipeDelta.current = dx;
   };
 
-  const handleTouchEnd = () => {
+  const handleSwipeEnd = () => {
+    if (!isDragging.current) return;
     const threshold = 50;
-    if (Math.abs(touchDelta.current) > threshold) {
-      if (touchDelta.current > 0) {
+    if (Math.abs(swipeDelta.current) > threshold) {
+      if (swipeDelta.current > 0) {
         if (isRtl) { nextImage(); } else { prevImage(); }
       } else {
         if (isRtl) { prevImage(); } else { nextImage(); }
       }
     }
-    touchStart.current = null;
-    touchDelta.current = 0;
+    swipeStart.current = null;
+    swipeDelta.current = 0;
+    isDragging.current = false;
+    setTimeout(() => setGalleryPaused(false), 2000);
   };
 
+  // Touch events
+  const onTouchStart = (e: React.TouchEvent) => handleSwipeStart(e.touches[0].clientX, e.touches[0].clientY);
+  const onTouchMove = (e: React.TouchEvent) => handleSwipeMove(e.touches[0].clientX, e.touches[0].clientY);
+  const onTouchEnd = () => handleSwipeEnd();
+
+  // Mouse events
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleSwipeStart(e.clientX, e.clientY);
+  };
+  const onMouseMove = (e: React.MouseEvent) => handleSwipeMove(e.clientX, e.clientY);
+  const onMouseUp = () => handleSwipeEnd();
+  const onMouseLeave = () => handleSwipeEnd();
+
+  // Keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -150,57 +186,39 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
 
         {/* Image gallery */}
         <div
-          className="relative touch-pan-y"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          className="relative touch-pan-y cursor-grab active:cursor-grabbing select-none"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+          onMouseEnter={() => setGalleryPaused(true)}
         >
           <Image
             src={gallery[activeImage]?.src || projectMeta.heroImage}
             alt={gallery[activeImage]?.alt || `${projectContent.client} — ${projectContent.title}`}
             fallback={projectContent.client}
-            className="w-full aspect-[16/9] object-cover"
+            className="w-full aspect-[16/9] object-cover pointer-events-none"
           />
 
-          {/* Image navigation */}
+          {/* Dot indicators */}
           {gallery.length > 1 && (
-            <>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
-                style={{ background: "var(--bg-overlay-light)" }}>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
+              style={{ background: "var(--bg-overlay-light)" }}>
+              {gallery.map((_, i) => (
                 <button
-                  onClick={() => {
-                    if (isRtl) { nextImage(); } else { prevImage(); }
-                  }}
-                  className="text-subtle hover:text-title transition-colors"
-                >
-                  <PrevIcon className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-                <span className="text-xs text-faint tabular-nums min-w-[3ch] text-center">
-                  {activeImage + 1}/{gallery.length}
-                </span>
-                <button
-                  onClick={() => {
-                    if (isRtl) { prevImage(); } else { nextImage(); }
-                  }}
-                  className="text-subtle hover:text-title transition-colors"
-                >
-                  <NextIcon className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-              </div>
-
-              {/* Thumbnails */}
-              <div className="absolute bottom-4 right-4 flex gap-1.5">
-                {gallery.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveImage(i)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === activeImage ? "bg-title scale-110" : "bg-faint hover:bg-subtle"
-                    }`}
-                  />
-                ))}
-              </div>
-            </>
+                  key={i}
+                  onClick={() => { setActiveImage(i); setGalleryPaused(true); setTimeout(() => setGalleryPaused(false), 2000); }}
+                  className={`h-[2px] rounded-full transition-all duration-300 focus-ring ${
+                    i === activeImage ? "w-4 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
+                  }`}
+                  aria-label={`Image ${i + 1}`}
+                  aria-current={i === activeImage ? "true" : undefined}
+                />
+              ))}
+            </div>
           )}
         </div>
 

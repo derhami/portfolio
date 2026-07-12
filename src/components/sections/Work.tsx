@@ -3,18 +3,20 @@ import { useTranslation } from "@/lib/i18n";
 import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { ChevronLeft, ChevronRight, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
 
 const ProjectModal = lazy(() =>
   import("@/components/ui/ProjectModal").then((m) => ({ default: m.ProjectModal }))
 );
 
 const projectSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
+const AUTOPLAY_INTERVAL = 5000;
 
 export function Work() {
   const { t, dir } = useTranslation();
   const [active, setActive] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   const currentSlug = projectSlugs[active];
   const projectContent = t.work.items[currentSlug];
@@ -30,36 +32,67 @@ export function Work() {
     setActive((a) => (a + 1) % projectSlugs.length);
   }, []);
 
-  const PrevIcon = isRtl ? ChevronRight : ChevronLeft;
-  const NextIcon = isRtl ? ChevronLeft : ChevronRight;
+  // Autoplay
+  useEffect(() => {
+    if (paused || modalOpen) return;
+    const timer = setInterval(() => {
+      setActive((a) => (a + 1) % projectSlugs.length);
+    }, AUTOPLAY_INTERVAL);
+    return () => clearInterval(timer);
+  }, [paused, modalOpen]);
 
-  // Touch swipe handling
-  const touchStart = useRef<number | null>(null);
-  const touchDelta = useRef(0);
+  // Unified swipe handling (touch + mouse drag)
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const swipeDelta = useRef(0);
+  const isDragging = useRef(false);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = e.touches[0].clientX;
-    touchDelta.current = 0;
+  const handleSwipeStart = (clientX: number, clientY: number) => {
+    swipeStart.current = { x: clientX, y: clientY };
+    swipeDelta.current = 0;
+    isDragging.current = true;
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStart.current === null) return;
-    touchDelta.current = e.touches[0].clientX - touchStart.current;
+  const handleSwipeMove = (clientX: number, clientY: number) => {
+    if (!swipeStart.current || !isDragging.current) return;
+    const dx = clientX - swipeStart.current.x;
+    const dy = clientY - swipeStart.current.y;
+    if (Math.abs(dy) > Math.abs(dx)) {
+      isDragging.current = false;
+      return;
+    }
+    swipeDelta.current = dx;
   };
 
-  const handleTouchEnd = () => {
+  const handleSwipeEnd = () => {
+    if (!isDragging.current) return;
     const threshold = 50;
-    if (Math.abs(touchDelta.current) > threshold) {
-      if (touchDelta.current > 0) {
+    if (Math.abs(swipeDelta.current) > threshold) {
+      if (swipeDelta.current > 0) {
         if (isRtl) { next(); } else { prev(); }
       } else {
         if (isRtl) { prev(); } else { next(); }
       }
     }
-    touchStart.current = null;
-    touchDelta.current = 0;
+    swipeStart.current = null;
+    swipeDelta.current = 0;
+    isDragging.current = false;
   };
 
+  // Touch events
+  const onTouchStart = (e: React.TouchEvent) => handleSwipeStart(e.touches[0].clientX, e.touches[0].clientY);
+  const onTouchMove = (e: React.TouchEvent) => handleSwipeMove(e.touches[0].clientX, e.touches[0].clientY);
+  const onTouchEnd = () => handleSwipeEnd();
+
+  // Mouse events
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleSwipeStart(e.clientX, e.clientY);
+  };
+  const onMouseMove = (e: React.MouseEvent) => handleSwipeMove(e.clientX, e.clientY);
+  const onMouseUp = () => handleSwipeEnd();
+  const onMouseLeave = () => { handleSwipeEnd(); setPaused(false); };
+
+  // Keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (modalOpen) return;
@@ -103,10 +136,15 @@ export function Work() {
       <div>
         <FadeIn>
           <div
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            className="touch-pan-y"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseLeave}
+            className="cursor-grab active:cursor-grabbing select-none"
+            onMouseEnter={() => setPaused(true)}
           >
             <button onClick={() => setModalOpen(true)} className="group w-full text-left focus-ring">
               <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
@@ -114,7 +152,7 @@ export function Work() {
                   src={projectMeta.coverImage}
                   alt={`${projectContent.client} — ${projectContent.title}`}
                   fallback={projectContent.client}
-                  className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                  className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
                 />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
@@ -165,31 +203,18 @@ export function Work() {
       </div>
 
       <FadeIn delay={0.2}>
-        <div className="flex items-center justify-center gap-4 mt-6">
-          <button onClick={prev} className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-title hover:border-border transition-all duration-300 focus-ring" aria-label="Previous">
-            <PrevIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
-          </button>
-          <span className="text-xs text-faint tabular-nums min-w-[3ch] text-center">
-            {String(active + 1).padStart(2, "0")}/{String(projectSlugs.length).padStart(2, "0")}
-          </span>
-          <button onClick={next} className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-title hover:border-border transition-all duration-300 focus-ring" aria-label="Next">
-            <NextIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
-          </button>
-
-          <div className="w-px h-4 bg-border mx-1" />
-
-          <div className="flex gap-1.5">
-            {projectSlugs.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
-                  i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
-                }`}
-                aria-label={`Project ${i + 1}`}
-              />
-            ))}
-          </div>
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {projectSlugs.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
+                i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
+              }`}
+              aria-label={`Project ${i + 1}`}
+              aria-current={i === active ? "true" : undefined}
+            />
+          ))}
         </div>
       </FadeIn>
 
