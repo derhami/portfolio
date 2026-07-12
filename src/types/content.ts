@@ -47,15 +47,16 @@ export interface ProjectContent {
   client: string;
   role: string;
   overview: string;
-  challenge?: string;
-  approach?: string;
-  solution?: string;
-  outcome?: string[];
+  context?: string;
+  contribution?: string;
+  impact?: string;
 }
 
 /* ========================================
    Work (Portfolio Section)
    ======================================== */
+
+export type ProjectGroup = "agency" | "independent" | "personal";
 
 export interface WorkGroup {
   title: string;

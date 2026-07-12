@@ -28,12 +28,16 @@ export const enContent: Content = {
     subtitle: "A selection of projects across enterprise brands and independent businesses.",
     groups: {
       agency: {
-        title: "Agency Projects",
-        description: "Digital products and campaign experiences designed during my collaboration with Shadow Digital Marketing Agency.",
+        title: "Agency Work",
+        description: "Projects completed through Shadow Digital Marketing Agency.",
       },
       independent: {
-        title: "Independent Projects",
-        description: "Projects delivered independently for businesses across different industries.",
+        title: "Independent Client Work",
+        description: "Projects delivered directly for clients.",
+      },
+      personal: {
+        title: "Personal Practice",
+        description: "My own design practice and explorations.",
       },
     },
     items: {
@@ -43,10 +47,9 @@ export const enContent: Content = {
         client: "Daewoo",
         role: "Senior Product & UI/UX Designer",
         overview: "Designed digital experiences and campaign landing pages for Daewoo while collaborating with Shadow Digital Marketing Agency.",
-        challenge: "Transform complex marketing requirements into intuitive and high-converting digital experiences.",
-        approach: "Focused on visual hierarchy, responsive behavior and conversion-oriented user journeys.",
-        solution: "Created scalable landing pages aligned with the brand identity and campaign goals.",
-        outcome: ["Delivered consistent digital experiences that supported multiple marketing campaigns."],
+        context: "Transform complex marketing requirements into intuitive and high-converting digital experiences.",
+        contribution: "Focused on visual hierarchy, responsive behavior and conversion-oriented user journeys. Created scalable landing pages aligned with the brand identity and campaign goals.",
+        impact: "Delivered consistent digital experiences that supported multiple marketing campaigns.",
       },
       snowa: {
         title: "Snowa",
@@ -54,10 +57,9 @@ export const enContent: Content = {
         client: "Snowa",
         role: "Senior Product & UI/UX Designer",
         overview: "Designed campaign landing pages and product experiences through Shadow Digital Marketing Agency.",
-        challenge: "Create engaging user journeys while maintaining brand consistency.",
-        approach: "Balanced storytelling, product presentation and conversion optimization.",
-        solution: "Developed responsive landing pages with strong visual hierarchy.",
-        outcome: ["Supported multiple product campaigns through cohesive digital experiences."],
+        context: "Create engaging user journeys while maintaining brand consistency.",
+        contribution: "Balanced storytelling, product presentation and conversion optimization. Developed responsive landing pages with strong visual hierarchy.",
+        impact: "Supported multiple product campaigns through cohesive digital experiences.",
       },
       ardesia: {
         title: "Ardesia",
@@ -89,7 +91,7 @@ export const enContent: Content = {
       },
       fadakargold: {
         title: "Fadakar Gold",
-        subtitle: "E-commerce Website",
+        subtitle: "E-commerce",
         client: "Fadakar Gold",
         role: "UI/UX Designer",
         overview: "Designed an e-commerce website for Fadakar Gold, creating a trustworthy and visually rich shopping experience for gold products.",
@@ -103,14 +105,14 @@ export const enContent: Content = {
       },
       erfanwatch: {
         title: "Erfan Watch",
-        subtitle: "E-commerce Website",
+        subtitle: "E-commerce",
         client: "Erfan Watch",
         role: "UI/UX Designer",
         overview: "Designed an e-commerce website for Erfan Watch, building a refined shopping experience for luxury timepieces.",
       },
       derhami: {
         title: "Derhami",
-        subtitle: "Portfolio Website",
+        subtitle: "Personal Practice",
         client: "Derhami",
         role: "Designer & Developer",
         overview: "Designed and developed this interactive portfolio site using React, TypeScript, TailwindCSS and Framer Motion.",

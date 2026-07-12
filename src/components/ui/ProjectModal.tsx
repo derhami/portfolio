@@ -2,18 +2,21 @@ import { useEffect, useCallback, useRef, useState } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, ChevronRight } from "lucide-react";
 import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
   projectSlug: ProjectSlug;
+  onNext: () => void;
 }
+
+const allSlugs = Object.keys(siteConfig.projects) as Array<ProjectSlug>;
 
 const GALLERY_AUTOPLAY_INTERVAL = 4000;
 
-export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps) {
+export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectModalProps) {
   const { t, locale, dir } = useTranslation();
   const projectContent = t.work.items[projectSlug];
   const projectMeta = siteConfig.projects[projectSlug];
@@ -21,6 +24,11 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
 
   const isRtl = dir === "rtl";
   const gallery = projectMeta?.gallery || [];
+
+  const currentIndex = allSlugs.indexOf(projectSlug);
+  const nextSlug = allSlugs[(currentIndex + 1) % allSlugs.length];
+  const nextContent = t.work.items[nextSlug];
+  const nextMeta = siteConfig.projects[nextSlug];
 
   const prevImage = useCallback(() => {
     setActiveImage((a) => (a - 1 + gallery.length) % gallery.length);
@@ -30,7 +38,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
     setActiveImage((a) => (a + 1) % gallery.length);
   }, [gallery.length]);
 
-  // Autoplay gallery
   const [galleryPaused, setGalleryPaused] = useState(false);
   useEffect(() => {
     if (!isOpen || galleryPaused || gallery.length <= 1) return;
@@ -40,7 +47,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
     return () => clearInterval(timer);
   }, [isOpen, galleryPaused, gallery.length]);
 
-  // Unified swipe handling (touch + mouse drag)
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const swipeDelta = useRef(0);
   const isDragging = useRef(false);
@@ -79,12 +85,10 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
     setTimeout(() => setGalleryPaused(false), 2000);
   };
 
-  // Touch events
   const onTouchStart = (e: React.TouchEvent) => handleSwipeStart(e.touches[0].clientX, e.touches[0].clientY);
   const onTouchMove = (e: React.TouchEvent) => handleSwipeMove(e.touches[0].clientX, e.touches[0].clientY);
   const onTouchEnd = () => handleSwipeEnd();
 
-  // Mouse events
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     handleSwipeStart(e.clientX, e.clientY);
@@ -93,7 +97,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
   const onMouseUp = () => handleSwipeEnd();
   const onMouseLeave = () => handleSwipeEnd();
 
-  // Keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -160,14 +163,12 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 backdrop-blur-md"
         style={{ background: "var(--bg-overlay)" }}
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div
         ref={modalRef}
         role="dialog"
@@ -175,7 +176,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
         aria-label={`${projectContent.client} — ${projectContent.title}`}
         className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-300 focus-ring"
@@ -184,7 +184,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
           <X className="w-5 h-5" strokeWidth={1.5} />
         </button>
 
-        {/* Image gallery */}
+        {/* Hero Image + Gallery */}
         <div
           className="relative touch-pan-y cursor-grab active:cursor-grabbing select-none"
           onTouchStart={onTouchStart}
@@ -203,7 +203,6 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
             className="w-full aspect-[16/9] object-cover pointer-events-none"
           />
 
-          {/* Dot indicators */}
           {gallery.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
               style={{ background: "var(--bg-overlay-light)" }}>
@@ -223,11 +222,11 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
         </div>
 
         {/* Content */}
-        <div className="p-8 space-y-6">
+        <div className="p-8 sm:p-10 md:p-12 space-y-8">
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-title">{projectContent.client}</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-title">{projectContent.client}</h2>
               <p className="text-sm text-subtle mt-1">
                 {projectContent.title} — {projectContent.role} · {projectMeta.year}
               </p>
@@ -246,70 +245,50 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
           </div>
 
           {/* Overview */}
-          <p className="text-base text-body leading-[1.8]">
+          <p className="text-base sm:text-lg text-body leading-[1.8]">
             {projectContent.overview}
           </p>
 
-          {/* Challenge */}
-          {projectContent.challenge && (
-            <div>
-              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Challenge" : "چالش"}
+          {/* Context */}
+          {projectContent.context && (
+            <div className="pt-2">
+              <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Context" : "زمینه"}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
-                {projectContent.challenge}
+                {projectContent.context}
               </p>
             </div>
           )}
 
-          {/* Approach */}
-          {projectContent.approach && (
-            <div>
-              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Approach" : "رویکرد"}
+          {/* My Contribution */}
+          {projectContent.contribution && (
+            <div className="pt-2">
+              <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "My Contribution" : "مشارکت من"}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
-                {projectContent.approach}
+                {projectContent.contribution}
               </p>
             </div>
           )}
 
-          {/* Solution */}
-          {projectContent.solution && (
-            <div>
-              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Solution" : "راه‌حل"}
+          {/* Impact */}
+          {projectContent.impact && (
+            <div className="pt-2">
+              <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Impact" : "تأثیر"}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
-                {projectContent.solution}
+                {projectContent.impact}
               </p>
-            </div>
-          )}
-
-          {/* Outcome */}
-          {projectContent.outcome && projectContent.outcome.length > 0 && (
-            <div>
-              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Key Results" : "نتایج کلیدی"}
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {projectContent.outcome.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface border border-border-subtle"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
-                    <span className="text-sm text-body">{item}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           )}
 
           {/* Technologies */}
           {projectMeta.technologies.length > 0 && (
-            <div>
-              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+            <div className="pt-2">
+              <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
                 {locale === "en" ? "Technologies" : "ابزارها"}
               </h3>
               <div className="flex flex-wrap gap-1.5">
@@ -322,6 +301,50 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
                   </span>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Project Links */}
+          {projectMeta.links.length > 0 && (
+            <div className="pt-2">
+              <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Links" : "لینک‌ها"}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {projectMeta.links.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-subtle hover:text-brand bg-surface border border-border hover:border-brand/30 rounded-md transition-all duration-300"
+                  >
+                    <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Next Project */}
+          {nextContent && nextMeta && (
+            <div className="pt-6 border-t border-border">
+              <button
+                onClick={onNext}
+                className="group w-full text-left flex items-center justify-between gap-4 p-4 rounded-xl bg-surface hover:bg-surface-hover border border-border transition-all duration-300 focus-ring"
+              >
+                <div>
+                  <p className="text-[0.65rem] uppercase tracking-widest text-faint mb-1">
+                    {locale === "en" ? "Next Project" : "پروژه بعدی"}
+                  </p>
+                  <p className="text-sm font-medium text-title">{nextContent.client}</p>
+                  <p className="text-xs text-subtle">{nextContent.subtitle}</p>
+                </div>
+                <div className={`w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle group-hover:text-brand group-hover:border-brand/30 transition-all duration-300 ${isRtl ? "rotate-180" : ""}`}>
+                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                </div>
+              </button>
             </div>
           )}
         </div>

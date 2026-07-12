@@ -1,3 +1,5 @@
+import type { ProjectGroup } from "@/types/content";
+
 export interface ProjectMeta {
   id: string;
   slug: string;
@@ -12,7 +14,7 @@ export interface ProjectMeta {
   links: { label: string; url: string }[];
   status: "completed" | "in-progress" | "concept";
   featured: boolean;
-  group: "agency" | "independent";
+  group: ProjectGroup;
   badge?: string;
 }
 
@@ -48,7 +50,7 @@ export const siteConfig = {
     daewoo: {
       id: "daewoo",
       slug: "daewoo",
-      category: "Consumer Electronics Experience",
+      category: "Campaign Experience",
       year: "2023",
       location: "Isfahan, Iran",
       technologies: ["Figma", "Landing Pages", "Prototyping", "Responsive Design"],
@@ -64,12 +66,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: true,
       group: "agency" as const,
-      badge: "Shadow Agency",
+      badge: "Through Shadow Agency",
     },
     snowa: {
       id: "snowa",
       slug: "snowa",
-      category: "Home Appliance Digital Experience",
+      category: "Campaign Experience",
       year: "2023",
       location: "Isfahan, Iran",
       technologies: ["Figma", "Landing Pages", "Responsive Design", "Visual Design"],
@@ -84,12 +86,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: true,
       group: "agency" as const,
-      badge: "Shadow Agency",
+      badge: "Through Shadow Agency",
     },
     ardesia: {
       id: "ardesia",
       slug: "ardesia",
-      category: "Kitchen Appliance Experience",
+      category: "Campaign Experience",
       year: "2022",
       location: "Isfahan, Iran",
       technologies: ["Figma", "Digital Interface", "Campaign Design"],
@@ -104,12 +106,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: true,
       group: "agency" as const,
-      badge: "Shadow Agency",
+      badge: "Through Shadow Agency",
     },
     entekhab: {
       id: "entekhab",
       slug: "entekhab",
-      category: "Corporate Digital Experience",
+      category: "Enterprise Product",
       year: "2022",
       location: "Isfahan, Iran",
       technologies: ["Figma", "Digital Product", "Corporate Design"],
@@ -124,7 +126,7 @@ export const siteConfig = {
       status: "completed" as const,
       featured: true,
       group: "agency" as const,
-      badge: "Shadow Agency",
+      badge: "Through Shadow Agency",
     },
     rahampars: {
       id: "rahampars",
@@ -143,7 +145,7 @@ export const siteConfig = {
       status: "completed" as const,
       featured: false,
       group: "independent" as const,
-      badge: "Independent",
+      badge: "Independent Project",
     },
     maanpolymer: {
       id: "maanpolymer",
@@ -162,12 +164,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: false,
       group: "independent" as const,
-      badge: "Independent",
+      badge: "Independent Project",
     },
     fadakargold: {
       id: "fadakargold",
       slug: "fadakargold",
-      category: "E-commerce Website",
+      category: "E-commerce",
       year: "2022",
       location: "Shiraz, Iran",
       technologies: ["Figma", "E-commerce", "Web Design"],
@@ -181,7 +183,7 @@ export const siteConfig = {
       status: "completed" as const,
       featured: false,
       group: "independent" as const,
-      badge: "Independent",
+      badge: "Independent Project",
     },
     adriankesht: {
       id: "adriankesht",
@@ -200,12 +202,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: false,
       group: "independent" as const,
-      badge: "Independent",
+      badge: "Independent Project",
     },
     erfanwatch: {
       id: "erfanwatch",
       slug: "erfanwatch",
-      category: "E-commerce Website",
+      category: "E-commerce",
       year: "2022",
       location: "Shiraz, Iran",
       technologies: ["Figma", "E-commerce", "Web Design"],
@@ -219,12 +221,12 @@ export const siteConfig = {
       status: "completed" as const,
       featured: false,
       group: "independent" as const,
-      badge: "Independent",
+      badge: "Independent Project",
     },
     derhami: {
       id: "derhami",
       slug: "derhami",
-      category: "Portfolio Website",
+      category: "Personal Practice",
       year: "2024",
       location: "Shiraz, Iran",
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
@@ -237,8 +239,8 @@ export const siteConfig = {
       links: [{ label: "Visit Site", url: "https://hawid.ir" }],
       status: "completed" as const,
       featured: false,
-      group: "independent" as const,
-      badge: "Independent",
+      group: "personal" as const,
+      badge: "Personal Practice",
     },
   } as const,
 } as const;

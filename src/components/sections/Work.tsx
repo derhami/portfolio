@@ -12,7 +12,7 @@ const ProjectModal = lazy(() =>
 const allSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
 const AUTOPLAY_INTERVAL = 5000;
 
-const groupOrder = ["agency", "independent"] as const;
+const groupOrder = ["agency", "independent", "personal"] as const;
 
 function getSlugsByGroup(group: string) {
   return allSlugs.filter((slug) => siteConfig.projects[slug].group === group);
@@ -20,12 +20,12 @@ function getSlugsByGroup(group: string) {
 
 interface GroupSliderProps {
   slugs: Array<keyof typeof siteConfig.projects>;
+  onOpenModal: (slug: keyof typeof siteConfig.projects) => void;
 }
 
-function GroupSlider({ slugs }: GroupSliderProps) {
+function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
   const { t, dir } = useTranslation();
   const [active, setActive] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [paused, setPaused] = useState(false);
 
   const currentSlug = slugs[active];
@@ -43,12 +43,12 @@ function GroupSlider({ slugs }: GroupSliderProps) {
   }, [slugs.length]);
 
   useEffect(() => {
-    if (paused || modalOpen) return;
+    if (paused) return;
     const timer = setInterval(() => {
       setActive((a) => (a + 1) % slugs.length);
     }, AUTOPLAY_INTERVAL);
     return () => clearInterval(timer);
-  }, [paused, modalOpen, slugs.length]);
+  }, [paused, slugs.length]);
 
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const swipeDelta = useRef(0);
@@ -100,7 +100,6 @@ function GroupSlider({ slugs }: GroupSliderProps) {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (modalOpen) return;
       if (e.key === "ArrowLeft") {
         e.preventDefault();
         if (isRtl) { next(); } else { prev(); }
@@ -110,7 +109,7 @@ function GroupSlider({ slugs }: GroupSliderProps) {
         if (isRtl) { prev(); } else { next(); }
       }
     },
-    [modalOpen, isRtl, prev, next]
+    [isRtl, prev, next]
   );
 
   useEffect(() => {
@@ -133,7 +132,7 @@ function GroupSlider({ slugs }: GroupSliderProps) {
         className="cursor-grab active:cursor-grabbing select-none"
         onMouseEnter={() => setPaused(true)}
       >
-        <button onClick={() => setModalOpen(true)} className="group w-full text-left focus-ring">
+        <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-left focus-ring">
           <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
             <Image
               src={projectMeta.coverImage}
@@ -144,7 +143,6 @@ function GroupSlider({ slugs }: GroupSliderProps) {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
 
-            {/* Badge */}
             {projectMeta.badge && (
               <div className="absolute top-3 left-3">
                 <span className="inline-flex items-center px-2 py-0.5 text-[0.6rem] sm:text-[0.65rem] font-medium text-subtle bg-surface/80 backdrop-blur-sm border border-border rounded-full">
@@ -208,16 +206,30 @@ function GroupSlider({ slugs }: GroupSliderProps) {
           />
         ))}
       </div>
-
-      <Suspense fallback={null}>
-        <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
-      </Suspense>
     </div>
   );
 }
 
 export function Work() {
   const { t } = useTranslation();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeSlug, setActiveSlug] = useState<keyof typeof siteConfig.projects | null>(null);
+
+  const openModal = (slug: keyof typeof siteConfig.projects) => {
+    setActiveSlug(slug);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const goToNext = useCallback(() => {
+    if (!activeSlug) return;
+    const idx = allSlugs.indexOf(activeSlug);
+    const next = allSlugs[(idx + 1) % allSlugs.length];
+    setActiveSlug(next);
+  }, [activeSlug]);
 
   return (
     <section id="work" className="py-20 sm:py-28 relative">
@@ -261,12 +273,23 @@ export function Work() {
                     {group.description}
                   </p>
                 </div>
-                <GroupSlider slugs={slugs} />
+                <GroupSlider slugs={slugs} onOpenModal={openModal} />
               </div>
             </FadeIn>
           );
         })}
       </div>
+
+      <Suspense fallback={null}>
+        {activeSlug && (
+          <ProjectModal
+            isOpen={modalOpen}
+            onClose={closeModal}
+            projectSlug={activeSlug}
+            onNext={goToNext}
+          />
+        )}
+      </Suspense>
     </section>
   );
 }
