@@ -8,26 +8,19 @@ export const enContent: Content = {
   },
   hero: {
     name: "Hamidreza Derhami",
-    role: "Senior Product Designer",
+    role: "Senior Product & UI/UX Designer",
     tagline:
-      "Creating intuitive, user-centered digital experiences.",
+      "I design digital experiences that balance user needs, business goals, and engineering constraints.",
     description:
-      "I design and build digital products that are clear, scalable, and visually consistent. From enterprise platforms to consumer apps — I turn complex problems into simple, delightful interfaces.",
-    stats: [
-      { label: "Years Experience", value: "6+" },
-      { label: "Projects Delivered", value: "40+" },
-      { label: "Design Systems", value: "8+" },
-    ],
-    cta: "View Work",
-    secondaryCta: "Get in Touch",
+      "Over the past years, I've designed digital products and experiences across different industries, collaborating with multidisciplinary teams to turn complex ideas into intuitive and scalable solutions.\n\nThrough my role at Shadow Digital Marketing Agency, I contributed to digital experiences for brands including Daewoo, Snowa, Ardesia and Entekhab Holding, while also leading independent projects for businesses in various industries.",
+    stats: [],
+    cta: "View Selected Work",
+    secondaryCta: "Let's Talk",
   },
   about: {
     label: "About",
     paragraphs: [
-      "With 6+ years of experience, I specialize in UI design — building clean, scalable, and visually consistent interfaces that align user needs with business goals. My core strength lies in precision and clarity within design systems, paired with a deep focus on UX: user behavior, feedback, and emotional impact.",
-      "I follow a structured, iterative process rooted in thoughtful problem-solving. Patiently identifying usability gaps and resolving them with practical solutions — from micro-interactions to full user journeys.",
-      "I deliver more than visuals: I ensure strong structure, seamless usability, and clear communication so products are both delightful for users and feasible for developers. I excel in cross-functional teams, turning concepts into validated, high-impact results.",
-      "Passionate about user-first design that drives meaningful product and business value.",
+      "I believe good design is not only about creating beautiful interfaces.\n\nA successful product is the result of balancing user expectations, business objectives and technical realities.\n\nThat perspective has shaped the way I approach every project—from research and product thinking to interface design, design systems and developer handoff.\n\nWhether working independently or collaborating through Shadow Digital Marketing Agency, my focus remains the same: designing digital products that are clear, practical and genuinely useful.",
     ],
   },
   work: {
