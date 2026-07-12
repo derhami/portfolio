@@ -32,110 +32,108 @@ export const enContent: Content = {
   },
   work: {
     label: "Selected Work",
-    items: [
-      {
+    items: {
+      daewoo: {
+        title: "Digital Platform",
+        subtitle: "End-to-end platform redesign",
         client: "Daewoo",
-        project: "Digital Platform",
         role: "Lead Designer",
-        period: "2023",
-        description:
+        overview:
           "Redesigned the customer-facing platform. Simplified product catalogs into intuitive browsing across all touchpoints.",
-        url: "https://daewoo.com",
-        longDescription:
-          "Led the complete redesign of Daewoo's digital platform, transforming a complex product catalog into an intuitive, conversion-focused browsing experience. The project involved deep user research, information architecture restructuring, and iterative prototyping. The new platform reduced bounce rate by 35% and increased product engagement by 48% across all touchpoints — web, mobile, and in-store kiosks.",
-        highlights: [
+        challenge:
+          "Daewoo's existing digital platform had a complex, fragmented product catalog that overwhelmed users and led to high bounce rates. The challenge was to unify the browsing experience across web, mobile, and in-store kiosks while maintaining brand consistency.",
+        approach:
+          "Led deep user research with 200+ participants to understand pain points. Restructured information architecture based on user mental models. Iterative prototyping with continuous feedback loops from stakeholders and end users.",
+        solution:
+          "Created a unified, conversion-focused browsing experience with intuitive navigation, smart filtering, and consistent design language across all touchpoints. Implemented a cross-platform design system for long-term maintainability.",
+        outcome: [
           "35% reduction in bounce rate",
           "48% increase in product engagement",
           "Cross-platform design system",
           "User research with 200+ participants",
         ],
-        images: [
-          "/assets/images/projects/project-01.jpg",
-          "/assets/images/projects/project-01-2.jpg",
-          "/assets/images/projects/project-01-3.jpg",
-        ],
       },
-      {
+      snowa: {
+        title: "Smart Home Interface",
+        subtitle: "IoT control dashboard",
         client: "Snowa",
-        project: "Smart Home Interface",
         role: "Product Designer",
-        period: "2023",
-        description:
+        overview:
           "Control interface for Snowa's smart home ecosystem. Complex device management made simple through clear information architecture.",
-        longDescription:
-          "Designed the primary control interface for Snowa's smart home ecosystem, managing 50+ device types across lighting, climate, security, and energy. The challenge was making complex device interactions feel simple and approachable. Created a unified dashboard with real-time status, scene management, and automated routines. The interface reduced average task completion time from 12 seconds to 4 seconds.",
-        highlights: [
+        challenge:
+          "Managing 50+ device types across lighting, climate, security, and energy required a unified interface that felt simple and approachable despite the underlying complexity.",
+        approach:
+          "Mapped device interaction patterns across all categories. Designed a unified dashboard with real-time status, scene management, and automated routines. Accessibility-first approach ensured inclusivity.",
+        solution:
+          "Created a primary control interface with real-time device monitoring, scene management, and automated routines. Reduced average task completion time from 12 seconds to 4 seconds through progressive disclosure and contextual controls.",
+        outcome: [
           "50+ device types supported",
           "67% faster task completion",
           "Real-time device monitoring",
           "Accessibility-first approach",
         ],
-        images: [
-          "/assets/images/projects/project-02.jpg",
-          "/assets/images/projects/project-02-2.jpg",
-        ],
       },
-      {
+      entekhab: {
+        title: "Corporate Digital",
+        subtitle: "Multi-brand digital ecosystem",
         client: "Entekhab Holding",
-        project: "Corporate Digital",
         role: "UI/UX Designer",
-        period: "2022",
-        description:
+        overview:
           "Unified digital presence across a diverse corporate portfolio. Balanced brand consistency with modern usability.",
-        longDescription:
-          "Created a unified digital presence for Entekhab Holding's diverse portfolio of brands. The challenge was maintaining distinct brand identities while ensuring a cohesive user experience across all properties. Developed a flexible design system with shared components and brand-specific themes. The result was a 40% reduction in design-to-development time and consistent brand experience across 12+ digital products.",
-        highlights: [
+        challenge:
+          "Maintaining distinct brand identities while ensuring a cohesive user experience across 12+ digital products for Entekhab Holding's diverse portfolio of brands.",
+        approach:
+          "Developed a flexible design system with shared components and brand-specific themes. Created governance guidelines for consistent application across teams.",
+        solution:
+          "Built a multi-brand design system with shared core components and brand-specific theme overlays. Enabled parallel design workflows while maintaining consistency.",
+        outcome: [
           "12+ digital products unified",
           "40% faster design-to-dev handoff",
           "Multi-brand design system",
           "Consistent UX across portfolio",
         ],
-        images: [
-          "/assets/images/projects/project-03.jpg",
-          "/assets/images/projects/project-03-2.jpg",
-        ],
       },
-      {
+      ardesia: {
+        title: "Design System",
+        subtitle: "Scalable component ecosystem",
         client: "Ardesia",
-        project: "Design System",
         role: "Design Lead",
-        period: "2022",
-        description:
+        overview:
           "Scalable design system serving multiple product teams. Tokens, components, and docs that cut handoff time by 60%.",
-        longDescription:
-          "Built a comprehensive design system from scratch serving 5+ product teams. Created a token-based architecture with Figma variables, a component library with 80+ components, and living documentation. The system enabled designers to work 3x faster and reduced design inconsistencies by 90%. Components were built with accessibility baked in, supporting WCAG 2.1 AA standards.",
-        highlights: [
+        challenge:
+          "Multiple product teams were working with inconsistent design patterns, leading to fragmented user experiences and slow design-to-development handoff.",
+        approach:
+          "Built a comprehensive design system from scratch with token-based architecture, Figma variables, and living documentation. Established governance and contribution guidelines.",
+        solution:
+          "Created a token-based architecture with Figma variables, a component library with 80+ components, and living documentation. Components were built with accessibility baked in, supporting WCAG 2.1 AA standards.",
+        outcome: [
           "80+ reusable components",
           "3x faster design workflow",
           "90% reduction in inconsistencies",
           "WCAG 2.1 AA compliant",
         ],
-        images: [
-          "/assets/images/projects/project-04.jpg",
-          "/assets/images/projects/project-04-2.jpg",
-        ],
       },
-      {
+      shadow: {
+        title: "Brand Identity",
+        subtitle: "Complete brand ecosystem",
         client: "Shadow Agency",
-        project: "Brand Identity",
         role: "Brand Designer",
-        period: "2021",
-        description:
+        overview:
           "Complete brand identity and digital presence for a creative agency. Logo, website, visual language.",
-        longDescription:
-          "Developed a complete brand identity for Shadow Agency, a creative marketing agency. The project encompassed logo design, visual language system, typography guidelines, color palette, and a full website redesign. The new brand identity helped Shadow Agency establish a premium market position and attract higher-tier clients within the first 6 months of launch.",
-        highlights: [
+        challenge:
+          "Shadow Agency needed a premium brand identity that would differentiate them in a competitive marketing agency landscape and attract higher-tier clients.",
+        approach:
+          "Developed comprehensive brand strategy through competitive analysis and stakeholder workshops. Created a cohesive visual language system spanning logo, typography, color, and digital presence.",
+        solution:
+          "Designed a complete brand identity including logo, visual language system, typography guidelines, color palette, and full website redesign. The new identity established a premium market position.",
+        outcome: [
           "Full brand identity system",
           "Website redesign",
           "Premium market positioning",
           "6-month client growth",
         ],
-        images: [
-          "/assets/images/projects/project-05.jpg",
-          "/assets/images/projects/project-05-2.jpg",
-        ],
       },
-    ],
+    },
   },
   experience: {
     label: "Experience",

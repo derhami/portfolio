@@ -6,24 +6,26 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ProjectModal } from "@/components/ui/ProjectModal";
 import { ChevronLeft, ChevronRight, ExternalLink, ArrowUpRight } from "lucide-react";
 
+const projectSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
+
 export function Work() {
   const { t, dir } = useTranslation();
   const [active, setActive] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const items = t.work.items;
-  const project = items[active];
-  const projectKeys = ["daewoo", "snowa", "entekhab", "ardesia", "shadow"] as const;
-  const projectImage = siteConfig.assets.projects[projectKeys[active]];
+
+  const currentSlug = projectSlugs[active];
+  const projectContent = t.work.items[currentSlug];
+  const projectMeta = siteConfig.projects[currentSlug];
 
   const isRtl = dir === "rtl";
 
   const prev = useCallback(() => {
-    setActive((a) => (a - 1 + items.length) % items.length);
-  }, [items.length]);
+    setActive((a) => (a - 1 + projectSlugs.length) % projectSlugs.length);
+  }, []);
 
   const next = useCallback(() => {
-    setActive((a) => (a + 1) % items.length);
-  }, [items.length]);
+    setActive((a) => (a + 1) % projectSlugs.length);
+  }, []);
 
   const PrevIcon = isRtl ? ChevronRight : ChevronLeft;
   const NextIcon = isRtl ? ChevronLeft : ChevronRight;
@@ -47,10 +49,8 @@ export function Work() {
     const threshold = 50;
     if (Math.abs(touchDelta.current) > threshold) {
       if (touchDelta.current > 0) {
-        // Swiped right
         if (isRtl) { next(); } else { prev(); }
       } else {
-        // Swiped left
         if (isRtl) { prev(); } else { next(); }
       }
     }
@@ -77,6 +77,8 @@ export function Work() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
+
+  if (!projectContent || !projectMeta) return null;
 
   return (
     <section id="work" className="py-20 sm:py-28 relative">
@@ -108,9 +110,9 @@ export function Work() {
             <button onClick={() => setModalOpen(true)} className="group w-full text-left focus-ring">
               <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
                 <Image
-                  src={projectImage}
-                  alt={`${project.client} — ${project.project}`}
-                  fallback={project.client}
+                  src={projectMeta.coverImage}
+                  alt={`${projectContent.client} — ${projectContent.title}`}
+                  fallback={projectContent.client}
                   className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700"
                 />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -132,21 +134,21 @@ export function Work() {
           <div className="flex items-start justify-between gap-4 sm:gap-6 mt-6">
             <div className="max-w-lg">
               <div className="flex items-baseline gap-2 sm:gap-3 mb-1.5">
-                <h3 className="text-lg sm:text-xl font-semibold text-title">{project.client}</h3>
-                <span className="text-xs sm:text-sm text-faint tabular-nums">{project.period}</span>
+                <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
+                <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
               </div>
               <p className="text-xs sm:text-sm text-subtle mb-2">
-                {project.project} — {project.role}
+                {projectContent.title} — {projectContent.role}
               </p>
               <p className="text-sm sm:text-base text-body leading-relaxed">
-                {project.description}
+                {projectContent.overview}
               </p>
             </div>
 
             <div className="flex items-center gap-2 shrink-0 pt-1.5">
-              {project.url && (
+              {projectMeta.links[0] && (
                 <a
-                  href={project.url}
+                  href={projectMeta.links[0].url}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
@@ -167,7 +169,7 @@ export function Work() {
             <PrevIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
           </button>
           <span className="text-xs text-faint tabular-nums min-w-[3ch] text-center">
-            {String(active + 1).padStart(2, "0")}/{String(items.length).padStart(2, "0")}
+            {String(active + 1).padStart(2, "0")}/{String(projectSlugs.length).padStart(2, "0")}
           </span>
           <button onClick={next} className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-title hover:border-border transition-all duration-300 focus-ring" aria-label="Next">
             <NextIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -176,12 +178,10 @@ export function Work() {
           <div className="w-px h-4 bg-border mx-1" />
 
           <div className="flex gap-1.5">
-            {items.map((_, i) => (
+            {projectSlugs.map((_, i) => (
               <button
                 key={i}
-                onClick={() => {
-                  setActive(i);
-                }}
+                onClick={() => setActive(i)}
                 className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
                   i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
                 }`}
@@ -192,7 +192,7 @@ export function Work() {
         </div>
       </FadeIn>
 
-      <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectIndex={active} />
+      <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
     </section>
   );
 }

@@ -1,9 +1,17 @@
 export type Locale = "en" | "fa";
 
+/* ========================================
+   Meta (SEO / OpenGraph)
+   ======================================== */
+
 export interface MetaContent {
   title: string;
   description: string;
 }
+
+/* ========================================
+   Hero
+   ======================================== */
 
 export interface HeroContent {
   name: string;
@@ -15,27 +23,48 @@ export interface HeroContent {
   secondaryCta: string;
 }
 
+/* ========================================
+   About
+   ======================================== */
+
 export interface AboutContent {
   label: string;
   paragraphs: string[];
 }
 
-export interface WorkItem {
-  client: string;
-  project: string;
-  role: string;
-  period: string;
-  description: string;
-  url?: string;
-  longDescription: string;
-  highlights: string[];
-  images: string[];
+/* ========================================
+   Project — Localizable Content
+   ======================================== */
+
+export interface ProjectLink {
+  label: string;
+  url: string;
 }
+
+export interface ProjectContent {
+  title: string;
+  subtitle: string;
+  client: string;
+  role: string;
+  overview: string;
+  challenge: string;
+  approach: string;
+  solution: string;
+  outcome: string[];
+}
+
+/* ========================================
+   Work (Portfolio Section)
+   ======================================== */
 
 export interface WorkContent {
   label: string;
-  items: WorkItem[];
+  items: Record<string, ProjectContent>;
 }
+
+/* ========================================
+   Experience
+   ======================================== */
 
 export interface ExperienceItem {
   company: string;
@@ -53,6 +82,10 @@ export interface ExperienceContent {
   items: ExperienceItem[];
 }
 
+/* ========================================
+   Skills
+   ======================================== */
+
 export interface SkillGroup {
   title: string;
   icon: string;
@@ -63,6 +96,10 @@ export interface SkillsContent {
   label: string;
   groups: SkillGroup[];
 }
+
+/* ========================================
+   Contact
+   ======================================== */
 
 export interface ContactLink {
   label: string;
@@ -77,6 +114,10 @@ export interface ContactContent {
   website: string;
   links: ContactLink[];
 }
+
+/* ========================================
+   Root Content (per locale)
+   ======================================== */
 
 export interface Content {
   meta: MetaContent;

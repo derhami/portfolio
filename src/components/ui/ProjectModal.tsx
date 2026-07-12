@@ -1,31 +1,36 @@
 import { useEffect, useCallback, useRef } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
+import { siteConfig } from "@/content/config";
 import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
-  projectIndex: number;
+  projectSlug: ProjectSlug;
 }
 
-export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProps) {
+export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps) {
   const { t, locale, dir } = useTranslation();
-  const project = t.work.items[projectIndex];
+  const projectContent = t.work.items[projectSlug];
+  const projectMeta = siteConfig.projects[projectSlug];
   const [activeImage, setActiveImage] = useState(0);
 
   const isRtl = dir === "rtl";
   const PrevIcon = isRtl ? ChevronRight : ChevronLeft;
   const NextIcon = isRtl ? ChevronLeft : ChevronRight;
 
+  const gallery = projectMeta?.gallery || [];
+
   const prevImage = useCallback(() => {
-    setActiveImage((a) => (a - 1 + project.images.length) % project.images.length);
-  }, [project.images.length]);
+    setActiveImage((a) => (a - 1 + gallery.length) % gallery.length);
+  }, [gallery.length]);
 
   const nextImage = useCallback(() => {
-    setActiveImage((a) => (a + 1) % project.images.length);
-  }, [project.images.length]);
+    setActiveImage((a) => (a + 1) % gallery.length);
+  }, [gallery.length]);
 
   // Touch swipe for gallery
   const touchStart = useRef<number | null>(null);
@@ -81,7 +86,7 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
     };
   }, [isOpen, handleKeyDown]);
 
-  if (!isOpen || !project) return null;
+  if (!isOpen || !projectContent || !projectMeta) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
@@ -111,14 +116,14 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
           onTouchEnd={handleTouchEnd}
         >
           <Image
-            src={project.images[activeImage]}
-            alt={`${project.client} — ${project.project}`}
-            fallback={project.client}
+            src={gallery[activeImage]?.src || projectMeta.heroImage}
+            alt={gallery[activeImage]?.alt || `${projectContent.client} — ${projectContent.title}`}
+            fallback={projectContent.client}
             className="w-full aspect-[16/9] object-cover"
           />
 
           {/* Image navigation */}
-          {project.images.length > 1 && (
+          {gallery.length > 1 && (
             <>
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
                 style={{ background: "var(--bg-overlay-light)" }}>
@@ -131,7 +136,7 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
                   <PrevIcon className="w-4 h-4" strokeWidth={1.5} />
                 </button>
                 <span className="text-xs text-faint tabular-nums min-w-[3ch] text-center">
-                  {activeImage + 1}/{project.images.length}
+                  {activeImage + 1}/{gallery.length}
                 </span>
                 <button
                   onClick={() => {
@@ -145,7 +150,7 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
 
               {/* Thumbnails */}
               <div className="absolute bottom-4 right-4 flex gap-1.5">
-                {project.images.map((_, i) => (
+                {gallery.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImage(i)}
@@ -164,14 +169,14 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-title">{project.client}</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-title">{projectContent.client}</h2>
               <p className="text-sm text-subtle mt-1">
-                {project.project} — {project.role} · {project.period}
+                {projectContent.title} — {projectContent.role} · {projectMeta.year}
               </p>
             </div>
-            {project.url && (
+            {projectMeta.links[0] && (
               <a
-                href={project.url}
+                href={projectMeta.links[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand hover:text-title bg-brand/10 hover:bg-brand/20 border border-brand/20 rounded-full transition-all duration-300"
@@ -182,28 +187,85 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
             )}
           </div>
 
-          {/* Description */}
+          {/* Overview */}
           <p className="text-base text-body leading-[1.8]">
-            {project.longDescription}
+            {projectContent.overview}
           </p>
 
-          {/* Highlights */}
-          <div>
-            <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
-              {locale === "en" ? "Key Results" : "نتایج کلیدی"}
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              {project.highlights.map((highlight, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface border border-border-subtle"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
-                  <span className="text-sm text-body">{highlight}</span>
-                </div>
-              ))}
+          {/* Challenge */}
+          {projectContent.challenge && (
+            <div>
+              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Challenge" : "چالش"}
+              </h3>
+              <p className="text-sm text-body leading-[1.8]">
+                {projectContent.challenge}
+              </p>
             </div>
-          </div>
+          )}
+
+          {/* Approach */}
+          {projectContent.approach && (
+            <div>
+              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Approach" : "رویکرد"}
+              </h3>
+              <p className="text-sm text-body leading-[1.8]">
+                {projectContent.approach}
+              </p>
+            </div>
+          )}
+
+          {/* Solution */}
+          {projectContent.solution && (
+            <div>
+              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Solution" : "راه‌حل"}
+              </h3>
+              <p className="text-sm text-body leading-[1.8]">
+                {projectContent.solution}
+              </p>
+            </div>
+          )}
+
+          {/* Outcome */}
+          {projectContent.outcome.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Key Results" : "نتایج کلیدی"}
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {projectContent.outcome.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface border border-border-subtle"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
+                    <span className="text-sm text-body">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Technologies */}
+          {projectMeta.technologies.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
+                {locale === "en" ? "Technologies" : "ابزارها"}
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {projectMeta.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="inline-flex items-center px-2.5 py-1 text-xs text-subtle bg-surface border border-border rounded-md"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
