@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-07-12
+
+### Changed
+- CapsuleMenu: removed print button, improved mobile touch targets (px-4 py-2.5, w-9 h-9)
+- CapsuleMenu: increased item gaps for better tap accuracy on mobile
+- Work: restructured navigation layout — arrows flank counter + separator + dot indicators
+- Work: external link button separated from navigation controls
+- Assistant: FAB repositioned to `bottom-[84px]` to avoid capsule menu overlap
+- Assistant: chat panel gets `mb-[76px]` bottom margin on mobile, max-height `calc(100dvh-100px)`
+- App.tsx: full-width sections on mobile (`max-w-full` on `<main>`)
+- index.css: sections get `height: 100%` on mobile for full viewport fit
+- index.css: `.section-snap` gets `height: 100%` for full-height sections
+
+### Added
+- Work: touch swipe support on project cards (left/right navigation via touch)
+- ProjectModal: touch swipe support on gallery images
+- `.section-title` CSS class — sticky section titles on mobile (position: sticky, top: 0, z-index: 10)
+- `.section-divider` hidden on mobile (`display: none` at max-width 768px)
+- Section titles (About, Work, Experience, Skills, Contact) use `.section-title` class
+
+### Removed
+- Print button from CapsuleMenu (simplified mobile nav)
+- Section dividers on mobile (cleaner full-width look)
+
 ## [0.2.0] — 2024-01-15
 
 ### Changed

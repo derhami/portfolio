@@ -114,3 +114,17 @@
 - [x] Update CHANGELOG.md
 - [x] Update TASKS.md (mark all complete)
 - [x] Final README.md polish
+
+## Phase 12: Mobile UX Improvements ✅
+
+- [x] Remove print button from CapsuleMenu on mobile
+- [x] Improve CapsuleMenu touch targets for better mobile clickability
+- [x] Fix Assistant popup positioning — prevent overlap with capsule menu
+- [x] Add touch swipe for Work project cards (left/right navigation)
+- [x] Add touch swipe for ProjectModal image gallery
+- [x] Restructure Work navigation: arrows before/after counter + dot indicators
+- [x] Hide section dividers on mobile for cleaner look
+- [x] Full-width sections on mobile (remove max-width constraint)
+- [x] Full-height sections on all viewports
+- [x] Sticky section titles on mobile (remain visible during scroll)
+- [x] Add .section-title CSS class for sticky title behavior

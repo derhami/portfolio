@@ -5,23 +5,19 @@
 ```
 src/
 ├── components/
-│   ├── layout/
-│   │   ├── Header.tsx        — Fixed top navigation bar
-│   │   └── Footer.tsx        — Site footer
 │   ├── sections/
-│   │   ├── Hero.tsx          — Full-screen cinematic opening
-│   │   ├── About.tsx         — Personal narrative
-│   │   ├── Experience.tsx    — Interactive timeline
-│   │   ├── Skills.tsx        — Expertise grid
-│   │   ├── Portfolio.tsx     — Rich case study cards (internal scroll)
-│   │   ├── Resume.tsx        — Printable resume (internal scroll)
-│   │   └── Contact.tsx       — CTA and social links
+│   │   ├── CapsuleMenu.tsx     — Fixed bottom capsule navigation bar
+│   │   ├── Hero.tsx            — Full-screen intro with portrait, stats, CTAs
+│   │   ├── About.tsx           — Bio paragraphs
+│   │   ├── Work.tsx            — Portfolio slider with swipe + dot navigation
+│   │   ├── Experience.tsx      — Stacked sticky timeline cards
+│   │   ├── Skills.tsx          — Tabbed skill grid with SVG brand icons
+│   │   ├── Contact.tsx         — Contact info and social links
+│   │   └── Assistant.tsx       — Floating chat assistant popup
 │   └── ui/
-│       ├── button.tsx        — Button primitive
-│       ├── badge.tsx         — Badge primitive
-│       ├── card.tsx          — Card primitive
-│       ├── separator.tsx     — Separator primitive
-│       └── scroll-area.tsx   — Custom scrollbar for internal scroll
+│       ├── FadeIn.tsx          — Scroll-triggered animation wrapper (Framer Motion)
+│       ├── Image.tsx           — Image component with error fallback
+│       └── ProjectModal.tsx    — Full-screen project detail modal with gallery
 ```
 
 ---
@@ -30,40 +26,27 @@ src/
 
 | Component | Was | Replaced By |
 |-----------|-----|-------------|
-| Sidebar | Mobile slide-out menu | Simplified mobile header menu |
+| Header | Fixed top navigation | CapsuleMenu (bottom capsule bar) |
+| Footer | Site footer | Removed entirely |
+| Sidebar | Mobile slide-out menu | CapsuleMenu (always visible) |
 | ProgressBar | Skill proficiency bars | Skill badges (no arbitrary levels) |
-| StaticTimeline | Fixed alternating timeline | Interactive expandable timeline |
+| button/badge/card | shadcn/ui primitives | Tailwind utility classes (no library) |
 
 ---
 
-## Layout Components
-
-### Header
+## Navigation: CapsuleMenu
 
 **Behavior:**
-- Fixed to top, full width
-- Glass morphism on scroll (backdrop-blur)
-- Logo/brand on start
-- Navigation links in center (desktop) / hamburger menu (mobile)
-- Theme toggle + language toggle on end
-- Active section highlighted via Intersection Observer
+- Fixed bottom center, pill-shaped capsule bar
+- Section links: Work, Experience, Skills, Contact
+- Theme toggle (Sun/Moon) + Language toggle (EN/FA)
+- Active section highlighted via scroll listener
+- Glass morphism (backdrop-blur) + shadow
 
-**Mobile:**
-- Hamburger menu opens inline dropdown (NOT a sidebar)
-- Menu items stacked vertically
-- Same glass morphism styling
-
-**Removed:**
-- ~~Mobile sidebar slide-out~~ → Inline dropdown menu
-- ~~Multi-page navigation~~ → Single-page smooth scroll
-
-### Footer
-
-**Behavior:**
-- Simple centered footer
-- Copyright text
-- "Made with" tagline
-- Border top separator
+**Mobile Improvements (Phase 12):**
+- Print button removed
+- Larger touch targets: `px-4 py-2.5` on links, `w-9 h-9` on icon buttons
+- Increased gap between items for better tap accuracy
 
 ---
 
@@ -73,150 +56,138 @@ src/
 
 **Behavior:**
 - Full viewport height (`min-h-screen`)
-- Centered content with gradient background
-- Decorative blurred orbs (absolute positioned)
-- Animated entrance (staggered opacity + translateY)
-- Two CTAs: primary (scroll to portfolio) and secondary (scroll to contact)
-- Animated scroll-down indicator
-
-**Removed:**
-- ~~Nothing~~ — This section is clean
+- Dot grid background pattern
+- Portrait image with ring border
+- Animated entrance (staggered via FadeIn)
+- Two CTAs: primary (scroll to work) + secondary (email)
+- Stats row with tabular numbers
 
 ### About
 
 **Behavior:**
-- Two-column layout on desktop (text + highlights)
-- Bio paragraphs with staggered entrance
-- Skill highlights as badges (NOT progress bars)
-- Scroll-triggered animation
+- Bio paragraphs with staggered scroll-triggered animation
+- Section divider (hidden on mobile)
+- Section title uses `.section-title` class for sticky behavior on mobile
 
-**Removed:**
-- ~~Progress bars for skill levels~~ → Simple badge list
-
-### Experience (Interactive Timeline)
+### Work (Portfolio Slider)
 
 **Behavior:**
-- Vertical timeline with connected line
-- Alternating cards (left/right on desktop)
-- Each card is **expandable** — click to reveal achievements
-- Expand/collapse with spring animation
-- Active item highlighted
-- Scroll-triggered entrance with stagger
+- Single-project-at-a-time slider
+- Project image with hover overlay (click opens ProjectModal)
+- Client name, period, role, description
+- External link button (if project has URL)
+- Dot indicators for project count
 
-**Interactive Features:**
-- Click card header to expand/collapse achievements
-- Smooth height animation (Framer Motion `AnimatePresence`)
-- Chevron icon rotates on expand
-- Only one item expanded at a time (accordion behavior)
+**Navigation (Phase 12):**
+- Arrows flank the counter: `← [01/05] →`
+- Separator line between arrows and dot indicators
+- Touch swipe support on the project card (left/right)
 
-**Removed:**
-- ~~Static non-interactive timeline~~ → Interactive expandable timeline
-- ~~Achievements always visible~~ → Progressive disclosure on click
+**Touch Swipe:**
+- `onTouchStart`, `onTouchMove`, `onTouchEnd` handlers
+- 50px threshold for swipe detection
+- RTL-aware direction handling
+
+### Experience
+
+**Behavior:**
+- Stacked sticky cards (each card sticks at offset from top)
+- Briefcase, Clock, MapPin icons
+- Company, role, period, location, description
+- Client tags and skill tags
+- Section title uses `.section-title` for sticky behavior
 
 ### Skills
 
 **Behavior:**
-- Three-column grid (Design, Technical, Soft Skills)
-- Each category is a card with badge list
-- Badges animate in with stagger
-- No progress bars, no proficiency levels
-- Purely categorical display
-
-**Removed:**
-- ~~Progress bars / proficiency indicators~~ → Simple badge list
-
-### Portfolio (Internal Scroll)
-
-**Behavior:**
-- Section title + description
-- **Internally scrollable container** for project cards
-- Rich project cards with:
-  - Color gradient placeholder (unique per project)
-  - Project icon/illustration placeholder
-  - Title, category, description
-  - Technology tags
-  - "View Case Study" link
-- Cards stagger-animate on scroll
-- Internal scroll has custom scrollbar styling
-
-**Internal Scroll Rules:**
-- `max-height: 60vh` (or similar)
-- `overflow-y: auto`
-- Custom `::-webkit-scrollbar` styling
-- Smooth scroll behavior
-- Scroll indicator (faded edge) when content overflows
-
-**Rich Card Structure:**
-```
-┌─────────────────────────────┐
-│  [Gradient Placeholder]     │  ← Color gradient unique per project
-│  [Icon/Illustration]        │  ← Lucide icon or SVG illustration
-├─────────────────────────────┤
-│  Category Overline          │  ← Small uppercase text
-│  Project Title              │  ← Bold heading
-│  Description text...        │  ← Muted body text
-│  [Tag] [Tag] [Tag]          │  ← Technology badges
-│  → View Case Study          │  ← Link with arrow
-└─────────────────────────────┘
-```
-
-### Resume (Internal Scroll)
-
-**Behavior:**
-- Printable resume layout
-- **Internally scrollable container** for detailed content
-- Structured sections: Experience, Education, Certifications
-- Clean, print-optimized typography
-- Logical properties for RTL support
+- Tabbed interface (one active group at a time)
+- Custom SVG brand logos (Figma, Framer, React, TailwindCSS, etc.)
+- Skills grid with hover effects
+- Section title uses `.section-title` for sticky behavior
 
 ### Contact
 
 **Behavior:**
-- Centered CTA section
-- Email button (mailto link)
-- Social links row (LinkedIn, Dribbble, GitHub)
-- Scroll-triggered animation
+- Headline, email, phone, website links
+- Social link buttons (pill-shaped)
+- Section divider at top (absolute positioned)
+- Section title uses `.section-title` for sticky behavior
+
+### Assistant (Chat Popup)
+
+**Behavior:**
+- Floating action button (bottom-right, fixed)
+- Terminal-style chat panel with backdrop blur
+- Predefined Q&A with fuzzy search (Levenshtein distance)
+- Chat history with user/system/answer roles
+- Email compose via mailto link
+
+**Mobile Improvements (Phase 12):**
+- FAB positioned at `bottom-[84px]` to avoid capsule menu overlap
+- Chat panel has `mb-[76px]` bottom margin on mobile
+- Max height: `calc(100dvh - 100px)` for proper viewport fit
 
 ---
 
 ## UI Primitives
 
-### Button
-- Variants: default, destructive, outline, secondary, ghost, link
-- Sizes: default, sm, lg, icon
-- Supports `asChild` via Radix Slot
-- Focus ring for accessibility
+### FadeIn
 
-### Badge
-- Variants: default, secondary, destructive, outline
-- Used for: skill tags, project tags, category labels
-- Rounded-full pill shape
+- Scroll-triggered animation wrapper using Framer Motion `useInView`
+- Props: `delay`, `y` (translateY offset)
+- Default: opacity 0→1 + translateY 16→0
 
-### Card
-- Composable: Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
-- Border + shadow + rounded corners
-- Hover state with scale + shadow
+### Image
 
-### Separator
-- Horizontal or vertical
-- Uses Radix Separator primitive
-- Purely decorative by default
+- Wraps `<img>` with error fallback
+- On error: shows fallback text (initials or name) instead of broken image
+- Uses `onError` event to toggle fallback state
 
-### ScrollArea
-- Custom scrollbar for internal scroll containers
-- Thin, rounded scrollbar thumb
-- Hover state reveals full scrollbar
-- RTL-aware
+### ProjectModal
+
+- Full-screen modal with backdrop blur
+- Image gallery with prev/next navigation + dot indicators
+- Thumbnail overlay navigation bar
+- Project details: header, description, highlights grid
+- External link button
+- Keyboard support: Escape (close), ArrowLeft/ArrowRight (gallery)
+- **Touch swipe** on gallery images (Phase 12)
+- Body scroll lock when open
+
+---
+
+## CSS Classes
+
+### `.section-title`
+- Added to section title `<p>` elements
+- On mobile: `position: sticky; top: 0; z-index: 10`
+- Background matches `--bg` to mask content scrolling behind
+- Ensures section context is always visible
+
+### `.section-divider`
+- Horizontal gradient line (transparent edges, border color center)
+- `opacity: 0.6`
+- **Hidden on mobile** (`display: none` at `max-width: 768px`)
+
+### `.section-snap`
+- Used on section wrapper `<div>` in App.tsx
+- Mobile: `scroll-snap-align: start; min-height: 100vh; height: 100%`
+- Flex column with centered content
+
+### `.focus-ring`
+- `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand`
+- Applied to all interactive elements
 
 ---
 
 ## Component Rules
 
-1. **No inline styles** — Everything via Tailwind classes
-2. **No hardcoded strings** — All text from i18n content
-3. **No duplicated code** — Shared utilities in `lib/utils.ts`
-4. **Everything typed** — Props interfaces for all components
-5. **Everything accessible** — ARIA labels, focus management, keyboard navigation
-6. **Everything responsive** — Mobile-first, breakpoints at sm/md/lg
-7. **Everything animated** — Framer Motion for all state changes
-8. **Everything RTL-ready** — Logical properties only
+1. **No inline styles** — Everything via Tailwind classes or CSS custom properties
+2. **No hardcoded strings** — All text from i18n content (en.ts / fa.ts)
+3. **Everything typed** — Props interfaces for all components
+4. **Everything accessible** — ARIA labels, focus management, keyboard navigation
+5. **Everything responsive** — Mobile-first, breakpoints at sm/md/lg
+6. **Everything animated** — Framer Motion via FadeIn wrapper
+7. **Everything RTL-ready** — Logical properties, direction-aware icons
+8. **Touch support** — Swipe handlers on carousels/gallery for mobile
+9. **Content source of truth** — Content is NEVER modified; schema adapts to content
