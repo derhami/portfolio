@@ -63,6 +63,8 @@
   button[aria-label="Toggle language"],
   button[aria-label="Open assistant"],
   button[aria-label="Print resume"],
+  button[aria-label*="assistant"],
+  button[aria-label*="دستیار"],
   .section-divider {
     display: none !important;
   }
@@ -254,7 +256,8 @@
   #work .flex.gap-1\.5,
   #work button[aria-label="Previous"],
   #work button[aria-label="Next"],
-  #work button[aria-label^="Project"] {
+  #work button[aria-label^="Project"],
+  #work button[aria-label*="پروژه"] {
     display: none !important;
   }
 

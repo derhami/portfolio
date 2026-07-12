@@ -139,17 +139,17 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         onMouseEnter={() => setPaused(true)}
       >
         <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-left focus-ring">
-          <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
+          <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200">
             <Image
               src={projectMeta.coverImage}
               alt={`${projectContent.client} — ${projectContent.title}`}
               fallback={projectContent.client}
-              className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
+              className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.015] transition-transform duration-400 pointer-events-none"
             />
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
 
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <span className="text-[0.6rem] sm:text-xs text-subtle uppercase tracking-wider">
                 {t.labels.work.clickToView}
               </span>
@@ -163,11 +163,11 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
 
       <div className="flex items-start justify-between gap-4 sm:gap-6">
         <div className="max-w-lg">
-          <div className="flex items-baseline gap-2 sm:gap-3 mb-1.5">
+          <div className="flex items-baseline gap-2 sm:gap-3 mb-1">
             <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
             <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
           </div>
-          <p className="text-xs sm:text-sm text-subtle mb-2">
+          <p className="text-xs sm:text-sm text-subtle mb-1.5">
             {projectContent.title} — {projectContent.role}
           </p>
           <p className="text-sm sm:text-base text-body leading-relaxed">
@@ -175,14 +175,14 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0 pt-1.5">
+        <div className="flex items-center gap-2 shrink-0 pt-1">
           {projectMeta.links[0] && (
             <a
               href={projectMeta.links[0].url}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-300"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-200"
               aria-label={t.labels.work.visitWebsite}
             >
               <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -196,7 +196,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
+            className={`h-[2px] rounded-full transition-all duration-200 focus-ring ${
               i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
             }`}
             aria-label={t.labels.work.projectAlt(i)}
@@ -230,8 +230,8 @@ export function Work() {
   }, [activeSlug]);
 
   return (
-    <section id="work" className="py-20 sm:py-28 relative">
-      <div className="section-divider mb-20 sm:mb-28" />
+    <section id="work" className="py-16 sm:py-24 relative">
+      <div className="section-divider mb-16 sm:mb-24" />
 
       <div
         className="absolute right-0 top-0 w-28 h-28 pointer-events-none opacity-[0.03]"

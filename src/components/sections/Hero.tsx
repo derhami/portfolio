@@ -23,18 +23,18 @@ export function Hero() {
       <div className="w-full relative">
         <div className="flex flex-col md:flex-row md:items-start md:gap-12 lg:gap-16">
           {/* Portrait */}
-          <FadeIn delay={0} className="shrink-0 mb-8 md:mb-0">
+          <FadeIn delay={0} className="shrink-0 mb-6 md:mb-0">
             <Image
               src={siteConfig.assets.profile}
               alt={t.hero.name}
               fallback="HD"
-              className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-2xl object-cover ring-1 ring-border"
+              className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-2xl object-cover ring-1 ring-border"
             />
           </FadeIn>
 
           {/* Content */}
-          <div className="flex-1 space-y-5">
-            <div className="space-y-2">
+          <div className="flex-1 space-y-4">
+            <div className="space-y-1.5">
               <FadeIn delay={0.1}>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] text-title">
                   {t.hero.name}
@@ -54,34 +54,36 @@ export function Hero() {
             </FadeIn>
 
             {/* Stats */}
-            <FadeIn delay={0.25}>
-              <div className="flex items-center gap-6 sm:gap-8 pt-1">
-                {t.hero.stats.map((stat, i) => (
-                  <div key={i} className="space-y-0.5">
-                    <p className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-title">
-                      {stat.value}
-                    </p>
-                    <p className="text-[0.6rem] sm:text-[0.65rem] text-faint uppercase tracking-widest">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
+            {t.hero.stats.length > 0 && (
+              <FadeIn delay={0.25}>
+                <div className="flex items-center gap-6 sm:gap-8 pt-1">
+                  {t.hero.stats.map((stat, i) => (
+                    <div key={i} className="space-y-0.5">
+                      <p className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-title">
+                        {stat.value}
+                      </p>
+                      <p className="text-[0.6rem] sm:text-[0.65rem] text-faint uppercase tracking-widest">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+            )}
 
             {/* CTAs */}
             <FadeIn delay={0.3}>
               <div className="flex items-center gap-4 pt-1">
                 <a
                   href="#work"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-brand rounded-full hover:opacity-90 transition-all duration-300 focus-ring group"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-brand rounded-full hover:opacity-90 transition-all duration-200 focus-ring group"
                 >
                   {t.hero.cta}
-                  <PrimaryIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
+                  <PrimaryIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={1.5} />
                 </a>
                 <a
                   href={`mailto:${t.contact.email}`}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-subtle hover:text-title transition-colors duration-300 focus-ring"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-subtle hover:text-title transition-colors duration-200 focus-ring"
                 >
                   <Mail className="w-4 h-4" strokeWidth={1.5} />
                   {t.hero.secondaryCta}

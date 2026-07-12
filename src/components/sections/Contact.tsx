@@ -14,7 +14,7 @@ export function Contact() {
   const { contact } = t;
 
   return (
-    <section id="contact" className="min-h-[60vh] flex items-center relative py-20 sm:py-28">
+    <section id="contact" className="min-h-[60vh] flex items-center relative py-16 sm:py-24">
       <div className="section-divider absolute top-0 left-0 right-0" />
 
       <div className="w-full space-y-12 sm:space-y-14">
@@ -26,15 +26,15 @@ export function Contact() {
 
         <FadeIn delay={0.1}>
           <div className="space-y-4">
-            <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-300 group">
+            <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-200 group">
               <MessageCircle className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
               {contact.email}
             </a>
-            <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-300 group">
+            <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-200 group">
               <Phone className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
               {contact.phone}
             </a>
-            <a href={`https://${contact.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-300 group">
+            <a href={`https://${contact.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-200 group">
               <Globe className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
               {contact.website}
             </a>
@@ -51,7 +51,7 @@ export function Contact() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm text-subtle hover:text-title bg-card-bg border border-card-border hover:border-border rounded-full transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm text-subtle hover:text-title bg-card-bg border border-card-border hover:border-border rounded-full transition-all duration-200"
                 >
                   <Icon className="w-3.5 h-3.5" strokeWidth={1.5} />
                   {link.label}

@@ -6,8 +6,8 @@ export function Experience() {
   const { t } = useTranslation();
 
   return (
-    <section id="experience" className="py-20 sm:py-28 relative">
-      <div className="section-divider mb-20 sm:mb-28" />
+    <section id="experience" className="py-16 sm:py-24 relative">
+      <div className="section-divider mb-16 sm:mb-24" />
 
       <FadeIn>
         <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
@@ -18,7 +18,7 @@ export function Experience() {
       <div className="space-y-6">
         {t.experience.items.map((item, i) => (
           <FadeIn key={item.id} delay={i * 0.1}>
-            <div className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-500 hover:border-border-subtle"
+            <div className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-200 hover:border-border-subtle"
               style={{
                 backgroundColor: "var(--card-bg)",
               }}
@@ -65,7 +65,7 @@ export function Experience() {
                     {item.keyCollabs.map((client) => (
                       <span
                         key={client}
-                        className="inline-flex items-center px-2.5 py-1 text-[0.65rem] sm:text-xs text-subtle bg-surface border border-border rounded-md hover:bg-surface-hover hover:border-border transition-colors duration-200 cursor-default"
+                        className="inline-flex items-center px-2.5 py-1 text-[0.65rem] sm:text-xs text-subtle bg-surface border border-border rounded-md hover:bg-surface-hover hover:border-border transition-colors duration-150 cursor-default"
                       >
                         {client}
                       </span>

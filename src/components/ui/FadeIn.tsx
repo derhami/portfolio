@@ -13,12 +13,12 @@ export function FadeIn({
   children,
   className,
   delay = 0,
-  duration = 0.6,
-  y = 20,
+  duration = 0.45,
+  y = 16,
   ...props
 }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
     <motion.div

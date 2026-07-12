@@ -180,7 +180,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-300 focus-ring"
+          className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-200 focus-ring"
           aria-label={t.labels.modal.close}
         >
           <X className="w-5 h-5" strokeWidth={1.5} />
@@ -212,7 +212,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                 <button
                   key={i}
                   onClick={() => { setActiveImage(i); setGalleryPaused(true); setTimeout(() => setGalleryPaused(false), 2000); }}
-                  className={`h-[2px] rounded-full transition-all duration-300 focus-ring ${
+                  className={`h-[2px] rounded-full transition-all duration-200 focus-ring ${
                     i === activeImage ? "w-4 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
                   }`}
                   aria-label={t.labels.modal.imageAlt(i)}
@@ -224,7 +224,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         </div>
 
         {/* Content */}
-        <div className="p-8 sm:p-10 md:p-12 space-y-8">
+        <div className="p-8 sm:p-10 md:p-12 space-y-10">
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -255,7 +255,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           </div>
 
           {/* Overview */}
-          <p className="text-base sm:text-lg text-body leading-[1.8]">
+          <p className="text-base sm:text-lg text-body leading-[1.8] max-w-[70ch]">
             {projectContent.overview}
           </p>
 
@@ -265,7 +265,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
                 {t.labels.modal.context}
               </h3>
-              <p className="text-sm text-body leading-[1.8]">
+              <p className="text-sm text-body leading-[1.8] max-w-[70ch]">
                 {projectContent.context}
               </p>
             </div>
@@ -277,7 +277,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
                 {t.labels.modal.myContribution}
               </h3>
-              <p className="text-sm text-body leading-[1.8]">
+              <p className="text-sm text-body leading-[1.8] max-w-[70ch]">
                 {projectContent.contribution}
               </p>
             </div>
@@ -289,7 +289,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
                 {t.labels.modal.impact}
               </h3>
-              <p className="text-sm text-body leading-[1.8]">
+              <p className="text-sm text-body leading-[1.8] max-w-[70ch]">
                 {projectContent.impact}
               </p>
             </div>
@@ -342,7 +342,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
             <div className="pt-6 border-t border-border">
               <button
                 onClick={onNext}
-                className="group w-full text-left flex items-center justify-between gap-4 p-4 rounded-xl bg-surface hover:bg-surface-hover border border-border transition-all duration-300 focus-ring"
+                className="group w-full text-left flex items-center justify-between gap-4 p-4 rounded-xl bg-surface hover:bg-surface-hover border border-border transition-all duration-200 focus-ring"
               >
                 <div>
                   <p className="text-[0.65rem] uppercase tracking-widest text-faint mb-1">
@@ -351,7 +351,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                   <p className="text-sm font-medium text-title">{nextContent.client}</p>
                   <p className="text-xs text-subtle">{nextContent.subtitle}</p>
                 </div>
-                <div className={`w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle group-hover:text-brand group-hover:border-brand/30 transition-all duration-300 ${isRtl ? "rotate-180" : ""}`}>
+                <div className={`w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle group-hover:text-brand group-hover:border-brand/30 transition-all duration-200 ${isRtl ? "rotate-180" : ""}`}>
                   <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
                 </div>
               </button>

@@ -93,8 +93,8 @@ export function Skills() {
   const groups = t.skills.groups;
 
   return (
-    <section id="skills" className="py-20 sm:py-28 relative">
-      <div className="section-divider mb-20 sm:mb-28" />
+    <section id="skills" className="py-16 sm:py-24 relative">
+      <div className="section-divider mb-16 sm:mb-24" />
 
       <div
         className="absolute left-0 bottom-0 w-20 h-20 pointer-events-none opacity-[0.03]"
@@ -122,7 +122,7 @@ export function Skills() {
                 aria-selected={activeTab === i}
                 aria-controls={`tabpanel-${i}`}
                 onClick={() => setActiveTab(i)}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 focus-ring ${
+                className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 focus-ring ${
                   activeTab === i
                     ? "bg-card-solid text-title shadow-sm"
                     : "text-subtle hover:text-title hover:bg-surface-hover"
@@ -145,10 +145,10 @@ export function Skills() {
               return (
                 <div
                   key={skill}
-                  className="group flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-card-bg border border-card-border hover:bg-surface-hover hover:border-border transition-all duration-300 cursor-default"
+                  className="group flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-card-bg border border-card-border hover:bg-surface-hover hover:border-border transition-all duration-200 cursor-default"
                 >
                   <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg bg-surface border border-border group-hover:bg-surface-hover transition-all duration-300 shrink-0">
-                    <Logo className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-subtle group-hover:text-title transition-colors" />
+                    <Logo className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-subtle group-hover:text-title transition-colors duration-200" />
                   </div>
                   <span className="text-xs sm:text-sm text-subtle group-hover:text-title transition-colors leading-snug">
                     {skill}
