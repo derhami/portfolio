@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { ProjectModal } from "@/components/ui/ProjectModal";
 import { ChevronLeft, ChevronRight, ExternalLink, ArrowUpRight } from "lucide-react";
+
+const ProjectModal = lazy(() =>
+  import("@/components/ui/ProjectModal").then((m) => ({ default: m.ProjectModal }))
+);
 
 const projectSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
 
@@ -33,7 +36,6 @@ export function Work() {
   // Touch swipe handling
   const touchStart = useRef<number | null>(null);
   const touchDelta = useRef(0);
-  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStart.current = e.touches[0].clientX;
@@ -101,7 +103,6 @@ export function Work() {
       <div>
         <FadeIn>
           <div
-            ref={cardRef}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -192,7 +193,9 @@ export function Work() {
         </div>
       </FadeIn>
 
-      <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
+      <Suspense fallback={null}>
+        <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
+      </Suspense>
     </section>
   );
 }

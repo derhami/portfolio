@@ -112,12 +112,15 @@ export function Skills() {
 
       {/* Tabs */}
       <FadeIn delay={0.05}>
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-8 sm:mb-10 w-fit overflow-x-auto">
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-8 sm:mb-10 w-fit overflow-x-auto" role="tablist" aria-label={t.skills.label}>
           {groups.map((group, i) => {
             const Logo = brandLogos[group.icon] || FallbackIcon;
             return (
               <button
                 key={group.title}
+                role="tab"
+                aria-selected={activeTab === i}
+                aria-controls={`tabpanel-${i}`}
                 onClick={() => setActiveTab(i)}
                 className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 focus-ring ${
                   activeTab === i
@@ -134,7 +137,7 @@ export function Skills() {
       </FadeIn>
 
       {/* Skills grid */}
-      <div className="relative" key={activeTab}>
+      <div className="relative" key={activeTab} role="tabpanel" id={`tabpanel-${activeTab}`} aria-label={groups[activeTab].title}>
         <FadeIn delay={0} y={8}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-2.5">
             {groups[activeTab].items.map((skill) => {

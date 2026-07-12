@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { qaData } from "@/content/qa-data";
 import { MessageCircle, X, ChevronRight, ChevronLeft, Send, Search } from "lucide-react";
@@ -119,6 +119,40 @@ export function Assistant() {
     setInput("");
   };
 
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      handleClose();
+      return;
+    }
+    if (e.key !== "Tab" || !panelRef.current) return;
+    const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, handleKeyDown]);
+
   return (
     <>
       {/* Floating Button — single, always visible */}
@@ -139,7 +173,13 @@ export function Assistant() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
           {/* Terminal Window */}
-          <div className="relative w-full sm:w-[420px] max-h-[calc(100dvh-100px)] sm:max-h-[600px] flex flex-col rounded-t-2xl sm:rounded-2xl border border-border bg-bg-elevated shadow-2xl overflow-hidden mb-[76px] sm:mb-0">
+          <div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={isFa ? "دستیار هوشمند" : "Smart Assistant"}
+            className="relative w-full sm:w-[420px] max-h-[calc(100dvh-100px)] sm:max-h-[600px] flex flex-col rounded-t-2xl sm:rounded-2xl border border-border bg-bg-elevated shadow-2xl overflow-hidden mb-[76px] sm:mb-0"
+          >
             {/* Title bar */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface">
               <div className="flex items-center gap-2">
@@ -175,7 +215,7 @@ export function Assistant() {
             </div>
 
             {/* Chat area */}
-            <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-3 text-xs sm:text-sm min-h-[200px] ${isFa ? "font-['Tahoma',sans-serif]" : "font-mono"}`}>
+            <div ref={scrollRef} aria-live="polite" className={`flex-1 overflow-y-auto p-4 space-y-3 text-xs sm:text-sm min-h-[200px] ${isFa ? "font-['Tahoma',sans-serif]" : "font-mono"}`}>
               {history.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-faint text-[0.65rem] sm:text-xs">

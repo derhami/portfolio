@@ -37,12 +37,13 @@ export function CapsuleMenu() {
   const Chevron = dir === "rtl" ? ChevronLeft : ChevronRight;
 
   return (
-    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1 sm:gap-0.5 px-2 sm:px-1.5 py-2 sm:py-1.5 rounded-full bg-capsule-bg backdrop-blur-xl border border-capsule-border shadow-lg">
+    <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Section navigation">
+      <div className="flex items-center gap-1 sm:gap-0.5 px-2 sm:px-1.5 py-2 sm:py-1.5 rounded-full bg-capsule-bg backdrop-blur-xl border border-capsule-border shadow-lg" role="menubar">
         {items.map((item) => (
           <a
             key={item.href}
             href={item.href}
+            role="menuitem"
             className={`px-4 sm:px-3.5 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium rounded-full transition-all duration-300 focus-ring whitespace-nowrap ${
               activeSection === item.id
                 ? "text-title bg-surface-hover shadow-sm"
@@ -72,6 +73,6 @@ export function CapsuleMenu() {
           {locale === "en" ? "فا" : "EN"}
         </button>
       </div>
-    </div>
+    </nav>
   );
 }

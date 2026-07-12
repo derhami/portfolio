@@ -1,9 +1,8 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
 import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
 import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
@@ -86,6 +85,41 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
     };
   }, [isOpen, handleKeyDown]);
 
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+    const modal = modalRef.current;
+    const focusable = modal.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length > 0) {
+      focusable[0].focus();
+    }
+    const trapFocus = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const allFocusable = modal.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (allFocusable.length === 0) return;
+      const first = allFocusable[0];
+      const last = allFocusable[allFocusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    modal.addEventListener("keydown", trapFocus);
+    return () => modal.removeEventListener("keydown", trapFocus);
+  }, [isOpen]);
+
   if (!isOpen || !projectContent || !projectMeta) return null;
 
   return (
@@ -98,7 +132,13 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl">
+      <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${projectContent.client} — ${projectContent.title}`}
+        className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
+      >
         {/* Close button */}
         <button
           onClick={onClose}
