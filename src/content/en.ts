@@ -25,106 +25,95 @@ export const enContent: Content = {
   },
   work: {
     label: "Selected Work",
+    subtitle: "A selection of projects across enterprise brands and independent businesses.",
+    groups: {
+      agency: {
+        title: "Agency Projects",
+        description: "Digital products and campaign experiences designed during my collaboration with Shadow Digital Marketing Agency.",
+      },
+      independent: {
+        title: "Independent Projects",
+        description: "Projects delivered independently for businesses across different industries.",
+      },
+    },
     items: {
       daewoo: {
-        title: "Digital Platform",
-        subtitle: "End-to-end platform redesign",
+        title: "Daewoo",
+        subtitle: "Consumer Electronics Experience",
         client: "Daewoo",
-        role: "Lead Designer",
-        overview:
-          "Redesigned the customer-facing platform. Simplified product catalogs into intuitive browsing across all touchpoints.",
-        challenge:
-          "Daewoo's existing digital platform had a complex, fragmented product catalog that overwhelmed users and led to high bounce rates. The challenge was to unify the browsing experience across web, mobile, and in-store kiosks while maintaining brand consistency.",
-        approach:
-          "Led deep user research with 200+ participants to understand pain points. Restructured information architecture based on user mental models. Iterative prototyping with continuous feedback loops from stakeholders and end users.",
-        solution:
-          "Created a unified, conversion-focused browsing experience with intuitive navigation, smart filtering, and consistent design language across all touchpoints. Implemented a cross-platform design system for long-term maintainability.",
-        outcome: [
-          "35% reduction in bounce rate",
-          "48% increase in product engagement",
-          "Cross-platform design system",
-          "User research with 200+ participants",
-        ],
+        role: "Senior Product & UI/UX Designer",
+        overview: "Designed digital experiences and campaign landing pages for Daewoo while collaborating with Shadow Digital Marketing Agency.",
+        challenge: "Transform complex marketing requirements into intuitive and high-converting digital experiences.",
+        approach: "Focused on visual hierarchy, responsive behavior and conversion-oriented user journeys.",
+        solution: "Created scalable landing pages aligned with the brand identity and campaign goals.",
+        outcome: ["Delivered consistent digital experiences that supported multiple marketing campaigns."],
       },
       snowa: {
-        title: "Smart Home Interface",
-        subtitle: "IoT control dashboard",
+        title: "Snowa",
+        subtitle: "Home Appliance Digital Experience",
         client: "Snowa",
-        role: "Product Designer",
-        overview:
-          "Control interface for Snowa's smart home ecosystem. Complex device management made simple through clear information architecture.",
-        challenge:
-          "Managing 50+ device types across lighting, climate, security, and energy required a unified interface that felt simple and approachable despite the underlying complexity.",
-        approach:
-          "Mapped device interaction patterns across all categories. Designed a unified dashboard with real-time status, scene management, and automated routines. Accessibility-first approach ensured inclusivity.",
-        solution:
-          "Created a primary control interface with real-time device monitoring, scene management, and automated routines. Reduced average task completion time from 12 seconds to 4 seconds through progressive disclosure and contextual controls.",
-        outcome: [
-          "50+ device types supported",
-          "67% faster task completion",
-          "Real-time device monitoring",
-          "Accessibility-first approach",
-        ],
-      },
-      entekhab: {
-        title: "Corporate Digital",
-        subtitle: "Multi-brand digital ecosystem",
-        client: "Entekhab Holding",
-        role: "UI/UX Designer",
-        overview:
-          "Unified digital presence across a diverse corporate portfolio. Balanced brand consistency with modern usability.",
-        challenge:
-          "Maintaining distinct brand identities while ensuring a cohesive user experience across 12+ digital products for Entekhab Holding's diverse portfolio of brands.",
-        approach:
-          "Developed a flexible design system with shared components and brand-specific themes. Created governance guidelines for consistent application across teams.",
-        solution:
-          "Built a multi-brand design system with shared core components and brand-specific theme overlays. Enabled parallel design workflows while maintaining consistency.",
-        outcome: [
-          "12+ digital products unified",
-          "40% faster design-to-dev handoff",
-          "Multi-brand design system",
-          "Consistent UX across portfolio",
-        ],
+        role: "Senior Product & UI/UX Designer",
+        overview: "Designed campaign landing pages and product experiences through Shadow Digital Marketing Agency.",
+        challenge: "Create engaging user journeys while maintaining brand consistency.",
+        approach: "Balanced storytelling, product presentation and conversion optimization.",
+        solution: "Developed responsive landing pages with strong visual hierarchy.",
+        outcome: ["Supported multiple product campaigns through cohesive digital experiences."],
       },
       ardesia: {
-        title: "Design System",
-        subtitle: "Scalable component ecosystem",
+        title: "Ardesia",
+        subtitle: "Kitchen Appliance Experience",
         client: "Ardesia",
-        role: "Design Lead",
-        overview:
-          "Scalable design system serving multiple product teams. Tokens, components, and docs that cut handoff time by 60%.",
-        challenge:
-          "Multiple product teams were working with inconsistent design patterns, leading to fragmented user experiences and slow design-to-development handoff.",
-        approach:
-          "Built a comprehensive design system from scratch with token-based architecture, Figma variables, and living documentation. Established governance and contribution guidelines.",
-        solution:
-          "Created a token-based architecture with Figma variables, a component library with 80+ components, and living documentation. Components were built with accessibility baked in, supporting WCAG 2.1 AA standards.",
-        outcome: [
-          "80+ reusable components",
-          "3x faster design workflow",
-          "90% reduction in inconsistencies",
-          "WCAG 2.1 AA compliant",
-        ],
+        role: "Senior Product & UI/UX Designer",
+        overview: "Designed digital interfaces and campaign experiences through Shadow Digital Marketing Agency.",
       },
-      shadow: {
-        title: "Brand Identity",
-        subtitle: "Complete brand ecosystem",
-        client: "Shadow Agency",
-        role: "Brand Designer",
-        overview:
-          "Complete brand identity and digital presence for a creative agency. Logo, website, visual language.",
-        challenge:
-          "Shadow Agency needed a premium brand identity that would differentiate them in a competitive marketing agency landscape and attract higher-tier clients.",
-        approach:
-          "Developed comprehensive brand strategy through competitive analysis and stakeholder workshops. Created a cohesive visual language system spanning logo, typography, color, and digital presence.",
-        solution:
-          "Designed a complete brand identity including logo, visual language system, typography guidelines, color palette, and full website redesign. The new identity established a premium market position.",
-        outcome: [
-          "Full brand identity system",
-          "Website redesign",
-          "Premium market positioning",
-          "6-month client growth",
-        ],
+      entekhab: {
+        title: "Entekhab Holding",
+        subtitle: "Corporate Digital Experience",
+        client: "Entekhab Holding",
+        role: "Senior Product & UI/UX Designer",
+        overview: "Contributed to digital product experiences for Entekhab Holding through Shadow Digital Marketing Agency.",
+      },
+      rahampars: {
+        title: "Raham Pars",
+        subtitle: "Corporate Website",
+        client: "Raham Pars",
+        role: "UI/UX Designer",
+        overview: "Designed a corporate website for Raham Pars, focusing on clear presentation of industrial products and services.",
+      },
+      maanpolymer: {
+        title: "Maan Polymer",
+        subtitle: "Corporate Website",
+        client: "Maan Polymer",
+        role: "UI/UX Designer",
+        overview: "Designed a corporate website for Maan Polymer, presenting polymer products with a clean and professional interface.",
+      },
+      fadakargold: {
+        title: "Fadakar Gold",
+        subtitle: "E-commerce Website",
+        client: "Fadakar Gold",
+        role: "UI/UX Designer",
+        overview: "Designed an e-commerce website for Fadakar Gold, creating a trustworthy and visually rich shopping experience for gold products.",
+      },
+      adriankesht: {
+        title: "Adrien Kesht",
+        subtitle: "Corporate Website",
+        client: "Adrien Kesht",
+        role: "UI/UX Designer",
+        overview: "Designed a corporate website for Adrien Kesht, delivering a modern and minimal interface for an interior design brand.",
+      },
+      erfanwatch: {
+        title: "Erfan Watch",
+        subtitle: "E-commerce Website",
+        client: "Erfan Watch",
+        role: "UI/UX Designer",
+        overview: "Designed an e-commerce website for Erfan Watch, building a refined shopping experience for luxury timepieces.",
+      },
+      derhami: {
+        title: "Derhami",
+        subtitle: "Portfolio Website",
+        client: "Derhami",
+        role: "Designer & Developer",
+        overview: "Designed and developed this interactive portfolio site using React, TypeScript, TailwindCSS and Framer Motion.",
       },
     },
   },

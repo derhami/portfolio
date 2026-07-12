@@ -47,18 +47,25 @@ export interface ProjectContent {
   client: string;
   role: string;
   overview: string;
-  challenge: string;
-  approach: string;
-  solution: string;
-  outcome: string[];
+  challenge?: string;
+  approach?: string;
+  solution?: string;
+  outcome?: string[];
 }
 
 /* ========================================
    Work (Portfolio Section)
    ======================================== */
 
+export interface WorkGroup {
+  title: string;
+  description: string;
+}
+
 export interface WorkContent {
   label: string;
+  subtitle: string;
+  groups: Record<string, WorkGroup>;
   items: Record<string, ProjectContent>;
 }
 

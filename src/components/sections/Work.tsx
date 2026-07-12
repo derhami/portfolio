@@ -9,39 +9,47 @@ const ProjectModal = lazy(() =>
   import("@/components/ui/ProjectModal").then((m) => ({ default: m.ProjectModal }))
 );
 
-const projectSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
+const allSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
 const AUTOPLAY_INTERVAL = 5000;
 
-export function Work() {
+const groupOrder = ["agency", "independent"] as const;
+
+function getSlugsByGroup(group: string) {
+  return allSlugs.filter((slug) => siteConfig.projects[slug].group === group);
+}
+
+interface GroupSliderProps {
+  slugs: Array<keyof typeof siteConfig.projects>;
+}
+
+function GroupSlider({ slugs }: GroupSliderProps) {
   const { t, dir } = useTranslation();
   const [active, setActive] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [paused, setPaused] = useState(false);
 
-  const currentSlug = projectSlugs[active];
+  const currentSlug = slugs[active];
   const projectContent = t.work.items[currentSlug];
   const projectMeta = siteConfig.projects[currentSlug];
 
   const isRtl = dir === "rtl";
 
   const prev = useCallback(() => {
-    setActive((a) => (a - 1 + projectSlugs.length) % projectSlugs.length);
-  }, []);
+    setActive((a) => (a - 1 + slugs.length) % slugs.length);
+  }, [slugs.length]);
 
   const next = useCallback(() => {
-    setActive((a) => (a + 1) % projectSlugs.length);
-  }, []);
+    setActive((a) => (a + 1) % slugs.length);
+  }, [slugs.length]);
 
-  // Autoplay
   useEffect(() => {
     if (paused || modalOpen) return;
     const timer = setInterval(() => {
-      setActive((a) => (a + 1) % projectSlugs.length);
+      setActive((a) => (a + 1) % slugs.length);
     }, AUTOPLAY_INTERVAL);
     return () => clearInterval(timer);
-  }, [paused, modalOpen]);
+  }, [paused, modalOpen, slugs.length]);
 
-  // Unified swipe handling (touch + mouse drag)
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const swipeDelta = useRef(0);
   const isDragging = useRef(false);
@@ -78,12 +86,10 @@ export function Work() {
     isDragging.current = false;
   };
 
-  // Touch events
   const onTouchStart = (e: React.TouchEvent) => handleSwipeStart(e.touches[0].clientX, e.touches[0].clientY);
   const onTouchMove = (e: React.TouchEvent) => handleSwipeMove(e.touches[0].clientX, e.touches[0].clientY);
   const onTouchEnd = () => handleSwipeEnd();
 
-  // Mouse events
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     handleSwipeStart(e.clientX, e.clientY);
@@ -92,7 +98,6 @@ export function Work() {
   const onMouseUp = () => handleSwipeEnd();
   const onMouseLeave = () => { handleSwipeEnd(); setPaused(false); };
 
-  // Keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (modalOpen) return;
@@ -116,6 +121,105 @@ export function Work() {
   if (!projectContent || !projectMeta) return null;
 
   return (
+    <div className="space-y-6">
+      <div
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
+        className="cursor-grab active:cursor-grabbing select-none"
+        onMouseEnter={() => setPaused(true)}
+      >
+        <button onClick={() => setModalOpen(true)} className="group w-full text-left focus-ring">
+          <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
+            <Image
+              src={projectMeta.coverImage}
+              alt={`${projectContent.client} — ${projectContent.title}`}
+              fallback={projectContent.client}
+              className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
+            />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
+
+            {/* Badge */}
+            {projectMeta.badge && (
+              <div className="absolute top-3 left-3">
+                <span className="inline-flex items-center px-2 py-0.5 text-[0.6rem] sm:text-[0.65rem] font-medium text-subtle bg-surface/80 backdrop-blur-sm border border-border rounded-full">
+                  {projectMeta.badge}
+                </span>
+              </div>
+            )}
+
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <span className="text-[0.6rem] sm:text-xs text-subtle uppercase tracking-wider">
+                {dir === "rtl" ? "کلیک برای مشاهده" : "Click to view details"}
+              </span>
+              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-surface backdrop-blur-md border border-border">
+                <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={1.5} />
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div className="flex items-start justify-between gap-4 sm:gap-6">
+        <div className="max-w-lg">
+          <div className="flex items-baseline gap-2 sm:gap-3 mb-1.5">
+            <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
+            <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
+          </div>
+          <p className="text-xs sm:text-sm text-subtle mb-2">
+            {projectContent.title} — {projectContent.role}
+          </p>
+          <p className="text-sm sm:text-base text-body leading-relaxed">
+            {projectContent.overview}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 pt-1.5">
+          {projectMeta.links[0] && (
+            <a
+              href={projectMeta.links[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-300"
+              aria-label="Visit website"
+            >
+              <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        {slugs.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
+              i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
+            }`}
+            aria-label={`Project ${i + 1}`}
+            aria-current={i === active ? "true" : undefined}
+          />
+        ))}
+      </div>
+
+      <Suspense fallback={null}>
+        <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
+      </Suspense>
+    </div>
+  );
+}
+
+export function Work() {
+  const { t } = useTranslation();
+
+  return (
     <section id="work" className="py-20 sm:py-28 relative">
       <div className="section-divider mb-20 sm:mb-28" />
 
@@ -128,99 +232,41 @@ export function Work() {
       />
 
       <FadeIn>
-        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
+        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-2 sm:mb-3 font-medium">
           {t.work.label}
         </p>
       </FadeIn>
 
-      <div>
-        <FadeIn>
-          <div
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseLeave}
-            className="cursor-grab active:cursor-grabbing select-none"
-            onMouseEnter={() => setPaused(true)}
-          >
-            <button onClick={() => setModalOpen(true)} className="group w-full text-left focus-ring">
-              <div className="relative overflow-hidden rounded-xl ring-1 ring-border hover:ring-border-subtle transition-all duration-500">
-                <Image
-                  src={projectMeta.coverImage}
-                  alt={`${projectContent.client} — ${projectContent.title}`}
-                  fallback={projectContent.client}
-                  className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
-                />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-[0.6rem] sm:text-xs text-subtle uppercase tracking-wider">
-                    {dir === "rtl" ? "کلیک برای مشاهده" : "Click to view details"}
-                  </span>
-                  <div className="w-9 h-9 flex items-center justify-center rounded-full bg-surface backdrop-blur-md border border-border">
-                    <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={1.5} />
-                  </div>
-                </div>
-              </div>
-            </button>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.1}>
-          <div className="flex items-start justify-between gap-4 sm:gap-6 mt-6">
-            <div className="max-w-lg">
-              <div className="flex items-baseline gap-2 sm:gap-3 mb-1.5">
-                <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
-                <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
-              </div>
-              <p className="text-xs sm:text-sm text-subtle mb-2">
-                {projectContent.title} — {projectContent.role}
-              </p>
-              <p className="text-sm sm:text-base text-body leading-relaxed">
-                {projectContent.overview}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 shrink-0 pt-1.5">
-              {projectMeta.links[0] && (
-                <a
-                  href={projectMeta.links[0].url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-300"
-                  aria-label="Visit website"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
-                </a>
-              )}
-            </div>
-          </div>
-        </FadeIn>
-      </div>
-
-      <FadeIn delay={0.2}>
-        <div className="flex items-center justify-center gap-2 mt-6">
-          {projectSlugs.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
-                i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
-              }`}
-              aria-label={`Project ${i + 1}`}
-              aria-current={i === active ? "true" : undefined}
-            />
-          ))}
-        </div>
+      <FadeIn delay={0.05}>
+        <p className="text-sm sm:text-base text-body mb-12 sm:mb-16 max-w-xl">
+          {t.work.subtitle}
+        </p>
       </FadeIn>
 
-      <Suspense fallback={null}>
-        <ProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)} projectSlug={currentSlug} />
-      </Suspense>
+      <div className="space-y-16 sm:space-y-20">
+        {groupOrder.map((groupKey) => {
+          const slugs = getSlugsByGroup(groupKey);
+          if (slugs.length === 0) return null;
+          const group = t.work.groups[groupKey];
+          if (!group) return null;
+
+          return (
+            <FadeIn key={groupKey}>
+              <div className="space-y-6 sm:space-y-8">
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-title mb-1">
+                    {group.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-subtle max-w-lg">
+                    {group.description}
+                  </p>
+                </div>
+                <GroupSlider slugs={slugs} />
+              </div>
+            </FadeIn>
+          );
+        })}
+      </div>
     </section>
   );
 }

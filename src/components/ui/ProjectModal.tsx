@@ -287,7 +287,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug }: ProjectModalProps
           )}
 
           {/* Outcome */}
-          {projectContent.outcome.length > 0 && (
+          {projectContent.outcome && projectContent.outcome.length > 0 && (
             <div>
               <h3 className="text-sm font-semibold text-subtle uppercase tracking-wider mb-3">
                 {locale === "en" ? "Key Results" : "نتایج کلیدی"}
