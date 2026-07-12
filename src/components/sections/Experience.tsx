@@ -15,28 +15,18 @@ export function Experience() {
         </p>
       </FadeIn>
 
-      <div className="relative pb-8">
+      <div className="space-y-6">
         {t.experience.items.map((item, i) => (
-          <div
-            key={i}
-            className="sticky"
-            style={{
-              top: `calc(60px + ${i * 14}px)`,
-              zIndex: i + 1,
-              marginBottom: i < t.experience.items.length - 1 ? "14px" : "0",
-            }}
-          >
-            <div
-              className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-500"
+          <FadeIn key={item.id} delay={i * 0.1}>
+            <div className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-500 hover:border-border-subtle"
               style={{
-                backgroundColor: i === 0 ? "var(--card-bg-solid)" : "var(--card-bg)",
-                boxShadow: `0 ${2 + i * 2}px ${12 + i * 10}px var(--shadow-color)`,
+                backgroundColor: "var(--card-bg)",
               }}
             >
               <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
               {/* Header row */}
-              <div className="flex items-start justify-between gap-3 mb-5">
+              <div className="flex items-start justify-between gap-3 mb-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2.5 mb-1.5">
                     <Briefcase className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={1.5} />
@@ -94,7 +84,7 @@ export function Experience() {
                 </div>
               )}
             </div>
-          </div>
+          </FadeIn>
         ))}
       </div>
     </section>

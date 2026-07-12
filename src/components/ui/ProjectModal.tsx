@@ -161,6 +161,8 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
 
   if (!isOpen || !projectContent || !projectMeta) return null;
 
+  const experience = t.experience.items.find((e) => e.id === projectMeta.experienceId);
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
       <div
@@ -226,6 +228,14 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
+              {experience && (
+                <p className="text-[0.65rem] sm:text-xs uppercase tracking-widest text-faint mb-2">
+                  {locale === "en" ? "Professional Experience" : "تجربه حرفه‌ای"}
+                </p>
+              )}
+              {experience && (
+                <p className="text-sm text-subtle mb-3">{experience.company}</p>
+              )}
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-title">{projectContent.client}</h2>
               <p className="text-sm text-subtle mt-1">
                 {projectContent.title} — {projectContent.role} · {projectMeta.year}

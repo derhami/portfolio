@@ -56,7 +56,7 @@ export interface ProjectContent {
    Work (Portfolio Section)
    ======================================== */
 
-export type ProjectGroup = "agency" | "independent" | "personal";
+export type ProjectGroup = "agency" | "independent";
 
 export interface WorkGroup {
   title: string;
@@ -75,6 +75,7 @@ export interface WorkContent {
    ======================================== */
 
 export interface ExperienceItem {
+  id: string;
   company: string;
   role: string;
   period: string;

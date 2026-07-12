@@ -12,10 +12,16 @@ const ProjectModal = lazy(() =>
 const allSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
 const AUTOPLAY_INTERVAL = 5000;
 
-const groupOrder = ["agency", "independent", "personal"] as const;
+const groupOrder = ["agency", "independent"] as const;
+
+const groupExperienceMap: Record<string, string> = {
+  agency: "shadow",
+  independent: "derhami",
+};
 
 function getSlugsByGroup(group: string) {
-  return allSlugs.filter((slug) => siteConfig.projects[slug].group === group);
+  const experienceId = groupExperienceMap[group];
+  return allSlugs.filter((slug) => siteConfig.projects[slug].experienceId === experienceId);
 }
 
 interface GroupSliderProps {
@@ -142,14 +148,6 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
             />
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
-
-            {projectMeta.badge && (
-              <div className="absolute top-3 left-3">
-                <span className="inline-flex items-center px-2 py-0.5 text-[0.6rem] sm:text-[0.65rem] font-medium text-subtle bg-surface/80 backdrop-blur-sm border border-border rounded-full">
-                  {projectMeta.badge}
-                </span>
-              </div>
-            )}
 
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <span className="text-[0.6rem] sm:text-xs text-subtle uppercase tracking-wider">

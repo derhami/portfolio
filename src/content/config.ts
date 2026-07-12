@@ -1,5 +1,3 @@
-import type { ProjectGroup } from "@/types/content";
-
 export interface ProjectMeta {
   id: string;
   slug: string;
@@ -14,8 +12,7 @@ export interface ProjectMeta {
   links: { label: string; url: string }[];
   status: "completed" | "in-progress" | "concept";
   featured: boolean;
-  group: ProjectGroup;
-  badge?: string;
+  experienceId: string;
 }
 
 export const siteConfig = {
@@ -62,11 +59,10 @@ export const siteConfig = {
         { src: "/assets/images/projects/project-01-2.jpg", alt: "Daewoo — Platform Detail" },
         { src: "/assets/images/projects/project-01-3.jpg", alt: "Daewoo — Mobile View" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: true,
-      group: "agency" as const,
-      badge: "Through Shadow Agency",
+      experienceId: "shadow",
     },
     snowa: {
       id: "snowa",
@@ -82,11 +78,10 @@ export const siteConfig = {
         { src: "/assets/images/projects/project-02.jpg", alt: "Snowa — Smart Home Interface" },
         { src: "/assets/images/projects/project-02-2.jpg", alt: "Snowa — Device Management" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: true,
-      group: "agency" as const,
-      badge: "Through Shadow Agency",
+      experienceId: "shadow",
     },
     ardesia: {
       id: "ardesia",
@@ -102,11 +97,10 @@ export const siteConfig = {
         { src: "/assets/images/projects/project-04.jpg", alt: "Ardesia — Design System" },
         { src: "/assets/images/projects/project-04-2.jpg", alt: "Ardesia — Components" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: true,
-      group: "agency" as const,
-      badge: "Through Shadow Agency",
+      experienceId: "shadow",
     },
     entekhab: {
       id: "entekhab",
@@ -122,11 +116,10 @@ export const siteConfig = {
         { src: "/assets/images/projects/project-03.jpg", alt: "Entekhab — Corporate Digital" },
         { src: "/assets/images/projects/project-03-2.jpg", alt: "Entekhab — Brand System" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: true,
-      group: "agency" as const,
-      badge: "Through Shadow Agency",
+      experienceId: "shadow",
     },
     rahampars: {
       id: "rahampars",
@@ -141,11 +134,10 @@ export const siteConfig = {
       gallery: [
         { src: "/assets/images/projects/project-06.jpg", alt: "Raham Pars — Corporate Website" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: false,
-      group: "independent" as const,
-      badge: "Independent Project",
+      experienceId: "derhami",
     },
     maanpolymer: {
       id: "maanpolymer",
@@ -160,11 +152,10 @@ export const siteConfig = {
       gallery: [
         { src: "/assets/images/projects/project-07.jpg", alt: "Maan Polymer — Corporate Website" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: false,
-      group: "independent" as const,
-      badge: "Independent Project",
+      experienceId: "derhami",
     },
     fadakargold: {
       id: "fadakargold",
@@ -179,11 +170,10 @@ export const siteConfig = {
       gallery: [
         { src: "/assets/images/projects/project-08.jpg", alt: "Fadakar Gold — E-commerce" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: false,
-      group: "independent" as const,
-      badge: "Independent Project",
+      experienceId: "derhami",
     },
     adriankesht: {
       id: "adriankesht",
@@ -198,11 +188,10 @@ export const siteConfig = {
       gallery: [
         { src: "/assets/images/projects/project-09.jpg", alt: "Adrien Kesht — Corporate Website" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: false,
-      group: "independent" as const,
-      badge: "Independent Project",
+      experienceId: "derhami",
     },
     erfanwatch: {
       id: "erfanwatch",
@@ -217,32 +206,12 @@ export const siteConfig = {
       gallery: [
         { src: "/assets/images/projects/project-10.jpg", alt: "Erfan Watch — E-commerce" },
       ],
-      links: [],
-      status: "completed" as const,
+      links: [] as { label: string; url: string }[],
+      status: "completed",
       featured: false,
-      group: "independent" as const,
-      badge: "Independent Project",
+      experienceId: "derhami",
     },
-    derhami: {
-      id: "derhami",
-      slug: "derhami",
-      category: "Personal Practice",
-      year: "2024",
-      location: "Shiraz, Iran",
-      technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
-      coverImage: "/assets/images/projects/project-11.jpg",
-      heroImage: "/assets/images/projects/project-11.jpg",
-      thumbnail: "/assets/images/projects/project-11.jpg",
-      gallery: [
-        { src: "/assets/images/projects/project-11.jpg", alt: "Derhami — Portfolio" },
-      ],
-      links: [{ label: "Visit Site", url: "https://hawid.ir" }],
-      status: "completed" as const,
-      featured: false,
-      group: "personal" as const,
-      badge: "Personal Practice",
-    },
-  } as const,
-} as const;
+  },
+};
 
 export type ProjectSlug = keyof typeof siteConfig.projects;
