@@ -9,7 +9,7 @@ export function About() {
       <div className="section-divider mb-20 sm:mb-28" />
 
       <FadeIn>
-        <p className="text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
+        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
           {t.about.label}
         </p>
       </FadeIn>

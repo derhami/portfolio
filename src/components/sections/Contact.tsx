@@ -19,7 +19,7 @@ export function Contact() {
 
       <div className="w-full space-y-12 sm:space-y-14">
         <FadeIn>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-title">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-title">
             {contact.headline}
           </h2>
         </FadeIn>

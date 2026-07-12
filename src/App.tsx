@@ -15,7 +15,7 @@ function AppInner() {
       <CapsuleMenu />
       <Assistant />
 
-      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 md:max-w-2xl max-w-full">
         <div className="section-snap">
           <Hero />
         </div>

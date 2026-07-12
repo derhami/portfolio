@@ -281,6 +281,12 @@ main {
   opacity: 0.6;
 }
 
+@media (max-width: 768px) {
+  .section-divider {
+    display: none;
+  }
+}
+
 /* ========================================
    Mobile App-Like Experience
    ======================================== */
@@ -307,17 +313,38 @@ main {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     padding-bottom: 72px;
+    max-width: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .section-snap {
     scroll-snap-align: start;
     min-height: 100vh;
     min-height: 100dvh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    position: relative;
+  }
+}
+
+/* ========================================
+   Sticky Section Titles — Mobile
+   ======================================== */
+
+@media (max-width: 768px) {
+  .section-title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 }
 

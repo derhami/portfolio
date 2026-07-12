@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
@@ -19,19 +19,54 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
   const PrevIcon = isRtl ? ChevronRight : ChevronLeft;
   const NextIcon = isRtl ? ChevronLeft : ChevronRight;
 
+  const prevImage = useCallback(() => {
+    setActiveImage((a) => (a - 1 + project.images.length) % project.images.length);
+  }, [project.images.length]);
+
+  const nextImage = useCallback(() => {
+    setActiveImage((a) => (a + 1) % project.images.length);
+  }, [project.images.length]);
+
+  // Touch swipe for gallery
+  const touchStart = useRef<number | null>(null);
+  const touchDelta = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+    touchDelta.current = 0;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStart.current === null) return;
+    touchDelta.current = e.touches[0].clientX - touchStart.current;
+  };
+
+  const handleTouchEnd = () => {
+    const threshold = 50;
+    if (Math.abs(touchDelta.current) > threshold) {
+      if (touchDelta.current > 0) {
+        if (isRtl) { nextImage(); } else { prevImage(); }
+      } else {
+        if (isRtl) { prevImage(); } else { nextImage(); }
+      }
+    }
+    touchStart.current = null;
+    touchDelta.current = 0;
+  };
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setActiveImage((a) => (a - 1 + project.images.length) % project.images.length);
+        if (isRtl) { nextImage(); } else { prevImage(); }
       }
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        setActiveImage((a) => (a + 1) % project.images.length);
+        if (isRtl) { prevImage(); } else { nextImage(); }
       }
     },
-    [onClose, project.images.length]
+    [onClose, isRtl, prevImage, nextImage]
   );
 
   useEffect(() => {
@@ -69,7 +104,12 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
         </button>
 
         {/* Image gallery */}
-        <div className="relative">
+        <div
+          className="relative touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <Image
             src={project.images[activeImage]}
             alt={`${project.client} — ${project.project}`}
@@ -83,7 +123,9 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
                 style={{ background: "var(--bg-overlay-light)" }}>
                 <button
-                  onClick={() => setActiveImage((a) => (a - 1 + project.images.length) % project.images.length)}
+                  onClick={() => {
+                    if (isRtl) { nextImage(); } else { prevImage(); }
+                  }}
                   className="text-subtle hover:text-title transition-colors"
                 >
                   <PrevIcon className="w-4 h-4" strokeWidth={1.5} />
@@ -92,7 +134,9 @@ export function ProjectModal({ isOpen, onClose, projectIndex }: ProjectModalProp
                   {activeImage + 1}/{project.images.length}
                 </span>
                 <button
-                  onClick={() => setActiveImage((a) => (a + 1) % project.images.length)}
+                  onClick={() => {
+                    if (isRtl) { prevImage(); } else { nextImage(); }
+                  }}
                   className="text-subtle hover:text-title transition-colors"
                 >
                   <NextIcon className="w-4 h-4" strokeWidth={1.5} />

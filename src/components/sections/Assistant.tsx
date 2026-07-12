@@ -125,7 +125,7 @@ export function Assistant() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-20 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-brand text-white shadow-[0_4px_20px_rgba(0,51,255,0.35)] hover:shadow-[0_4px_28px_rgba(0,51,255,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 focus-ring group"
+          className="fixed bottom-[84px] sm:bottom-20 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-brand text-white shadow-[0_4px_20px_rgba(0,51,255,0.35)] hover:shadow-[0_4px_28px_rgba(0,51,255,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 focus-ring group"
           aria-label="Open assistant"
         >
           <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={1.5} />
@@ -139,7 +139,7 @@ export function Assistant() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={handleClose} />
 
           {/* Terminal Window */}
-          <div className="relative w-full sm:w-[420px] max-h-[85vh] sm:max-h-[600px] flex flex-col rounded-t-2xl sm:rounded-2xl border border-border bg-bg-elevated shadow-2xl overflow-hidden">
+          <div className="relative w-full sm:w-[420px] max-h-[calc(100dvh-100px)] sm:max-h-[600px] flex flex-col rounded-t-2xl sm:rounded-2xl border border-border bg-bg-elevated shadow-2xl overflow-hidden mb-[76px] sm:mb-0">
             {/* Title bar */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-surface">
               <div className="flex items-center gap-2">

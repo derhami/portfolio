@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { ChevronLeft, ChevronRight, Sun, Moon, Printer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
 
 export function CapsuleMenu() {
   const { locale, toggleLocale, dir } = useTranslation();
@@ -38,12 +38,12 @@ export function CapsuleMenu() {
 
   return (
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-0.5 px-1.5 py-1.5 rounded-full bg-capsule-bg backdrop-blur-xl border border-capsule-border shadow-lg">
+      <div className="flex items-center gap-1 sm:gap-0.5 px-2 sm:px-1.5 py-2 sm:py-1.5 rounded-full bg-capsule-bg backdrop-blur-xl border border-capsule-border shadow-lg">
         {items.map((item) => (
           <a
             key={item.href}
             href={item.href}
-            className={`px-3.5 py-2 text-xs font-medium rounded-full transition-all duration-300 focus-ring whitespace-nowrap ${
+            className={`px-4 sm:px-3.5 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium rounded-full transition-all duration-300 focus-ring whitespace-nowrap ${
               activeSection === item.id
                 ? "text-title bg-surface-hover shadow-sm"
                 : "text-subtle hover:text-title hover:bg-surface-hover"
@@ -53,31 +53,22 @@ export function CapsuleMenu() {
           </a>
         ))}
 
-        <div className="w-px h-4 bg-border mx-1" />
-
-        <button
-          onClick={() => window.print()}
-          className="w-8 h-8 flex items-center justify-center rounded-full text-faint hover:text-title hover:bg-surface-hover transition-all duration-300 focus-ring"
-          aria-label="Print resume"
-          title="Print / PDF"
-        >
-          <Printer className="w-3.5 h-3.5" strokeWidth={1.5} />
-        </button>
+        <div className="w-px h-4 bg-border mx-1.5 sm:mx-1" />
 
         <button
           onClick={toggleTheme}
-          className="w-8 h-8 flex items-center justify-center rounded-full text-faint hover:text-title hover:bg-surface-hover transition-all duration-300 focus-ring"
+          className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-faint hover:text-title hover:bg-surface-hover transition-all duration-300 focus-ring"
           aria-label="Toggle theme"
         >
-          {theme === "dark" ? <Sun className="w-3.5 h-3.5" strokeWidth={1.5} /> : <Moon className="w-3.5 h-3.5" strokeWidth={1.5} />}
+          {theme === "dark" ? <Sun className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={1.5} /> : <Moon className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={1.5} />}
         </button>
 
         <button
           onClick={toggleLocale}
-          className="flex items-center gap-1 px-3 py-2 text-xs font-medium text-faint hover:text-title hover:bg-surface-hover rounded-full transition-all duration-300 focus-ring"
+          className="flex items-center gap-1 px-3.5 sm:px-3 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium text-faint hover:text-title hover:bg-surface-hover rounded-full transition-all duration-300 focus-ring"
           aria-label="Toggle language"
         >
-          <Chevron className="w-3 h-3" strokeWidth={2} />
+          <Chevron className="w-3.5 h-3.5 sm:w-3 sm:h-3" strokeWidth={2} />
           {locale === "en" ? "فا" : "EN"}
         </button>
       </div>
