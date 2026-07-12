@@ -3,7 +3,7 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 
 export function Experience() {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <section id="experience" className="py-20 sm:py-28 relative">
@@ -59,7 +59,7 @@ export function Experience() {
               {item.keyCollabs && item.keyCollabs.length > 0 && (
                 <div className="mb-4 pl-6">
                   <span className="text-[0.6rem] sm:text-[0.65rem] text-faint font-medium uppercase tracking-widest block mb-2">
-                    {locale === "en" ? "Clients" : "مشتریان"}
+                    {t.labels.experience.clients}
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {item.keyCollabs.map((client) => (

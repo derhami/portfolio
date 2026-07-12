@@ -125,6 +125,74 @@ export interface ContactContent {
 }
 
 /* ========================================
+   Labels — All UI strings
+   ======================================== */
+
+export interface LabelsContent {
+  nav: {
+    work: string;
+    experience: string;
+    skills: string;
+    contact: string;
+  };
+  modal: {
+    close: string;
+    visitSite: string;
+    professionalExperience: string;
+    context: string;
+    myContribution: string;
+    impact: string;
+    technologies: string;
+    links: string;
+    nextProject: string;
+    imageAlt: (index: number) => string;
+  };
+  work: {
+    clickToView: string;
+    visitWebsite: string;
+    projectAlt: (index: number) => string;
+  };
+  experience: {
+    clients: string;
+  };
+  assistant: {
+    openLabel: string;
+    dialogLabel: string;
+    terminalTitle: string;
+    welcomeMessage: string;
+    moreQuestions: string;
+    emailButton: string;
+    emailSubject: string;
+    emailQuestionPrefix: string;
+    emailAnswerPrefix: string;
+    emailMessagePrefix: string;
+    placeholder: string;
+    backToQuestions: string;
+    close: string;
+  };
+  capsule: {
+    sectionNav: string;
+    toggleTheme: string;
+    toggleLanguage: string;
+  };
+}
+
+/* ========================================
+   SEO Metadata
+   ======================================== */
+
+export interface SeoContent {
+  title: string;
+  description: string;
+  author: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogUrl: string;
+  ogSiteName: string;
+  jsonLd: Record<string, unknown>;
+}
+
+/* ========================================
    Root Content (per locale)
    ======================================== */
 
@@ -136,4 +204,6 @@ export interface Content {
   experience: ExperienceContent;
   skills: SkillsContent;
   contact: ContactContent;
+  labels: LabelsContent;
+  seo: SeoContent;
 }

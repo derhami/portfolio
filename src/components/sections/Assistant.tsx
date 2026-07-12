@@ -44,7 +44,7 @@ function findClosest(input: string, lang: "en" | "fa") {
 }
 
 export function Assistant() {
-  const { locale } = useTranslation();
+  const { t, locale } = useTranslation();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
@@ -97,13 +97,13 @@ export function Assistant() {
   };
 
   const handleEmail = () => {
-    const subject = encodeURIComponent(isFa ? "سوال از دستیار هوشمند" : "Question from Assistant");
+    const subject = encodeURIComponent(t.labels.assistant.emailSubject);
     const lastQA = history.filter((h) => h.role === "answer").pop();
     const lastQ = history.filter((h) => h.role === "user").pop();
     const body = encodeURIComponent(
-      `${isFa ? "سوال:" : "Question:"}\n${lastQ?.text || ""}\n\n${isFa ? "پاسخ:" : "Answer:"}\n${lastQA?.text || ""}\n\n${isFa ? "---\nپیام شما:" : "---\nYour message:"}\n`
+      `${t.labels.assistant.emailQuestionPrefix}\n${lastQ?.text || ""}\n\n${t.labels.assistant.emailAnswerPrefix}\n${lastQA?.text || ""}\n\n${t.labels.assistant.emailMessagePrefix}\n`
     );
-    window.open(`mailto:hi@hawid.ir?subject=${subject}&body=${body}`, "_blank");
+    window.open(`mailto:${t.contact.email}?subject=${subject}&body=${body}`, "_blank");
   };
 
   const handleBack = () => {
@@ -160,7 +160,7 @@ export function Assistant() {
         <button
           onClick={() => setOpen(true)}
           className="fixed bottom-[84px] sm:bottom-20 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-brand text-white shadow-[0_4px_20px_rgba(0,51,255,0.35)] hover:shadow-[0_4px_28px_rgba(0,51,255,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 focus-ring group"
-          aria-label="Open assistant"
+          aria-label={t.labels.assistant.openLabel}
         >
           <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={1.5} />
         </button>
@@ -177,7 +177,7 @@ export function Assistant() {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label={isFa ? "دستیار هوشمند" : "Smart Assistant"}
+            aria-label={t.labels.assistant.dialogLabel}
             className="relative w-full sm:w-[420px] max-h-[calc(100dvh-100px)] sm:max-h-[600px] flex flex-col rounded-t-2xl sm:rounded-2xl border border-border bg-bg-elevated shadow-2xl overflow-hidden mb-[76px] sm:mb-0"
           >
             {/* Title bar */}
@@ -187,7 +187,7 @@ export function Assistant() {
                   <button
                     onClick={handleBack}
                     className="w-7 h-7 flex items-center justify-center rounded-md text-faint hover:text-title hover:bg-surface-hover transition-all duration-200"
-                    aria-label="Back to questions"
+                    aria-label={t.labels.assistant.backToQuestions}
                   >
                     {isFa ? (
                       <ChevronRight className="w-3.5 h-3.5 rotate-180" strokeWidth={1.5} />
@@ -202,13 +202,13 @@ export function Assistant() {
                   <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
                 </div>
                 <span className="text-[0.6rem] sm:text-xs text-faint font-mono ml-2">
-                  assistant@hawid:~
+                  {t.labels.assistant.terminalTitle}
                 </span>
               </div>
               <button
                 onClick={handleClose}
                 className="w-7 h-7 flex items-center justify-center rounded-md text-faint hover:text-title hover:bg-surface-hover transition-all duration-200"
-                aria-label="Close"
+                aria-label={t.labels.assistant.close}
               >
                 <X className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
@@ -219,9 +219,7 @@ export function Assistant() {
               {history.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-faint text-[0.65rem] sm:text-xs">
-                    {isFa
-                      ? "> سلام! من دستیار هوشمند حامد هستم. سوالات متداول مشتریان اینجاست یا تایپ کنید:"
-                      : "> Hi! I'm Hamid's smart assistant. Here are common client questions, or type your own:"}
+                    {t.labels.assistant.welcomeMessage}
                   </p>
                   <div className="space-y-1.5">
                     {filteredQuestions.map((item) => (
@@ -263,12 +261,12 @@ export function Assistant() {
                     {isFa ? (
                       <>
                         <ChevronRight className="w-3 h-3 rotate-180" strokeWidth={1.5} />
-                        سوالات دیگر
+                        {t.labels.assistant.moreQuestions}
                       </>
                     ) : (
                       <>
                         <ChevronLeft className="w-3 h-3" strokeWidth={1.5} />
-                        More questions
+                        {t.labels.assistant.moreQuestions}
                       </>
                     )}
                   </button>
@@ -277,7 +275,7 @@ export function Assistant() {
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.65rem] sm:text-xs font-medium text-brand hover:bg-brand/10 border border-brand/20 transition-all duration-200"
                   >
                     <Send className="w-3 h-3" strokeWidth={1.5} />
-                    {isFa ? "ایمیل" : "Email"}
+                    {t.labels.assistant.emailButton}
                   </button>
                 </div>
               )}
@@ -291,7 +289,7 @@ export function Assistant() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={isFa ? "تایپ کنید..." : "Type a question..."}
+                placeholder={t.labels.assistant.placeholder}
                 className="flex-1 bg-transparent text-xs sm:text-sm text-title placeholder:text-faint outline-none font-mono"
               />
               <button

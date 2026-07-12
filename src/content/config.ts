@@ -16,31 +16,9 @@ export interface ProjectMeta {
 }
 
 export const siteConfig = {
-  meta: {
-    title: "Hamidreza Derhami — Senior Product Designer",
-    description:
-      "Senior Product Designer. Six years designing enterprise platforms, consumer apps, and design systems for Daewoo, Snowa, Entekhab Holding, and others.",
-    url: "https://hawid.ir",
-  },
-
   assets: {
     profile: "/assets/images/profile/profile.png",
     resume: "/assets/documents/resume.pdf",
-  },
-
-  contact: {
-    email: "hi@hawid.ir",
-    phone: "+98 933 484 7452",
-    website: "https://hawid.ir",
-  },
-
-  social: {
-    telegram: "https://t.me/derhami",
-    linkedin: "https://linkedin.com/in/derhami",
-    dribbble: "https://dribbble.com/derhami",
-    instagram: "https://instagram.com/derhami",
-    threads: "https://threads.net/@derhami",
-    bale: "https://bale.ai/derhamix",
   },
 
   projects: {

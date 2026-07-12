@@ -17,7 +17,7 @@ const allSlugs = Object.keys(siteConfig.projects) as Array<ProjectSlug>;
 const GALLERY_AUTOPLAY_INTERVAL = 4000;
 
 export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectModalProps) {
-  const { t, locale, dir } = useTranslation();
+  const { t, dir } = useTranslation();
   const projectContent = t.work.items[projectSlug];
   const projectMeta = siteConfig.projects[projectSlug];
   const [activeImage, setActiveImage] = useState(0);
@@ -181,7 +181,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-300 focus-ring"
-          aria-label="Close"
+          aria-label={t.labels.modal.close}
         >
           <X className="w-5 h-5" strokeWidth={1.5} />
         </button>
@@ -215,7 +215,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                   className={`h-[2px] rounded-full transition-all duration-300 focus-ring ${
                     i === activeImage ? "w-4 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
                   }`}
-                  aria-label={`Image ${i + 1}`}
+                  aria-label={t.labels.modal.imageAlt(i)}
                   aria-current={i === activeImage ? "true" : undefined}
                 />
               ))}
@@ -230,7 +230,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
             <div>
               {experience && (
                 <p className="text-[0.65rem] sm:text-xs uppercase tracking-widest text-faint mb-2">
-                  {locale === "en" ? "Professional Experience" : "تجربه حرفه‌ای"}
+                  {t.labels.modal.professionalExperience}
                 </p>
               )}
               {experience && (
@@ -249,7 +249,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand hover:text-title bg-brand/10 hover:bg-brand/20 border border-brand/20 rounded-full transition-all duration-300"
               >
                 <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
-                {locale === "en" ? "Visit Site" : "مشاهده سایت"}
+                {t.labels.modal.visitSite}
               </a>
             )}
           </div>
@@ -263,7 +263,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {projectContent.context && (
             <div className="pt-2">
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Context" : "زمینه"}
+                {t.labels.modal.context}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
                 {projectContent.context}
@@ -275,7 +275,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {projectContent.contribution && (
             <div className="pt-2">
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "My Contribution" : "مشارکت من"}
+                {t.labels.modal.myContribution}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
                 {projectContent.contribution}
@@ -287,7 +287,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {projectContent.impact && (
             <div className="pt-2">
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Impact" : "تأثیر"}
+                {t.labels.modal.impact}
               </h3>
               <p className="text-sm text-body leading-[1.8]">
                 {projectContent.impact}
@@ -299,7 +299,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {projectMeta.technologies.length > 0 && (
             <div className="pt-2">
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Technologies" : "ابزارها"}
+                {t.labels.modal.technologies}
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {projectMeta.technologies.map((tech) => (
@@ -318,7 +318,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           {projectMeta.links.length > 0 && (
             <div className="pt-2">
               <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">
-                {locale === "en" ? "Links" : "لینک‌ها"}
+                {t.labels.modal.links}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {projectMeta.links.map((link) => (
@@ -346,7 +346,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
               >
                 <div>
                   <p className="text-[0.65rem] uppercase tracking-widest text-faint mb-1">
-                    {locale === "en" ? "Next Project" : "پروژه بعدی"}
+                    {t.labels.modal.nextProject}
                   </p>
                   <p className="text-sm font-medium text-title">{nextContent.client}</p>
                   <p className="text-xs text-subtle">{nextContent.subtitle}</p>

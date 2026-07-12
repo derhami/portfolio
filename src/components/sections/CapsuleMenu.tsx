@@ -4,7 +4,7 @@ import { useTheme } from "@/lib/theme";
 import { ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
 
 export function CapsuleMenu() {
-  const { locale, toggleLocale, dir } = useTranslation();
+  const { t, locale, toggleLocale, dir } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("");
 
@@ -28,16 +28,16 @@ export function CapsuleMenu() {
   }, []);
 
   const items = [
-    { id: "work", label: locale === "en" ? "Work" : "کارها", href: "#work" },
-    { id: "experience", label: locale === "en" ? "Experience" : "تجربه", href: "#experience" },
-    { id: "skills", label: locale === "en" ? "Skills" : "مهارت‌ها", href: "#skills" },
-    { id: "contact", label: locale === "en" ? "Contact" : "تماس", href: "#contact" },
+    { id: "work", label: t.labels.nav.work, href: "#work" },
+    { id: "experience", label: t.labels.nav.experience, href: "#experience" },
+    { id: "skills", label: t.labels.nav.skills, href: "#skills" },
+    { id: "contact", label: t.labels.nav.contact, href: "#contact" },
   ];
 
   const Chevron = dir === "rtl" ? ChevronLeft : ChevronRight;
 
   return (
-    <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Section navigation">
+    <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label={t.labels.capsule.sectionNav}>
       <div className="flex items-center gap-1 sm:gap-0.5 px-2 sm:px-1.5 py-2 sm:py-1.5 rounded-full bg-capsule-bg backdrop-blur-xl border border-capsule-border shadow-lg" role="menubar">
         {items.map((item) => (
           <a
@@ -59,7 +59,7 @@ export function CapsuleMenu() {
         <button
           onClick={toggleTheme}
           className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-faint hover:text-title hover:bg-surface-hover transition-all duration-300 focus-ring"
-          aria-label="Toggle theme"
+          aria-label={t.labels.capsule.toggleTheme}
         >
           {theme === "dark" ? <Sun className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={1.5} /> : <Moon className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={1.5} />}
         </button>
@@ -67,7 +67,7 @@ export function CapsuleMenu() {
         <button
           onClick={toggleLocale}
           className="flex items-center gap-1 px-3.5 sm:px-3 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium text-faint hover:text-title hover:bg-surface-hover rounded-full transition-all duration-300 focus-ring"
-          aria-label="Toggle language"
+          aria-label={t.labels.capsule.toggleLanguage}
         >
           <Chevron className="w-3.5 h-3.5 sm:w-3 sm:h-3" strokeWidth={2} />
           {locale === "en" ? "فا" : "EN"}

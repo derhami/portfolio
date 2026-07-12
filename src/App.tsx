@@ -8,10 +8,12 @@ import { Work } from "@/components/sections/Work";
 import { Experience } from "@/components/sections/Experience";
 import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
+import { Seo } from "@/components/ui/Seo";
 
 function AppInner() {
   return (
     <>
+      <Seo />
       <CapsuleMenu />
       <Assistant />
 

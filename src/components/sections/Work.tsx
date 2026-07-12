@@ -151,7 +151,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
 
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <span className="text-[0.6rem] sm:text-xs text-subtle uppercase tracking-wider">
-                {dir === "rtl" ? "کلیک برای مشاهده" : "Click to view details"}
+                {t.labels.work.clickToView}
               </span>
               <div className="w-9 h-9 flex items-center justify-center rounded-full bg-surface backdrop-blur-md border border-border">
                 <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={1.5} />
@@ -183,7 +183,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-300"
-              aria-label="Visit website"
+              aria-label={t.labels.work.visitWebsite}
             >
               <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
             </a>
@@ -199,7 +199,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
             className={`h-[2px] rounded-full transition-all duration-500 focus-ring ${
               i === active ? "w-6 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
             }`}
-            aria-label={`Project ${i + 1}`}
+            aria-label={t.labels.work.projectAlt(i)}
             aria-current={i === active ? "true" : undefined}
           />
         ))}
