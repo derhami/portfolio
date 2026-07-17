@@ -15,8 +15,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="min-h-[60vh] flex items-center relative py-16 sm:py-24">
-      <div className="section-divider absolute top-0 left-0 right-0" />
-
       <div className="w-full space-y-12 sm:space-y-14">
         <FadeIn>
           <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-title">

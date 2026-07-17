@@ -1,14 +1,29 @@
+import { useMemo } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 
+const monthMap: Record<string, number> = {
+  jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+  jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11,
+};
+
+function parseStartDate(period: string): number {
+  const match = period.match(/(\w+)\s+(\d{4})/);
+  if (!match) return 0;
+  const month = monthMap[match[1].toLowerCase()] ?? 0;
+  return Number(match[2]) * 12 + month;
+}
+
 export function Experience() {
   const { t } = useTranslation();
+  const items = useMemo(
+    () => [...t.experience.items].sort((a, b) => parseStartDate(b.period) - parseStartDate(a.period)),
+    [t.experience.items]
+  );
 
   return (
     <section id="experience" className="py-16 sm:py-24 relative">
-      <div className="section-divider mb-16 sm:mb-24" />
-
       <FadeIn>
         <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
           {t.experience.label}
@@ -16,7 +31,7 @@ export function Experience() {
       </FadeIn>
 
       <div className="space-y-6">
-        {t.experience.items.map((item, i) => (
+        {items.map((item, i) => (
           <FadeIn key={item.id} delay={i * 0.1}>
             <div className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-200 hover:border-border-subtle"
               style={{

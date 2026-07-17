@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
+import { Briefcase, History, Zap, Send, ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
+
+const navIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+  work: Briefcase,
+  experience: History,
+  skills: Zap,
+  contact: Send,
+};
 
 export function CapsuleMenu() {
   const { t, locale, toggleLocale, dir } = useTranslation();
@@ -39,20 +46,24 @@ export function CapsuleMenu() {
   return (
     <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label={t.labels.capsule.sectionNav}>
       <div className="flex items-center gap-1 sm:gap-0.5 px-2 sm:px-1.5 py-2 sm:py-1.5 rounded-full bg-capsule-bg/80 backdrop-blur-xl border border-capsule-border shadow-lg" role="menubar">
-        {items.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            role="menuitem"
-            className={`px-4 sm:px-3.5 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium rounded-full transition-all duration-200 focus-ring whitespace-nowrap ${
-              activeSection === item.id
-                ? "text-title bg-surface-hover shadow-sm"
-                : "text-subtle hover:text-title hover:bg-surface-hover"
-            }`}
-          >
-            {item.label}
-          </a>
-        ))}
+        {items.map((item) => {
+          const Icon = navIcons[item.id];
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              role="menuitem"
+              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-3.5 py-2.5 sm:py-2 text-[0.7rem] sm:text-xs font-medium rounded-full transition-all duration-200 focus-ring whitespace-nowrap ${
+                activeSection === item.id
+                  ? "text-title bg-surface-hover shadow-sm"
+                  : "text-subtle hover:text-title hover:bg-surface-hover"
+              }`}
+            >
+              {Icon && <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={1.5} />}
+              {item.label}
+            </a>
+          );
+        })}
 
         <div className="w-px h-4 bg-border mx-1.5 sm:mx-1" />
 

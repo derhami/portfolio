@@ -12,18 +12,6 @@ const ProjectModal = lazy(() =>
 const allSlugs = Object.keys(siteConfig.projects) as Array<keyof typeof siteConfig.projects>;
 const AUTOPLAY_INTERVAL = 5000;
 
-const groupOrder = ["agency", "independent"] as const;
-
-const groupExperienceMap: Record<string, string> = {
-  agency: "shadow",
-  independent: "derhami",
-};
-
-function getSlugsByGroup(group: string) {
-  const experienceId = groupExperienceMap[group];
-  return allSlugs.filter((slug) => siteConfig.projects[slug].experienceId === experienceId);
-}
-
 interface GroupSliderProps {
   slugs: Array<keyof typeof siteConfig.projects>;
   onOpenModal: (slug: keyof typeof siteConfig.projects) => void;
@@ -231,8 +219,6 @@ export function Work() {
 
   return (
     <section id="work" className="py-16 sm:py-24 relative">
-      <div className="section-divider mb-16 sm:mb-24" />
-
       <div
         className="absolute right-0 top-0 w-28 h-28 pointer-events-none opacity-[0.03]"
         style={{
@@ -242,41 +228,14 @@ export function Work() {
       />
 
       <FadeIn>
-        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-2 sm:mb-3 font-medium">
+        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-12 sm:mb-16 font-medium">
           {t.work.label}
         </p>
       </FadeIn>
 
-      <FadeIn delay={0.05}>
-        <p className="text-sm sm:text-base text-body mb-12 sm:mb-16 max-w-xl">
-          {t.work.subtitle}
-        </p>
+      <FadeIn>
+        <GroupSlider slugs={allSlugs} onOpenModal={openModal} />
       </FadeIn>
-
-      <div className="space-y-16 sm:space-y-20">
-        {groupOrder.map((groupKey) => {
-          const slugs = getSlugsByGroup(groupKey);
-          if (slugs.length === 0) return null;
-          const group = t.work.groups[groupKey];
-          if (!group) return null;
-
-          return (
-            <FadeIn key={groupKey}>
-              <div className="space-y-6 sm:space-y-8">
-                <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-title mb-1">
-                    {group.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-subtle max-w-lg">
-                    {group.description}
-                  </p>
-                </div>
-                <GroupSlider slugs={slugs} onOpenModal={openModal} />
-              </div>
-            </FadeIn>
-          );
-        })}
-      </div>
 
       <Suspense fallback={null}>
         {activeSlug && (

@@ -1,5 +1,4 @@
 import { useTranslation } from "@/lib/i18n";
-import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { ArrowRight, ArrowLeft, Mail } from "lucide-react";
@@ -24,11 +23,12 @@ export function Hero() {
         <div className="flex flex-col md:flex-row md:items-start md:gap-12 lg:gap-16">
           {/* Portrait */}
           <FadeIn delay={0} className="shrink-0 mb-6 md:mb-0">
-            <Image
+            <img
               src={siteConfig.assets.profile}
               alt={t.hero.name}
-              fallback="HD"
-              className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-2xl object-cover ring-1 ring-border"
+              loading="lazy"
+              decoding="async"
+              className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-2xl object-cover ring-1 ring-border bg-surface"
             />
           </FadeIn>
 

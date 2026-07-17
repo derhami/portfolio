@@ -64,8 +64,7 @@
   button[aria-label="Open assistant"],
   button[aria-label="Print resume"],
   button[aria-label*="assistant"],
-  button[aria-label*="دستیار"],
-  .section-divider {
+  button[aria-label*="دستیار"] {
     display: none !important;
   }
 
@@ -112,7 +111,6 @@
     margin-bottom: 8pt !important;
   }
 
-  section:first-of-type .section-divider,
   section:first-of-type > div:first-child {
     display: none !important;
   }

@@ -6,8 +6,6 @@ export function About() {
 
   return (
     <section id="about" className="py-16 sm:py-24 relative">
-      <div className="section-divider mb-16 sm:mb-24" />
-
       <FadeIn>
         <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
           {t.about.label}

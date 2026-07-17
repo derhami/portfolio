@@ -2,90 +2,58 @@ import { useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { FadeIn } from "@/components/ui/FadeIn";
 
-const brandLogos: Record<string, React.FC<{ className?: string }>> = {
-  Figma: ({ className }) => (
-    <svg className={className} viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19 28.5C19 23.2534 23.2534 19 28.5 19C33.7466 19 38 23.2534 38 28.5C38 33.7466 33.7466 38 28.5 38C23.2534 38 19 33.7466 19 28.5Z" fill="#1ABCFE"/>
-      <path d="M0 47.5C0 42.2534 4.25339 37.5 9.5 37.5H19V47.5C19 52.7466 14.7466 57 9.5 57C4.25339 57 0 52.7466 0 47.5Z" fill="#0ACF83"/>
-      <path d="M19 0V19H28.5C33.7466 19 38 14.7466 38 9.5C38 4.25339 33.7466 0 28.5 0H19Z" fill="#FF7262"/>
-      <path d="M0 9.5C0 14.7466 4.25339 19 9.5 19H19V0H9.5C4.25339 0 0 4.25339 0 9.5Z" fill="#F24E1E"/>
-      <path d="M0 28.5C0 33.7466 4.25339 38 9.5 38H19V19H9.5C4.25339 19 0 23.2534 0 28.5Z" fill="#A259FF"/>
-    </svg>
-  ),
-  Framer: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 24V12H12L24 0H0V24Z" fill="#05F"/>
-      <path d="M0 36V24H12L24 12H12L0 24V36Z" fill="#05F"/>
-      <path d="M12 24V12H24L12 24Z" fill="#05F"/>
-    </svg>
-  ),
-  React: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="2.5" fill="#61DAFB"/>
-      <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1"/>
-      <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 12 12)"/>
-      <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 12 12)"/>
-    </svg>
-  ),
-  TailwindCSS: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 6C8 6 6 8 4 10C6 8 8 8 10 10C8 12 6 16 4 18C6 16 8 16 10 18C12 20 14 20 16 18C18 16 20 12 22 10C20 12 18 12 16 14C18 12 20 8 22 6C20 8 18 8 16 10C14 8 12 6 12 6Z" fill="#38BDF8"/>
-    </svg>
-  ),
-  JavaScript: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="24" height="24" rx="2" fill="#F7DF1E"/>
-      <path d="M7 18.5V7.5H10.5C12.5 7.5 13.5 8.5 13.5 10C13.5 11.5 12.5 12 11.5 12.5C12.8 13 14 14 14 16C14 18.5 12 18.5 10 18.5H7ZM9 10H9.5C10 10 10.5 9.5 10.5 9C10.5 8.5 10 8 9.5 8H9V10ZM9.5 16.5H10C10.5 16.5 11 16 11 15.5C11 15 10.5 14.5 10 14.5H9V16.5Z" fill="#323330"/>
-      <path d="M15 18.5V7.5H18.5C20.5 7.5 21.5 9 21.5 11C21.5 13 20.5 14 19 14H17V18.5H15ZM17 12H18C19 12 19.5 11.5 19.5 11C19.5 10.5 19 10 18 10H17V12Z" fill="#323330"/>
-    </svg>
-  ),
-  Git: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M23.2 11.5L12.8 1.1C12.4 0.7 11.8 0.7 11.4 1.1L9.3 3.2L11.6 5.5C12.1 5 12.8 4.7 13.5 4.7C15 4.7 16.2 5.9 16.2 7.4V7.9H18.5C20.4 7.9 22 9.5 22 11.4C22 13.3 20.4 14.9 18.5 14.9H17.8V17.4C17.8 19.8 15.8 21.8 13.4 21.8C11 21.8 9 19.8 9 17.4V16.4H7V17.4C7 20.9 9.9 23.8 13.4 23.8C16.9 23.8 19.8 20.9 19.8 17.4V14.9C21 14.9 22 13.9 22 12.7" fill="#F05032"/>
-    </svg>
-  ),
-  Accessibility: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="4" r="2" fill="currentColor"/>
-      <path d="M12 8C8 8 6 9 4 11L5.5 12.5C7 11 8.5 10 12 10C15.5 10 17 11 18.5 12.5L20 11C18 9 16 8 12 8Z" fill="currentColor"/>
-      <path d="M10 14L9 21H11L12 16L13 21H15L14 14H10Z" fill="currentColor"/>
-    </svg>
-  ),
-  Design: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-      <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-      <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
-      <rect x="14" y="14" width="7" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-    </svg>
-  ),
-  Development: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 6L2 12L8 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M16 6L22 12L16 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M14 4L10 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  ),
-  Process: ({ className }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="3" fill="currentColor"/>
-      <circle cx="12" cy="4" r="2" fill="currentColor"/>
-      <circle cx="19" cy="8" r="2" fill="currentColor"/>
-      <circle cx="19" cy="16" r="2" fill="currentColor"/>
-      <circle cx="12" cy="20" r="2" fill="currentColor"/>
-      <circle cx="5" cy="16" r="2" fill="currentColor"/>
-      <circle cx="5" cy="8" r="2" fill="currentColor"/>
-      <path d="M12 6V9M16.2 9.5L14.5 10.5M17.5 15L15.5 14M12 15V18M7.8 14.5L9.5 13.5M6.5 9L8.5 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-    </svg>
-  ),
+/* ─── Generic currentColor SVG icons ─── */
+
+const genericIcons: Record<string, string> = {
+  palette: "M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2zM12 18a3 3 0 100-6 3 3 0 000 6zM14.5 2v5.5H20",
+  code: "M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16",
+  workflow: "M12 2v4M12 22v-4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83",
+  "Product Design": "M12 2l5 5-5 5-5-5 5-5zM5 15h14v2H5v-2zM7 19h10v2H7v-2z",
+  "UI Design": "M8 2h8a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zM6 6h12M10 18h4",
+  "UX Research": "M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16zM11 8v4l2.5 1.5",
+  "Design Systems": "M12 2l2.5 4.5L19 8l-3 3.5L17 16l-5-2-5 2 1-4.5L5 8l4.5-1.5L12 2z",
+  Prototyping: "M13 2L3 14h9l-1 8 10-12h-9l1-8z",
+  "Interaction Design": "M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3zM8 22h8M12 15v7",
+  Figma: "/assets/images/logos/figma.svg",
+  Framer: "/assets/images/logos/framer.svg",
+  "React / TypeScript": "/assets/images/logos/react.svg",
+  TailwindCSS: "/assets/images/logos/tailwindcss.svg",
+  "HTML / CSS": "M8 6l-6 6 6 6M16 6l6 6-6 6",
+  JavaScript: "/assets/images/logos/javascript.svg",
+  Git: "/assets/images/logos/git.svg",
+  "Responsive Design": "M4 6h16v8H4V6zM7 18h10M8 14v4M16 14v4",
+  "Design Strategy": "M12 2l2.5 4.5L19 8l-3 3.5L17 16l-5-2-5 2 1-4.5L5 8l4.5-1.5L12 2z",
+  "User Research": "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
+  "Workshop Facilitation": "M12 2a3 3 0 100 6 3 3 0 000-6zM4 15a3 3 0 100 6 3 3 0 000-6zM20 15a3 3 0 100 6 3 3 0 000-6zM7 12l2.5 3L12 12l2.5 3L17 12",
+  "Agile / Scrum": "M21 12a9 9 0 11-6.219-8.56M21 3v5h-5M21 3l-7.5 7.5",
+  "Developer Handoff": "M5 12h14M12 5v14",
+  Accessibility: "M12 4a2 2 0 100-4 2 2 0 000 4zM12 8c-4 0-6 1-8 3l1.5 1.5C7 11 8.5 10 12 10s5 1 6.5 2.5L20 11c-2-2-4-3-8-3zM10 14l-1 7h2l1-5 1 5h2l-1-7h-4z",
 };
 
-const FallbackIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="3"/>
-    <path d="M9 9h6M9 12h6M9 15h4"/>
-  </svg>
-);
+const GenericIcon = ({ className }: { className?: string }) => {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M9 9h6M9 12h6M9 15h4" />
+    </svg>
+  );
+};
+
+function SkillIcon({ name, className }: { name: string; className?: string }) {
+  const icon = genericIcons[name];
+
+  if (!icon) return <GenericIcon className={className} />;
+
+  if (icon.startsWith("/")) {
+    return <img src={icon} alt={name} className={`${className || ""} object-contain`} loading="lazy" />;
+  }
+
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d={icon} />
+    </svg>
+  );
+}
 
 export function Skills() {
   const { t } = useTranslation();
@@ -94,8 +62,6 @@ export function Skills() {
 
   return (
     <section id="skills" className="py-16 sm:py-24 relative">
-      <div className="section-divider mb-16 sm:mb-24" />
-
       <div
         className="absolute left-0 bottom-0 w-20 h-20 pointer-events-none opacity-[0.03]"
         style={{
@@ -113,26 +79,23 @@ export function Skills() {
       {/* Tabs */}
       <FadeIn delay={0.05}>
         <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-8 sm:mb-10 w-fit overflow-x-auto" role="tablist" aria-label={t.skills.label}>
-          {groups.map((group, i) => {
-            const Logo = brandLogos[group.icon] || FallbackIcon;
-            return (
-              <button
-                key={group.title}
-                role="tab"
-                aria-selected={activeTab === i}
-                aria-controls={`tabpanel-${i}`}
-                onClick={() => setActiveTab(i)}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 focus-ring ${
-                  activeTab === i
-                    ? "bg-card-solid text-title shadow-sm"
-                    : "text-subtle hover:text-title hover:bg-surface-hover"
-                }`}
-              >
-                <Logo className="w-4 h-4" />
-                {group.title}
-              </button>
-            );
-          })}
+          {groups.map((group, i) => (
+            <button
+              key={group.title}
+              role="tab"
+              aria-selected={activeTab === i}
+              aria-controls={`tabpanel-${i}`}
+              onClick={() => setActiveTab(i)}
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 focus-ring ${
+                activeTab === i
+                  ? "bg-card-solid text-title shadow-sm"
+                  : "text-subtle hover:text-title hover:bg-surface-hover"
+              }`}
+            >
+              <SkillIcon name={group.icon} className="w-4 h-4" />
+              {group.title}
+            </button>
+          ))}
         </div>
       </FadeIn>
 
@@ -140,22 +103,19 @@ export function Skills() {
       <div className="relative" key={activeTab} role="tabpanel" id={`tabpanel-${activeTab}`} aria-label={groups[activeTab].title}>
         <FadeIn delay={0} y={8}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-2.5">
-            {groups[activeTab].items.map((skill) => {
-              const Logo = brandLogos[skill] || FallbackIcon;
-              return (
-                <div
-                  key={skill}
-                  className="group flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-card-bg border border-card-border hover:bg-surface-hover hover:border-border transition-all duration-200 cursor-default"
-                >
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg bg-surface border border-border group-hover:bg-surface-hover transition-all duration-300 shrink-0">
-                    <Logo className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-subtle group-hover:text-title transition-colors duration-200" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-subtle group-hover:text-title transition-colors leading-snug">
-                    {skill}
-                  </span>
+            {groups[activeTab].items.map((skill) => (
+              <div
+                key={skill}
+                className="group flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-card-bg border border-card-border hover:bg-surface-hover hover:border-border transition-all duration-200 cursor-default"
+              >
+                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg bg-surface border border-border group-hover:bg-surface-hover transition-all duration-300 shrink-0">
+                  <SkillIcon name={skill} className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-subtle group-hover:text-title transition-colors duration-200" />
                 </div>
-              );
-            })}
+                <span className="text-xs sm:text-sm text-subtle group-hover:text-title transition-colors leading-snug">
+                  {skill}
+                </span>
+              </div>
+            ))}
           </div>
         </FadeIn>
       </div>
