@@ -169,7 +169,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
   const media = projectContent.media || [];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center" style={accentStyle}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center pb-[90px] sm:pb-[100px]" style={accentStyle}>
       <div
         className="absolute inset-0 backdrop-blur-md"
         style={{ background: "var(--bg-overlay)" }}
@@ -181,7 +181,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         role="dialog"
         aria-modal="true"
         aria-label={`${projectContent.client} — ${projectContent.title}`}
-        className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
+        className="relative w-full max-w-4xl max-h-[calc(90vh-100px)] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
       >
 
         <button
