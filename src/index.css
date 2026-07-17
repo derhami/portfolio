@@ -436,16 +436,16 @@ a:hover svg, button:hover svg {
 .glass-capsule {
   position: relative;
   background: 
-    linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.12) 70%, rgba(255,255,255,0.08) 100%);
+    linear-gradient(135deg, rgba(248,249,250,0.92) 0%, rgba(248,249,250,0.88) 40%, rgba(248,249,250,0.9) 70%, rgba(248,249,250,0.85) 100%);
   border: none;
   box-shadow: 
     0 8px 40px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    inset 0 -1px 0 rgba(255,255,255,0.1);
-  backdrop-filter: url(#frosted) blur(40px) saturate(1.8) brightness(1.1);
-  -webkit-backdrop-filter: url(#frosted) blur(40px) saturate(1.8) brightness(1.1);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 -1px 0 rgba(0,0,0,0.05);
+  backdrop-filter: url(#frosted) blur(60px) saturate(2) brightness(1.05);
+  -webkit-backdrop-filter: url(#frosted) blur(60px) saturate(2) brightness(1.05);
+  text-shadow: none;
 }
 
 .glass-capsule::before {
@@ -454,20 +454,20 @@ a:hover svg, button:hover svg {
   inset: 0;
   border-radius: inherit;
   background: 
-    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255,255,255,0.2) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255,255,255,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255,255,255,0.3) 0%, transparent 50%);
   pointer-events: none;
 }
 
 .dark .glass-capsule {
   background: 
-    linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.08) 70%, rgba(255,255,255,0.04) 100%);
+    linear-gradient(135deg, rgba(15,16,20,0.92) 0%, rgba(15,16,20,0.88) 40%, rgba(15,16,20,0.9) 70%, rgba(15,16,20,0.85) 100%);
   box-shadow: 
-    0 8px 40px rgba(0, 0, 0, 0.35),
-    0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    inset 0 -1px 0 rgba(255,255,255,0.05);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 0 rgba(255,255,255,0.03);
+  text-shadow: none;
 }
 
 .dark .glass-capsule::before {
@@ -475,6 +475,24 @@ a:hover svg, button:hover svg {
     radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255,255,255,0.08) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255,255,255,0.04) 0%, transparent 50%);
 }
+
+/* Social Icons Brand Colors */
+.social-icon[data-brand="Telegram"] { filter: invert(39%) sepia(93%) saturate(586%) hue-rotate(176deg) brightness(95%) contrast(90%); }
+.social-icon[data-brand="LinkedIn"] { filter: invert(34%) sepia(68%) saturate(525%) hue-rotate(176deg) brightness(92%) contrast(90%); }
+.social-icon[data-brand="Dribbble"] { filter: invert(45%) sepia(80%) saturate(1500%) hue-rotate(310deg) brightness(95%) contrast(90%); }
+.social-icon[data-brand="Instagram"] { filter: invert(27%) sepia(85%) saturate(1200%) hue-rotate(320deg) brightness(95%) contrast(90%); }
+.social-icon[data-brand="Bale"] { filter: invert(50%) sepia(60%) saturate(400%) hue-rotate(170deg) brightness(95%) contrast(90%); }
+
+.social-icon[data-brand="Threads"] { filter: invert(0%); }
+.dark .social-icon[data-brand="Threads"] { filter: invert(100%); }
+
+.social-link:hover .social-icon[data-brand="Telegram"] { filter: invert(39%) sepia(93%) saturate(586%) hue-rotate(176deg) brightness(95%) contrast(90%) drop-shadow(0 0 4px rgba(0,136,204,0.5)); }
+.social-link:hover .social-icon[data-brand="LinkedIn"] { filter: invert(34%) sepia(68%) saturate(525%) hue-rotate(176deg) brightness(92%) contrast(90%) drop-shadow(0 0 4px rgba(0,119,181,0.5)); }
+.social-link:hover .social-icon[data-brand="Dribbble"] { filter: invert(45%) sepia(80%) saturate(1500%) hue-rotate(310deg) brightness(95%) contrast(90%) drop-shadow(0 0 4px rgba(234,76,137,0.5)); }
+.social-link:hover .social-icon[data-brand="Instagram"] { filter: invert(27%) sepia(85%) saturate(1200%) hue-rotate(320deg) brightness(95%) contrast(90%) drop-shadow(0 0 4px rgba(228,64,95,0.5)); }
+.social-link:hover .social-icon[data-brand="Bale"] { filter: invert(50%) sepia(60%) saturate(400%) hue-rotate(170deg) brightness(95%) contrast(90%) drop-shadow(0 0 4px rgba(53,160,212,0.5)); }
+.social-link:hover .social-icon[data-brand="Threads"] { filter: invert(0%) drop-shadow(0 0 4px rgba(0,0,0,0.3)); }
+.dark .social-link:hover .social-icon[data-brand="Threads"] { filter: invert(100%) drop-shadow(0 0 4px rgba(255,255,255,0.3)); }
 
 /* Capsule Icon Animations */
 .capsule-icon {

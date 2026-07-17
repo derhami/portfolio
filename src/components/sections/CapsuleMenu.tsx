@@ -11,6 +11,10 @@ const navIcons: Record<string, React.ComponentType<{ className?: string; strokeW
   contact: Send,
 };
 
+const shortLabels: Record<string, { en: string; fa: string }> = {
+  experience: { en: "Exp", fa: "تجربه" },
+};
+
 export function CapsuleMenu() {
   const { t, locale, toggleLocale } = useTranslation();
   const { theme, toggleTheme } = useTheme();
@@ -65,7 +69,9 @@ export function CapsuleMenu() {
             >
               {isActive && <span className="capsule-active-glow" />}
               {Icon && <Icon className="capsule-icon w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} />}
-              <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">{item.label}</span>
+              <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">
+                {shortLabels[item.id] ? shortLabels[item.id][locale] || item.label : item.label}
+              </span>
             </a>
           );
         })}
