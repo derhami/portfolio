@@ -55,15 +55,16 @@ export function CapsuleMenu() {
               key={item.href}
               href={item.href}
               role="menuitem"
-              className={`group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full transition-all duration-200 focus-ring ${
+              className={`group capsule-item relative flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full transition-all duration-300 focus-ring ${
                 isActive
-                  ? "text-title bg-white/25 dark:bg-white/15 shadow-sm"
-                  : "text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10"
+                  ? "text-title bg-white/25 dark:bg-white/15"
+                  : "text-title/80 dark:text-title/70 hover:text-title"
               }`}
               aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
             >
-              {Icon && <Icon className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:scale-110 group-active:scale-95" strokeWidth={2} />}
+              {isActive && <span className="capsule-active-glow" />}
+              {Icon && <Icon className="capsule-icon w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} />}
               <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">{item.label}</span>
             </a>
           );
@@ -73,10 +74,10 @@ export function CapsuleMenu() {
 
         <button
           onClick={toggleTheme}
-          className="group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 focus-ring"
+          className="group capsule-item relative flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title transition-all duration-300 focus-ring"
           aria-label={t.labels.capsule.toggleTheme}
         >
-          <span className="transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
+          <span className="capsule-icon">
             {theme === "dark" ? <Sun className="w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} /> : <Moon className="w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} />}
           </span>
           <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">
@@ -86,10 +87,12 @@ export function CapsuleMenu() {
 
         <button
           onClick={toggleLocale}
-          className="group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 focus-ring"
+          className="group capsule-item relative flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title transition-all duration-300 focus-ring"
           aria-label={t.labels.capsule.toggleLanguage}
         >
-          <Globe className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:scale-110 group-active:scale-95" strokeWidth={2} />
+          <span className="capsule-icon">
+            <Globe className="w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} />
+          </span>
           <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">
             {locale === "en" ? t.labels.capsule.langFa : t.labels.capsule.langEn}
           </span>
