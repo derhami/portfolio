@@ -128,13 +128,13 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         onMouseEnter={() => setPaused(true)}
       >
         <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-left focus-ring">
-          <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200">
+          <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200 min-h-[50dvh] sm:min-h-[45dvh] md:min-h-[55dvh]">
             <Image
               src={projectMeta.coverImage}
               mobileSrc={projectMeta.mobileCover}
               alt={`${projectContent.client} — ${projectContent.title}`}
               fallback={projectContent.client}
-              className="w-full aspect-[4/3] md:aspect-[2/1] object-cover group-hover:scale-[1.015] transition-transform duration-400 pointer-events-none"
+              className="w-full h-full absolute inset-0 aspect-auto object-cover group-hover:scale-[1.015] transition-transform duration-400 pointer-events-none"
             />
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
@@ -150,17 +150,17 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
 
             <button
               onClick={(e) => { e.stopPropagation(); prev(); }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-surface/80 backdrop-blur-md border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-hover focus-ring"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/30 dark:bg-black/30 backdrop-blur-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white/50 dark:hover:bg-black/50 focus-ring"
               aria-label={t.labels.work.prevProject}
             >
-              <ChevronLeft className="w-4 h-4 text-body" strokeWidth={1.5} />
+              <ChevronLeft className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" strokeWidth={2.5} />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); next(); }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-surface/80 backdrop-blur-md border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-hover focus-ring"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/30 dark:bg-black/30 backdrop-blur-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white/50 dark:hover:bg-black/50 focus-ring"
               aria-label={t.labels.work.nextProject}
             >
-              <ChevronRight className="w-4 h-4 text-body" strokeWidth={1.5} />
+              <ChevronRight className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" strokeWidth={2.5} />
             </button>
           </div>
         </button>
@@ -197,7 +197,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         </div>
       </button>
 
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 mt-8 sm:mt-10">
         {slugs.map((_, i) => (
           <button
             key={i}

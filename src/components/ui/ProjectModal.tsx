@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef, useState } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
-import { X, ExternalLink, ChevronRight } from "lucide-react";
+import { X, ExternalLink, ChevronRight, ChevronLeft, Folder, Tag, Building2 } from "lucide-react";
 import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
@@ -159,12 +159,17 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
     return () => modal.removeEventListener("keydown", trapFocus);
   }, [isOpen]);
 
+  const accent = projectMeta.accent;
+  const accentStyle = accent ? { "--accent": accent } as React.CSSProperties : undefined;
+
   if (!isOpen || !projectContent || !projectMeta) return null;
 
   const experience = t.experience.items.find((e) => e.id === projectMeta.experienceId);
 
+  const media = projectContent.media || [];
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center" style={accentStyle}>
       <div
         className="absolute inset-0 backdrop-blur-md"
         style={{ background: "var(--bg-overlay)" }}
@@ -178,6 +183,9 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         aria-label={`${projectContent.client} — ${projectContent.title}`}
         className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
       >
+        {/* Accent bar */}
+        {accent && <div className="h-1 w-full rounded-t-2xl" style={{ background: accent }} />}
+
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-200 focus-ring"
@@ -188,7 +196,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
 
         {/* Hero Image + Gallery */}
         <div
-          className="relative touch-pan-y cursor-grab active:cursor-grabbing select-none"
+          className="relative group touch-pan-y cursor-grab active:cursor-grabbing select-none min-h-[40dvh] sm:min-h-[45dvh] md:min-h-[55dvh]"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -202,24 +210,40 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
             src={gallery[activeImage]?.src || projectMeta.heroImage}
             alt={gallery[activeImage]?.alt || `${projectContent.client} — ${projectContent.title}`}
             fallback={projectContent.client}
-            className="w-full aspect-[16/9] object-cover pointer-events-none"
+            className="w-full h-full absolute inset-0 aspect-auto object-cover pointer-events-none"
           />
 
           {gallery.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
-              style={{ background: "var(--bg-overlay-light)" }}>
-              {gallery.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setActiveImage(i); setGalleryPaused(true); setTimeout(() => setGalleryPaused(false), 2000); }}
-                  className={`h-[2px] rounded-full transition-all duration-200 focus-ring ${
-                    i === activeImage ? "w-4 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
-                  }`}
-                  aria-label={t.labels.modal.imageAlt(i)}
-                  aria-current={i === activeImage ? "true" : undefined}
-                />
-              ))}
-            </div>
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/30 dark:bg-black/30 backdrop-blur-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white/50 dark:hover:bg-black/50 focus-ring"
+                aria-label={t.labels.modal.previousImage}
+              >
+                <ChevronLeft className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" strokeWidth={2.5} />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/30 dark:bg-black/30 backdrop-blur-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white/50 dark:hover:bg-black/50 focus-ring"
+                aria-label={t.labels.modal.nextImage}
+              >
+                <ChevronRight className="w-5 h-5 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" strokeWidth={2.5} />
+              </button>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md border border-card-border"
+                style={{ background: "var(--bg-overlay-light)" }}>
+                {gallery.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setActiveImage(i); setGalleryPaused(true); setTimeout(() => setGalleryPaused(false), 2000); }}
+                    className={`h-[2px] rounded-full transition-all duration-200 focus-ring ${
+                      i === activeImage ? "w-4 bg-title" : "w-1.5 bg-faint hover:bg-subtle"
+                    }`}
+                    aria-label={t.labels.modal.imageAlt(i)}
+                    aria-current={i === activeImage ? "true" : undefined}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
 
@@ -227,18 +251,33 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         <div className="p-8 sm:p-10 md:p-12 space-y-10">
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span
+                  className="inline-flex items-center gap-1 px-2 py-0.5 text-[0.6rem] rounded-md"
+                  style={{
+                    color: accent ? `${accent}cc` : "var(--subtle)",
+                    background: accent ? `${accent}12` : "var(--surface)",
+                    border: `1px solid ${accent ? `${accent}20` : "var(--border)"}`,
+                  }}
+                >
+                  <Folder className="w-3 h-3" strokeWidth={2} />
+                  {projectMeta.category}
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[0.6rem] text-faint bg-surface border border-border rounded-md">
+                  <Tag className="w-3 h-3" strokeWidth={2} />
+                  {projectMeta.year}
+                </span>
+              </div>
               {experience && (
-                <p className="text-[0.65rem] sm:text-xs uppercase tracking-widest text-faint mb-2">
-                  {t.labels.modal.professionalExperience}
+                <p className="flex items-center gap-1.5 text-xs text-subtle">
+                  <Building2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  {experience.company}
                 </p>
               )}
-              {experience && (
-                <p className="text-sm text-subtle mb-3">{experience.company}</p>
-              )}
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-title">{projectContent.client}</h2>
-              <p className="text-sm text-subtle mt-1">
-                {projectContent.title} — {projectContent.role} · {projectMeta.year}
+              <p className="text-sm text-subtle">
+                {projectContent.title} — {projectContent.role}
               </p>
             </div>
             {projectMeta.links[0] && (
@@ -246,7 +285,12 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                 href={projectMeta.links[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand hover:text-title bg-brand/10 hover:bg-brand/20 border border-brand/20 rounded-full transition-all duration-300"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 shrink-0"
+                style={{
+                  color: accent || "var(--brand)",
+                  background: accent ? `${accent}15` : "var(--brand-bg)",
+                  border: `1px solid ${accent ? `${accent}30` : "var(--brand-border)"}`,
+                }}
               >
                 <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
                 {t.labels.modal.visitSite}
@@ -258,6 +302,24 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
           <p className="text-base sm:text-lg text-body leading-[1.8] max-w-[70ch]">
             {projectContent.overview}
           </p>
+
+          {/* Media */}
+          {media.length > 0 && (
+            <div className="space-y-6 pt-2">
+              {media.map((m, i) => (
+                <div key={i}>
+                  <Image
+                    src={m.src}
+                    alt={m.alt}
+                    className="w-full aspect-video object-cover rounded-xl ring-1 ring-border"
+                  />
+                  {m.caption && (
+                    <p className="text-xs text-faint mt-1.5 text-center">{m.caption}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Context */}
           {projectContent.context && (
@@ -305,7 +367,12 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                 {projectMeta.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="inline-flex items-center px-2.5 py-1 text-xs text-subtle bg-surface border border-border rounded-md"
+                    className="inline-flex items-center px-2.5 py-1 text-xs rounded-md"
+                    style={{
+                      color: accent ? `${accent}cc` : "var(--subtle)",
+                      background: accent ? `${accent}12` : "var(--surface)",
+                      borderColor: accent ? `${accent}20` : "var(--border)",
+                    }}
                   >
                     {tech}
                   </span>
@@ -327,7 +394,12 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-subtle hover:text-brand bg-surface border border-border hover:border-brand/30 rounded-md transition-all duration-300"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-md transition-all duration-300"
+                    style={{
+                      color: "var(--subtle)",
+                      background: "var(--surface)",
+                      border: "1px solid var(--border)",
+                    }}
                   >
                     <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
                     {link.label}

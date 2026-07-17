@@ -46,6 +46,7 @@ export const enContent: Content = {
         context: "Transform complex marketing requirements into intuitive and high-converting digital experiences.",
         contribution: "Focused on visual hierarchy, responsive behavior and conversion-oriented user journeys. Created scalable landing pages aligned with the brand identity and campaign goals.",
         impact: "Delivered consistent digital experiences that supported multiple marketing campaigns.",
+        media: [],
       },
       snowa: {
         title: "Snowa",
@@ -56,6 +57,7 @@ export const enContent: Content = {
         context: "Create engaging user journeys while maintaining brand consistency.",
         contribution: "Balanced storytelling, product presentation and conversion optimization. Developed responsive landing pages with strong visual hierarchy.",
         impact: "Supported multiple product campaigns through cohesive digital experiences.",
+        media: [],
       },
       ardesia: {
         title: "Ardesia",
@@ -63,6 +65,7 @@ export const enContent: Content = {
         client: "Ardesia",
         role: "Senior Product & UI/UX Designer",
         overview: "Designed digital interfaces and campaign experiences through Shadow Digital Marketing Agency.",
+        media: [],
       },
       entekhab: {
         title: "Entekhab Holding",
@@ -70,6 +73,7 @@ export const enContent: Content = {
         client: "Entekhab Holding",
         role: "Senior Product & UI/UX Designer",
         overview: "Contributed to digital product experiences for Entekhab Holding through Shadow Digital Marketing Agency.",
+        media: [],
       },
       rahampars: {
         title: "Raham Pars",
@@ -77,6 +81,7 @@ export const enContent: Content = {
         client: "Raham Pars",
         role: "UI/UX Designer",
         overview: "Designed a corporate website for Raham Pars, focusing on clear presentation of industrial products and services.",
+        media: [],
       },
       maanpolymer: {
         title: "Maan Polymer",
@@ -84,6 +89,7 @@ export const enContent: Content = {
         client: "Maan Polymer",
         role: "UI/UX Designer",
         overview: "Designed a corporate website for Maan Polymer, presenting polymer products with a clean and professional interface.",
+        media: [],
       },
       fadakargold: {
         title: "Fadakar Gold",
@@ -91,6 +97,7 @@ export const enContent: Content = {
         client: "Fadakar Gold",
         role: "UI/UX Designer",
         overview: "Designed an e-commerce website for Fadakar Gold, creating a trustworthy and visually rich shopping experience for gold products.",
+        media: [],
       },
       adriankesht: {
         title: "Adrien Kesht",
@@ -98,6 +105,7 @@ export const enContent: Content = {
         client: "Adrien Kesht",
         role: "UI/UX Designer",
         overview: "Designed a corporate website for Adrien Kesht, delivering a modern and minimal interface for an interior design brand.",
+        media: [],
       },
       erfanwatch: {
         title: "Erfan Watch",
@@ -105,6 +113,7 @@ export const enContent: Content = {
         client: "Erfan Watch",
         role: "UI/UX Designer",
         overview: "Designed an e-commerce website for Erfan Watch, building a refined shopping experience for luxury timepieces.",
+        media: [],
       },
     },
   },
@@ -220,6 +229,7 @@ export const enContent: Content = {
   },
   labels: {
     nav: {
+      home: "Home",
       work: "Work",
       experience: "Experience",
       skills: "Skills",
@@ -235,6 +245,8 @@ export const enContent: Content = {
       technologies: "Technologies",
       links: "Links",
       nextProject: "Next Project",
+      previousImage: "Previous image",
+      nextImage: "Next image",
       imageAlt: (index: number) => `Image ${index + 1}`,
     },
     work: {

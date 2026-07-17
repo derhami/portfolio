@@ -46,6 +46,7 @@ export const faContent: Content = {
         context: "تبدیل نیازهای بازاریابی به تجربه‌هایی ساده، قابل فهم و مؤثر برای کاربران.",
         contribution: "تمرکز بر سلسله‌مراتب بصری، طراحی واکنش‌گرا و مسیرهای کاربری منطبق با اهداف کمپین. طراحی صفحات فرود مقیاس‌پذیر و هماهنگ با هویت برند و اهداف بازاریابی.",
         impact: "ایجاد تجربه‌ای یکپارچه برای کمپین‌های مختلف برند دوو.",
+        media: [],
       },
       snowa: {
         title: "اسنوا",
@@ -56,6 +57,7 @@ export const faContent: Content = {
         context: "ایجاد تجربه‌ای جذاب در کنار حفظ یکپارچگی هویت برند.",
         contribution: "ترکیب روایت محصول، ساختار محتوایی و طراحی کاربرمحور. طراحی صفحات فرود واکنش‌گرا با ساختار بصری منسجم.",
         impact: "پشتیبانی از کمپین‌های مختلف محصولات اسنوا با تجربه‌ای یکپارچه.",
+        media: [],
       },
       ardesia: {
         title: "آردزیا",
@@ -63,6 +65,7 @@ export const faContent: Content = {
         client: "آردزیا",
         role: "طراح ارشد محصول و رابط کاربری",
         overview: "طراحی رابط‌ها و صفحات دیجیتال برند آردزیا در همکاری با آژانس دیجیتال مارکتینگ سایه.",
+        media: [],
       },
       entekhab: {
         title: "گروه انتخاب",
@@ -70,6 +73,7 @@ export const faContent: Content = {
         client: "گروه انتخاب",
         role: "طراح ارشد محصول و رابط کاربری",
         overview: "همکاری در طراحی تجربه‌های دیجیتال گروه انتخاب در قالب فعالیت حرفه‌ای در آژانس دیجیتال مارکتینگ سایه.",
+        media: [],
       },
       rahampars: {
         title: "رهام پارس",
@@ -77,6 +81,7 @@ export const faContent: Content = {
         client: "رهام پارس",
         role: "طراح UI/UX",
         overview: "طراحی وب‌سایت شرکتی رهام پارس با تمرکز بر ارائه واضح محصولات و خدمات صنعتی.",
+        media: [],
       },
       maanpolymer: {
         title: "مان پلیمر",
@@ -84,6 +89,7 @@ export const faContent: Content = {
         client: "مان پلیمر",
         role: "طراح UI/UX",
         overview: "طراحی وب‌سایت شرکتی مان پلیمر با ارائه محصولات پلیمری در قالبی تمیز و حرفه‌ای.",
+        media: [],
       },
       fadakargold: {
         title: "فداکارگلد",
@@ -91,6 +97,7 @@ export const faContent: Content = {
         client: "فداکارگلد",
         role: "طراح UI/UX",
         overview: "طراحی فروشگاه اینترنتی فداکارگلد با ایجاد تجربه خرید مطمئن و بصری غنی برای محصولات طلا.",
+        media: [],
       },
       adriankesht: {
         title: "آدریان کشت",
@@ -98,6 +105,7 @@ export const faContent: Content = {
         client: "آدریان کشت",
         role: "طراح UI/UX",
         overview: "طراحی وب‌سایت شرکتی آدریان کشت با رابط مدرن و مینیمال برای برند طراحی داخلی.",
+        media: [],
       },
       erfanwatch: {
         title: "ارفان واچ",
@@ -105,6 +113,7 @@ export const faContent: Content = {
         client: "ارفان واچ",
         role: "طراح UI/UX",
         overview: "طراحی فروشگاه اینترنتی ارفان واچ با ایجاد تجربه خرید ظریف برای ساعت‌های لوکس.",
+        media: [],
       },
     },
   },
@@ -220,6 +229,7 @@ export const faContent: Content = {
   },
   labels: {
     nav: {
+      home: "خانه",
       work: "کارها",
       experience: "تجربه",
       skills: "مهارت‌ها",
@@ -235,11 +245,15 @@ export const faContent: Content = {
       technologies: "ابزارها",
       links: "لینک‌ها",
       nextProject: "پروژه بعدی",
+      previousImage: "تصویر قبلی",
+      nextImage: "تصویر بعدی",
       imageAlt: (index: number) => `تصویر ${index + 1}`,
     },
     work: {
       clickToView: "کلیک برای مشاهده",
       visitWebsite: "مشاهده وب‌سایت",
+      prevProject: "پروژه قبلی",
+      nextProject: "پروژه بعدی",
       projectAlt: (index: number) => `پروژه ${index + 1}`,
     },
     experience: {

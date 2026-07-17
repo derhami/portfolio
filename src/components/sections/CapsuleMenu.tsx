@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { Briefcase, History, Zap, Send, ChevronLeft, ChevronRight, Sun, Moon } from "lucide-react";
+import { Briefcase, History, Zap, Send, Sun, Moon, Globe, House } from "lucide-react";
 
 const navIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+  home: House,
   work: Briefcase,
   experience: History,
   skills: Zap,
@@ -11,13 +12,13 @@ const navIcons: Record<string, React.ComponentType<{ className?: string; strokeW
 };
 
 export function CapsuleMenu() {
-  const { t, locale, toggleLocale, dir } = useTranslation();
+  const { t, locale, toggleLocale } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["contact", "skills", "experience", "work"];
+      const sections = ["contact", "skills", "experience", "work", "hero"];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
@@ -28,6 +29,7 @@ export function CapsuleMenu() {
           }
         }
       }
+      if (window.scrollY < 100) setActiveSection("hero");
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -35,17 +37,16 @@ export function CapsuleMenu() {
   }, []);
 
   const items = [
+    { id: "home", label: t.labels.nav.home, href: "#hero" },
     { id: "work", label: t.labels.nav.work, href: "#work" },
     { id: "experience", label: t.labels.nav.experience, href: "#experience" },
     { id: "skills", label: t.labels.nav.skills, href: "#skills" },
     { id: "contact", label: t.labels.nav.contact, href: "#contact" },
   ];
 
-  const Chevron = dir === "rtl" ? ChevronLeft : ChevronRight;
-
   return (
     <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label={t.labels.capsule.sectionNav}>
-      <div className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-capsule-bg/80 backdrop-blur-xl border border-capsule-border shadow-lg" role="menubar">
+      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-capsule-bg/80 backdrop-blur-xl shadow-[0_-15px_25px_-8px_var(--bg),0_15px_25px_-8px_var(--bg)]" role="menubar">
         {items.map((item) => {
           const Icon = navIcons[item.id];
           const isActive = activeSection === item.id;
@@ -54,36 +55,37 @@ export function CapsuleMenu() {
               key={item.href}
               href={item.href}
               role="menuitem"
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 p-2 sm:px-3.5 sm:py-2 rounded-full transition-all duration-200 focus-ring ${
+              className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-full transition-all duration-200 focus-ring min-w-[52px] ${
                 isActive
                   ? "text-title bg-surface-hover shadow-sm"
                   : "text-subtle hover:text-title hover:bg-surface-hover"
               }`}
               aria-label={item.label}
             >
-              {Icon && <Icon className="w-[18px] h-[18px] sm:w-4 sm:h-4" strokeWidth={1.5} />}
-              <span className="hidden sm:inline text-[0.7rem] sm:text-xs font-medium whitespace-nowrap">{item.label}</span>
+              {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
+              <span className="text-[0.5rem] leading-none font-medium whitespace-nowrap">{item.label}</span>
             </a>
           );
         })}
 
-        <div className="w-px h-5 sm:h-4 bg-border mx-0.5 sm:mx-1.5" />
+        <div className="w-px h-7 bg-border mx-1" />
 
         <button
           onClick={toggleTheme}
-          className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-faint hover:text-title hover:bg-surface-hover transition-all duration-200 focus-ring"
+          className="flex flex-col items-center gap-0.5 px-3 py-2 rounded-full text-subtle hover:text-title hover:bg-surface-hover transition-all duration-200 focus-ring min-w-[52px]"
           aria-label={t.labels.capsule.toggleTheme}
         >
-          {theme === "dark" ? <Sun className="w-[18px] h-[18px] sm:w-4 sm:h-4" strokeWidth={1.5} /> : <Moon className="w-[18px] h-[18px] sm:w-4 sm:h-4" strokeWidth={1.5} />}
+          {theme === "dark" ? <Sun className="w-5 h-5" strokeWidth={2} /> : <Moon className="w-5 h-5" strokeWidth={2} />}
+          <span className="text-[0.5rem] leading-none font-medium">{theme === "dark" ? "Light" : "Dark"}</span>
         </button>
 
         <button
           onClick={toggleLocale}
-          className="flex items-center justify-center gap-1 w-9 h-9 sm:px-3 sm:py-2 sm:w-auto sm:h-auto text-[0.7rem] sm:text-xs font-medium text-faint hover:text-title hover:bg-surface-hover rounded-full transition-all duration-200 focus-ring"
+          className="flex flex-col items-center gap-0.5 px-3 py-2 rounded-full text-subtle hover:text-title hover:bg-surface-hover transition-all duration-200 focus-ring min-w-[52px]"
           aria-label={t.labels.capsule.toggleLanguage}
         >
-          <Chevron className="w-3.5 h-3.5 sm:w-3 sm:h-3" strokeWidth={2} />
-          <span className="hidden sm:inline">{locale === "en" ? "فا" : "EN"}</span>
+          <Globe className="w-5 h-5" strokeWidth={2} />
+          <span className="text-[0.5rem] leading-none font-medium">{locale === "en" ? "FA" : "EN"}</span>
         </button>
       </div>
     </nav>

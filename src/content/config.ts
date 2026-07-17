@@ -4,6 +4,7 @@ export interface ProjectMeta {
   category: string;
   year: string;
   location?: string;
+  accent?: string;
   technologies: string[];
   coverImage: string;
   mobileCover: string;
@@ -29,6 +30,7 @@ export const siteConfig = {
       category: "Campaign Experience",
       year: "2023",
       location: "Isfahan, Iran",
+      accent: "#3B82F6",
       technologies: ["Figma", "Landing Pages", "Prototyping", "Responsive Design"],
       coverImage: "/assets/images/projects/project-01.jpg",
       mobileCover: "/assets/images/projects/project-01-mobile.jpg",
@@ -50,6 +52,7 @@ export const siteConfig = {
       category: "Campaign Experience",
       year: "2023",
       location: "Isfahan, Iran",
+      accent: "#06B6D4",
       technologies: ["Figma", "Landing Pages", "Responsive Design", "Visual Design"],
       coverImage: "/assets/images/projects/project-02.jpg",
       mobileCover: "/assets/images/projects/project-02-mobile.jpg",
@@ -70,6 +73,7 @@ export const siteConfig = {
       category: "Campaign Experience",
       year: "2022",
       location: "Isfahan, Iran",
+      accent: "#8B5CF6",
       technologies: ["Figma", "Digital Interface", "Campaign Design"],
       coverImage: "/assets/images/projects/project-04.jpg",
       mobileCover: "/assets/images/projects/project-04-mobile.jpg",
@@ -90,6 +94,7 @@ export const siteConfig = {
       category: "Enterprise Product",
       year: "2022",
       location: "Isfahan, Iran",
+      accent: "#10B981",
       technologies: ["Figma", "Digital Product", "Corporate Design"],
       coverImage: "/assets/images/projects/project-03.jpg",
       mobileCover: "/assets/images/projects/project-03-mobile.jpg",
@@ -110,6 +115,7 @@ export const siteConfig = {
       category: "Corporate Website",
       year: "2023",
       location: "Shiraz, Iran",
+      accent: "#F59E0B",
       technologies: ["Figma", "Web Design", "Responsive Design"],
       coverImage: "/assets/images/projects/project-06.jpg",
       mobileCover: "/assets/images/projects/project-06-mobile.jpg",
@@ -129,6 +135,7 @@ export const siteConfig = {
       category: "Corporate Website",
       year: "2023",
       location: "Shiraz, Iran",
+      accent: "#F43F5E",
       technologies: ["Figma", "Web Design", "Responsive Design"],
       coverImage: "/assets/images/projects/project-07.jpg",
       mobileCover: "/assets/images/projects/project-07-mobile.jpg",
@@ -148,6 +155,7 @@ export const siteConfig = {
       category: "E-commerce",
       year: "2022",
       location: "Shiraz, Iran",
+      accent: "#D4A574",
       technologies: ["Figma", "E-commerce", "Web Design"],
       coverImage: "/assets/images/projects/project-08.jpg",
       mobileCover: "/assets/images/projects/project-08-mobile.jpg",
@@ -167,6 +175,7 @@ export const siteConfig = {
       category: "Corporate Website",
       year: "2022",
       location: "Shiraz, Iran",
+      accent: "#14B8A6",
       technologies: ["Figma", "Web Design", "Responsive Design"],
       coverImage: "/assets/images/projects/project-09.jpg",
       mobileCover: "/assets/images/projects/project-09-mobile.jpg",
@@ -186,6 +195,7 @@ export const siteConfig = {
       category: "E-commerce",
       year: "2022",
       location: "Shiraz, Iran",
+      accent: "#6366F1",
       technologies: ["Figma", "E-commerce", "Web Design"],
       coverImage: "/assets/images/projects/project-10.jpg",
       mobileCover: "/assets/images/projects/project-10-mobile.jpg",

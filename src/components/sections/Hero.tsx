@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -7,11 +8,25 @@ export function Hero() {
   const { t, dir } = useTranslation();
   const isRtl = dir === "rtl";
   const PrimaryIcon = isRtl ? ArrowLeft : ArrowRight;
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.getElementById("hero");
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, -rect.top / (rect.height * 0.6)));
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const paragraphs = t.hero.description.split("\n\n").filter(Boolean);
 
   return (
-    <section className="min-h-screen flex items-center relative">
+    <section id="hero" className="min-h-screen flex items-center relative">
       {/* Dot grid pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.035]"
@@ -21,7 +36,14 @@ export function Hero() {
         }}
       />
 
-      <div className="w-full max-w-2xl mx-auto">
+      <div
+        className="w-full max-w-2xl mx-auto transition-all duration-500"
+        style={{
+          opacity: 1 - scrollProgress,
+          transform: `translateY(${scrollProgress * 40}px)`,
+          filter: `blur(${scrollProgress * 4}px)`,
+        }}
+      >
         <div className="flex flex-col">
           {/* Portrait */}
           <FadeIn delay={0} variant="scaleIn" className="mb-6" duration={0.6}>

@@ -50,6 +50,7 @@ export interface ProjectContent {
   context?: string;
   contribution?: string;
   impact?: string;
+  media?: { src: string; alt: string; caption?: string }[];
 }
 
 /* ========================================
@@ -130,6 +131,7 @@ export interface ContactContent {
 
 export interface LabelsContent {
   nav: {
+    home: string;
     work: string;
     experience: string;
     skills: string;
@@ -145,6 +147,8 @@ export interface LabelsContent {
     technologies: string;
     links: string;
     nextProject: string;
+    previousImage: string;
+    nextImage: string;
     imageAlt: (index: number) => string;
   };
   work: {
