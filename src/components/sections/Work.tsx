@@ -4,7 +4,7 @@ import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { ExternalLink, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 const ProjectModal = lazy(() =>
   import("@/components/ui/ProjectModal").then((m) => ({ default: m.ProjectModal }))
@@ -131,9 +131,10 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
           <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200">
             <Image
               src={projectMeta.coverImage}
+              mobileSrc={projectMeta.mobileCover}
               alt={`${projectContent.client} — ${projectContent.title}`}
               fallback={projectContent.client}
-              className="w-full aspect-[16/9] md:aspect-[2/1] object-cover group-hover:scale-[1.015] transition-transform duration-400 pointer-events-none"
+              className="w-full aspect-[4/3] md:aspect-[2/1] object-cover group-hover:scale-[1.015] transition-transform duration-400 pointer-events-none"
             />
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               style={{ background: "linear-gradient(to top, var(--bg-gradient-end), transparent)" }} />
@@ -146,39 +147,55 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
                 <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={1.5} />
               </div>
             </div>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-surface/80 backdrop-blur-md border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-hover focus-ring"
+              aria-label={t.labels.work.prevProject}
+            >
+              <ChevronLeft className="w-4 h-4 text-body" strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-surface/80 backdrop-blur-md border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-surface-hover focus-ring"
+              aria-label={t.labels.work.nextProject}
+            >
+              <ChevronRight className="w-4 h-4 text-body" strokeWidth={1.5} />
+            </button>
           </div>
         </button>
       </div>
 
-      <div className="flex items-start justify-between gap-4 sm:gap-6">
-        <div className="max-w-lg">
-          <div className="flex items-baseline gap-2 sm:gap-3 mb-1">
-            <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
-            <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
+      <button onClick={() => onOpenModal(currentSlug)} className="w-full text-left focus-ring">
+        <div className="flex items-start justify-between gap-4 sm:gap-6">
+          <div className="max-w-lg">
+            <div className="flex items-baseline gap-2 sm:gap-3 mb-1">
+              <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
+              <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
+            </div>
+            <p className="text-xs sm:text-sm text-subtle mb-1.5">
+              {projectContent.title} — {projectContent.role}
+            </p>
+            <p className="text-sm sm:text-base text-body leading-relaxed">
+              {projectContent.overview}
+            </p>
           </div>
-          <p className="text-xs sm:text-sm text-subtle mb-1.5">
-            {projectContent.title} — {projectContent.role}
-          </p>
-          <p className="text-sm sm:text-base text-body leading-relaxed">
-            {projectContent.overview}
-          </p>
-        </div>
 
-        <div className="flex items-center gap-2 shrink-0 pt-1">
-          {projectMeta.links[0] && (
-            <a
-              href={projectMeta.links[0].url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-200"
-              aria-label={t.labels.work.visitWebsite}
-            >
-              <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
-            </a>
-          )}
+          <div className="flex items-center gap-2 shrink-0 pt-1" onClick={(e) => e.stopPropagation()}>
+            {projectMeta.links[0] && (
+              <a
+                href={projectMeta.links[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-200"
+                aria-label={t.labels.work.visitWebsite}
+              >
+                <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </a>
+            )}
+          </div>
         </div>
-      </div>
+      </button>
 
       <div className="flex items-center justify-center gap-2">
         {slugs.map((_, i) => (

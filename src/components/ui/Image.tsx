@@ -3,6 +3,7 @@ import { Shimmer } from "@/components/ui/Shimmer";
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   fallback?: string;
+  mobileSrc?: string;
 }
 
 const shimmerStyles = [
@@ -12,7 +13,7 @@ const shimmerStyles = [
   { icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14", label: "Image" },
 ];
 
-export function Image({ src, alt, fallback, className, width, height, onLoad, ...props }: ImageProps) {
+export function Image({ src, alt, fallback, className, width, height, onLoad, mobileSrc, ...props }: ImageProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "loaded" | "error">("idle");
   const imgRef = useRef<HTMLImageElement>(null);
   const shimmerRef = useRef(Math.floor(Math.random() * shimmerStyles.length));
@@ -63,19 +64,21 @@ export function Image({ src, alt, fallback, className, width, height, onLoad, ..
           style={width && height ? { aspectRatio: `${width}/${height}` } : undefined}
         />
       )}
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt || ""}
-        width={width}
-        height={height}
-        loading="lazy"
-        decoding="async"
-        onLoad={handleLoad}
-        onError={handleError}
-        className={`${className || ""} ${status === "loaded" ? "" : "hidden"}`}
-        {...props}
-      />
+      <picture>
+        {mobileSrc && <source media="(max-width: 767px)" srcSet={mobileSrc} />}
+        <img
+          ref={imgRef}
+          src={src}
+          alt={alt || ""}
+          width={width}
+          height={height}
+          decoding="async"
+          onLoad={handleLoad}
+          onError={handleError}
+          className={`${className || ""} ${status === "loaded" ? "" : "opacity-0"}`}
+          {...props}
+        />
+      </picture>
     </>
   );
 }

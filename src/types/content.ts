@@ -150,6 +150,8 @@ export interface LabelsContent {
   work: {
     clickToView: string;
     visitWebsite: string;
+    prevProject: string;
+    nextProject: string;
     projectAlt: (index: number) => string;
   };
   experience: {

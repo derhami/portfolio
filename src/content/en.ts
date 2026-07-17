@@ -240,6 +240,8 @@ export const enContent: Content = {
     work: {
       clickToView: "Click to view details",
       visitWebsite: "Visit website",
+      prevProject: "Previous project",
+      nextProject: "Next project",
       projectAlt: (index: number) => `Project ${index + 1}`,
     },
     experience: {
