@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 
 const monthMap: Record<string, number> = {
@@ -24,15 +25,13 @@ export function Experience() {
 
   return (
     <section id="experience" className="py-16 sm:py-24 relative">
-      <FadeIn>
-        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
-          {t.experience.label}
-        </p>
+      <FadeIn variant="fadeIn" duration={0.4}>
+        <SectionTitle id="experience">{t.experience.label}</SectionTitle>
       </FadeIn>
 
       <div className="space-y-6">
         {items.map((item, i) => (
-          <FadeIn key={item.id} delay={i * 0.1}>
+          <FadeIn key={item.id} delay={i * 0.1} variant="slideUp" duration={0.5}>
             <div className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border backdrop-blur-xl transition-all duration-200 hover:border-border-subtle"
               style={{
                 backgroundColor: "var(--card-bg)",

@@ -55,6 +55,17 @@ export function Assistant() {
   const isFa = locale === "fa";
 
   useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  useEffect(() => {
     if (open && inputRef.current) {
       inputRef.current.focus();
     }

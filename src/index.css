@@ -87,45 +87,45 @@
    ======================================== */
 
 :root {
-  /* Backgrounds */
-  --bg: #FFFFFF;
-  --bg-elevated: #FAFAFB;
+  /* Backgrounds — warm off-white */
+  --bg: #F8F9FA;
+  --bg-elevated: #F2F3F5;
 
-  /* Foregrounds — no opacity, explicit hex */
-  --fg: #0B0C10;
-  --fg-title: #0B0C10;
-  --fg-body: #4A4B55;
-  --fg-subtle: #7A7B85;
-  --fg-faint: #A8A9B2;
+  /* Foregrounds */
+  --fg: #0F1014;
+  --fg-title: #0F1014;
+  --fg-body: #3E3F48;
+  --fg-subtle: #686A74;
+  --fg-faint: #94959E;
 
   /* Borders */
-  --border: #E8E9EC;
-  --border-subtle: #F0F0F2;
+  --border: #E2E3E8;
+  --border-subtle: #EBECF0;
 
   /* Surfaces */
-  --surface: #F5F5F7;
-  --surface-hover: #EDEDEF;
+  --surface: #EFF0F3;
+  --surface-hover: #E7E8EC;
 
   /* Overlays */
-  --bg-overlay: rgba(255, 255, 255, 0.9);
-  --bg-overlay-light: rgba(255, 255, 255, 0.6);
-  --bg-gradient-end: rgba(255, 255, 255, 0.8);
+  --bg-overlay: rgba(248, 249, 250, 0.92);
+  --bg-overlay-light: rgba(248, 249, 250, 0.65);
+  --bg-gradient-end: rgba(248, 249, 250, 0.85);
 
   /* Brand */
-  --brand: #0033FF;
+  --brand: #1A4AFF;
 
   /* Cards */
-  --card-bg: #F7F8FA;
-  --card-border: #ECECEF;
-  --card-bg-solid: #F0F1F4;
+  --card-bg: #F2F3F6;
+  --card-border: #E6E7EC;
+  --card-bg-solid: #EBECF0;
 
   /* Capsule */
-  --capsule-bg: #F0F1F4;
-  --capsule-border: #E2E3E7;
+  --capsule-bg: #EBECF0;
+  --capsule-border: #DCDDE2;
 
   /* Decorative */
-  --dot-color: #D4D5DA;
-  --shadow-color: rgba(0, 0, 0, 0.04);
+  --dot-color: #D0D1D6;
+  --shadow-color: rgba(0, 0, 0, 0.05);
 }
 
 .dark {
@@ -318,7 +318,7 @@ main {
   top: 0;
   z-index: 10;
   background: var(--bg);
-  padding-top: 0.5rem;
+  padding-top: 0.75rem;
   padding-bottom: 0.5rem;
   margin-bottom: 0;
 }
@@ -346,6 +346,38 @@ main {
 ::-webkit-scrollbar-thumb {
   background: var(--fg-faint);
   border-radius: 2px;
+}
+
+/* ========================================
+   Icon Animations
+   ======================================== */
+
+a svg, button svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.25s ease;
+}
+
+a:hover svg, button:hover svg {
+  transform: scale(1.1);
+}
+
+.dark a:hover svg, .dark button:hover svg {
+  filter: brightness(1.15) drop-shadow(0 0 4px rgba(59, 107, 247, 0.12));
+}
+
+/* Subtle icon entrance */
+.icon-enter {
+  animation: iconPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes iconPop {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Dark mode: enhance thin icons with subtle glow */
+.dark svg[stroke-width="1.5"] {
+  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.04));
 }
 
 /* ========================================

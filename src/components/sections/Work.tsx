@@ -3,6 +3,7 @@ import { useTranslation } from "@/lib/i18n";
 import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 
 const ProjectModal = lazy(() =>
@@ -227,13 +228,11 @@ export function Work() {
         }}
       />
 
-      <FadeIn>
-        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-12 sm:mb-16 font-medium">
-          {t.work.label}
-        </p>
+      <FadeIn variant="fadeIn" duration={0.4}>
+        <SectionTitle id="work" className="mb-12 sm:mb-16">{t.work.label}</SectionTitle>
       </FadeIn>
 
-      <FadeIn>
+      <FadeIn variant="scaleIn" duration={0.6} delay={0.1}>
         <GroupSlider slugs={allSlugs} onOpenModal={openModal} />
       </FadeIn>
 

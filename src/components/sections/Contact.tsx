@@ -16,13 +16,13 @@ export function Contact() {
   return (
     <section id="contact" className="min-h-[60vh] flex items-center relative py-16 sm:py-24">
       <div className="w-full space-y-12 sm:space-y-14">
-        <FadeIn>
+        <FadeIn variant="blurIn" duration={0.6}>
           <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-title">
             {contact.headline}
           </h2>
         </FadeIn>
 
-        <FadeIn delay={0.1}>
+        <FadeIn delay={0.1} variant="slideUp" duration={0.5}>
           <div className="space-y-4">
             <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm sm:text-base text-body hover:text-title transition-colors duration-200 group">
               <MessageCircle className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
@@ -39,7 +39,7 @@ export function Contact() {
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.2}>
+        <FadeIn delay={0.2} variant="fadeUp" duration={0.5}>
           <div className="flex flex-wrap gap-2.5">
             {contact.links.map((link) => {
               const Icon = iconMap[link.icon] || Link;

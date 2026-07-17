@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 
 /* ─── Generic currentColor SVG icons ─── */
 
@@ -70,14 +71,12 @@ export function Skills() {
         }}
       />
 
-      <FadeIn>
-        <p className="section-title text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-subtle mb-8 sm:mb-10 font-medium">
-          {t.skills.label}
-        </p>
+      <FadeIn variant="fadeIn" duration={0.4}>
+        <SectionTitle id="skills">{t.skills.label}</SectionTitle>
       </FadeIn>
 
       {/* Tabs */}
-      <FadeIn delay={0.05}>
+      <FadeIn delay={0.05} variant="fadeUp" duration={0.45}>
         <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-8 sm:mb-10 w-fit overflow-x-auto" role="tablist" aria-label={t.skills.label}>
           {groups.map((group, i) => (
             <button
@@ -101,7 +100,7 @@ export function Skills() {
 
       {/* Skills grid */}
       <div className="relative" key={activeTab} role="tabpanel" id={`tabpanel-${activeTab}`} aria-label={groups[activeTab].title}>
-        <FadeIn delay={0} y={8}>
+        <FadeIn delay={0} variant="scaleIn" duration={0.5}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-2.5">
             {groups[activeTab].items.map((skill) => (
               <div
