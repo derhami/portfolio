@@ -45,8 +45,8 @@ export function CapsuleMenu() {
   ];
 
   return (
-    <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label={t.labels.capsule.sectionNav}>
-      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-capsule-bg/80 backdrop-blur-xl shadow-[0_-15px_25px_-8px_var(--bg),0_15px_25px_-8px_var(--bg)]" role="menubar">
+    <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50" aria-label={t.labels.capsule.sectionNav}>
+      <div className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-2 sm:py-2.5 rounded-full glass-capsule" role="menubar">
         {items.map((item) => {
           const Icon = navIcons[item.id];
           const isActive = activeSection === item.id;
@@ -55,37 +55,44 @@ export function CapsuleMenu() {
               key={item.href}
               href={item.href}
               role="menuitem"
-              className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-full transition-all duration-200 focus-ring min-w-[52px] ${
+              className={`group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full transition-all duration-200 focus-ring ${
                 isActive
-                  ? "text-title bg-surface-hover shadow-sm"
-                  : "text-subtle hover:text-title hover:bg-surface-hover"
+                  ? "text-title bg-white/25 dark:bg-white/15 shadow-sm"
+                  : "text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10"
               }`}
               aria-label={item.label}
+              aria-current={isActive ? "page" : undefined}
             >
-              {Icon && <Icon className="w-5 h-5" strokeWidth={2} />}
-              <span className="text-[0.5rem] leading-none font-medium whitespace-nowrap">{item.label}</span>
+              {Icon && <Icon className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:scale-110 group-active:scale-95" strokeWidth={2} />}
+              <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">{item.label}</span>
             </a>
           );
         })}
 
-        <div className="w-px h-7 bg-border mx-1" />
+        <div className="w-px h-6 sm:h-7 bg-title/20 dark:bg-title/15 mx-0.5 sm:mx-1" />
 
         <button
           onClick={toggleTheme}
-          className="flex flex-col items-center gap-0.5 px-3 py-2 rounded-full text-subtle hover:text-title hover:bg-surface-hover transition-all duration-200 focus-ring min-w-[52px]"
+          className="group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 focus-ring"
           aria-label={t.labels.capsule.toggleTheme}
         >
-          {theme === "dark" ? <Sun className="w-5 h-5" strokeWidth={2} /> : <Moon className="w-5 h-5" strokeWidth={2} />}
-          <span className="text-[0.5rem] leading-none font-medium">{theme === "dark" ? "Light" : "Dark"}</span>
+          <span className="transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
+            {theme === "dark" ? <Sun className="w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} /> : <Moon className="w-5 h-5 sm:w-5.5 sm:h-5.5" strokeWidth={2} />}
+          </span>
+          <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">
+            {theme === "dark" ? t.labels.capsule.themeLight : t.labels.capsule.themeDark}
+          </span>
         </button>
 
         <button
           onClick={toggleLocale}
-          className="flex flex-col items-center gap-0.5 px-3 py-2 rounded-full text-subtle hover:text-title hover:bg-surface-hover transition-all duration-200 focus-ring min-w-[52px]"
+          className="group flex flex-col items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-title/80 dark:text-title/70 hover:text-title hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 focus-ring"
           aria-label={t.labels.capsule.toggleLanguage}
         >
-          <Globe className="w-5 h-5" strokeWidth={2} />
-          <span className="text-[0.5rem] leading-none font-medium">{locale === "en" ? "FA" : "EN"}</span>
+          <Globe className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:scale-110 group-active:scale-95" strokeWidth={2} />
+          <span className="text-[0.6rem] sm:text-[0.65rem] font-normal leading-none whitespace-nowrap">
+            {locale === "en" ? t.labels.capsule.langFa : t.labels.capsule.langEn}
+          </span>
         </button>
       </div>
     </nav>

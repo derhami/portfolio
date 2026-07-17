@@ -127,7 +127,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         className="cursor-grab active:cursor-grabbing select-none"
         onMouseEnter={() => setPaused(true)}
       >
-        <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-left focus-ring">
+        <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-start focus-ring">
           <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200 min-h-[50dvh] sm:min-h-[45dvh] md:min-h-[55dvh]">
             <Image
               src={projectMeta.coverImage}
@@ -144,7 +144,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
                 {t.labels.work.clickToView}
               </span>
               <div className="w-9 h-9 flex items-center justify-center rounded-full bg-surface backdrop-blur-md border border-border">
-                <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={1.5} />
+                <ArrowUpRight className="w-4 h-4 text-body" strokeWidth={2} />
               </div>
             </div>
 
@@ -166,7 +166,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         </button>
       </div>
 
-      <button onClick={() => onOpenModal(currentSlug)} className="w-full text-left focus-ring">
+      <button onClick={() => onOpenModal(currentSlug)} className="w-full text-start focus-ring">
         <div className="flex items-start justify-between gap-4 sm:gap-6">
           <div className="max-w-lg">
             <div className="flex items-baseline gap-2 sm:gap-3 mb-1">
@@ -190,7 +190,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
                 className="w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle hover:text-brand hover:border-brand/30 transition-all duration-200"
                 aria-label={t.labels.work.visitWebsite}
               >
-                <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.5} />
+                <ExternalLink className="w-3.5 h-3.5" strokeWidth={2} />
               </a>
             )}
           </div>

@@ -183,15 +183,13 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
         aria-label={`${projectContent.client} — ${projectContent.title}`}
         className="relative w-full max-w-4xl max-h-[90vh] mx-4 overflow-y-auto rounded-2xl border border-card-border bg-bg-elevated shadow-2xl"
       >
-        {/* Accent bar */}
-        {accent && <div className="h-1 w-full rounded-t-2xl" style={{ background: accent }} />}
 
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-hover text-subtle hover:text-title transition-all duration-200 focus-ring"
           aria-label={t.labels.modal.close}
         >
-          <X className="w-5 h-5" strokeWidth={1.5} />
+          <X className="w-5 h-5" strokeWidth={2} />
         </button>
 
         {/* Hero Image + Gallery */}
@@ -271,7 +269,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
               </div>
               {experience && (
                 <p className="flex items-center gap-1.5 text-xs text-subtle">
-                  <Building2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  <Building2 className="w-3.5 h-3.5" strokeWidth={2} />
                   {experience.company}
                 </p>
               )}
@@ -292,7 +290,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                   border: `1px solid ${accent ? `${accent}30` : "var(--brand-border)"}`,
                 }}
               >
-                <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
+                <ExternalLink className="w-4 h-4" strokeWidth={2} />
                 {t.labels.modal.visitSite}
               </a>
             )}
@@ -401,7 +399,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                       border: "1px solid var(--border)",
                     }}
                   >
-                    <ExternalLink className="w-3 h-3" strokeWidth={1.5} />
+                    <ExternalLink className="w-3 h-3" strokeWidth={2} />
                     {link.label}
                   </a>
                 ))}
@@ -414,7 +412,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
             <div className="pt-6 border-t border-border">
               <button
                 onClick={onNext}
-                className="group w-full text-left flex items-center justify-between gap-4 p-4 rounded-xl bg-surface hover:bg-surface-hover border border-border transition-all duration-200 focus-ring"
+                className="group w-full text-start flex items-center justify-between gap-4 p-4 rounded-xl bg-surface hover:bg-surface-hover border border-border transition-all duration-200 focus-ring"
               >
                 <div>
                   <p className="text-[0.65rem] uppercase tracking-widest text-faint mb-1">
@@ -424,7 +422,7 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                   <p className="text-xs text-subtle">{nextContent.subtitle}</p>
                 </div>
                 <div className={`w-8 h-8 flex items-center justify-center rounded-full border border-border text-subtle group-hover:text-brand group-hover:border-brand/30 transition-all duration-200 ${isRtl ? "rotate-180" : ""}`}>
-                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                  <ChevronRight className="w-4 h-4" strokeWidth={2} />
                 </div>
               </button>
             </div>

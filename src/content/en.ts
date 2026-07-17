@@ -262,7 +262,7 @@ export const enContent: Content = {
     assistant: {
       openLabel: "Open assistant",
       dialogLabel: "Smart Assistant",
-      terminalTitle: "assistant@hawid:~",
+      terminalTitle: "assistant@derhami:~",
       welcomeMessage: "> Hi! I'm Hamid's smart assistant. Here are common client questions, or type your own:",
       moreQuestions: "More questions",
       emailButton: "Email",
@@ -277,7 +277,13 @@ export const enContent: Content = {
     capsule: {
       sectionNav: "Section navigation",
       toggleTheme: "Toggle theme",
+      themeLight: "Light",
+      themeDark: "Dark",
       toggleLanguage: "Toggle language",
+      langEn: "EN",
+      langFa: "FA",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
     },
   },
   seo: {

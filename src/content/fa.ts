@@ -262,8 +262,8 @@ export const faContent: Content = {
     assistant: {
       openLabel: "باز کردن دستیار",
       dialogLabel: "دستیار هوشمند",
-      terminalTitle: "assistant@hawid:~",
-      welcomeMessage: "> سلام! من دستیار هوشمند حامد هستم. سوالات متداول مشتریان اینجاست یا تایپ کنید:",
+      terminalTitle: "assistant@derhami:~",
+      welcomeMessage: "> سلام! من دستیار هوشمند حمیدرضا هستم. سوالات متداول مشتریان اینجاست یا تایپ کنید:",
       moreQuestions: "سوالات دیگر",
       emailButton: "ایمیل",
       emailSubject: "سوال از دستیار هوشمند",
@@ -277,7 +277,13 @@ export const faContent: Content = {
     capsule: {
       sectionNav: "ناوبری بخش‌ها",
       toggleTheme: "تغییر تم",
+      themeLight: "روشن",
+      themeDark: "تیره",
       toggleLanguage: "تغییر زبان",
+      langEn: "ان",
+      langFa: "فا",
+      openMenu: "باز کردن منو",
+      closeMenu: "بستن منو",
     },
   },
   seo: {

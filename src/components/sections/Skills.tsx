@@ -62,7 +62,7 @@ export function Skills() {
   const groups = t.skills.groups;
 
   return (
-    <section id="skills" className="py-16 sm:py-24 relative">
+    <section id="skills" className="py-6 sm:py-10 md:py-16 relative">
       <div
         className="absolute left-0 bottom-0 w-20 h-20 pointer-events-none opacity-[0.03]"
         style={{
@@ -77,7 +77,7 @@ export function Skills() {
 
       {/* Tabs */}
       <FadeIn delay={0.05} variant="fadeUp" duration={0.45}>
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-8 sm:mb-10 w-fit overflow-x-auto" role="tablist" aria-label={t.skills.label}>
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border mb-4 sm:mb-10 w-fit overflow-x-auto" role="tablist" aria-label={t.skills.label}>
           {groups.map((group, i) => (
             <button
               key={group.title}
@@ -101,7 +101,7 @@ export function Skills() {
       {/* Skills grid */}
       <div className="relative" key={activeTab} role="tabpanel" id={`tabpanel-${activeTab}`} aria-label={groups[activeTab].title}>
         <FadeIn delay={0} variant="scaleIn" duration={0.5}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2.5">
             {groups[activeTab].items.map((skill) => (
               <div
                 key={skill}

@@ -17,6 +17,20 @@ function AppInner() {
       <CapsuleMenu />
       <Assistant />
 
+      {/* Top page gradient fade */}
+      <div className="fixed top-0 left-0 right-0 h-16 sm:h-24 z-40 pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, var(--bg) 0%, transparent 100%)",
+        }}
+      />
+
+      {/* Bottom page gradient fade */}
+      <div className="fixed bottom-0 left-0 right-0 h-24 sm:h-32 z-40 pointer-events-none"
+        style={{
+          background: "linear-gradient(to top, var(--bg) 0%, transparent 100%)",
+        }}
+      />
+
       <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 md:max-w-2xl max-w-full">
         <div className="section-snap">
           <Hero />

@@ -117,13 +117,13 @@ export function Hero() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-brand rounded-full hover:opacity-90 transition-all duration-200 focus-ring group"
                   >
                     {t.hero.cta}
-                    <PrimaryIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={1.5} />
+                    <PrimaryIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={2} />
                   </a>
                   <a
                     href={`mailto:${t.contact.email}`}
                     className="inline-flex items-center gap-2 text-sm font-medium text-subtle hover:text-title transition-colors duration-200 focus-ring"
                   >
-                    <Mail className="w-4 h-4" strokeWidth={1.5} />
+                    <Mail className="w-4 h-4" strokeWidth={2} />
                     {t.hero.secondaryCta}
                   </a>
                 </div>

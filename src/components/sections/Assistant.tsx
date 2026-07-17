@@ -170,10 +170,10 @@ export function Assistant() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-[84px] sm:bottom-20 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-brand text-white shadow-[0_4px_20px_rgba(0,51,255,0.35)] hover:shadow-[0_4px_28px_rgba(0,51,255,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 focus-ring group"
+          className="fixed bottom-[84px] sm:bottom-20 right-5 z-50 flex items-center justify-center w-12 h-12 rounded-full bg-brand text-white shadow-[0_4px_20px_rgba(0,51,255,0.35)] hover:shadow-[0_4px_28px_rgba(0,51,255,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 focus-ring group animate-float"
           aria-label={t.labels.assistant.openLabel}
         >
-          <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={1.5} />
+          <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2} />
         </button>
       )}
 
@@ -201,9 +201,9 @@ export function Assistant() {
                     aria-label={t.labels.assistant.backToQuestions}
                   >
                     {isFa ? (
-                      <ChevronRight className="w-3.5 h-3.5 rotate-180" strokeWidth={1.5} />
+                      <ChevronRight className="w-3.5 h-3.5 rotate-180" strokeWidth={2} />
                     ) : (
-                      <ChevronLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      <ChevronLeft className="w-3.5 h-3.5" strokeWidth={2} />
                     )}
                   </button>
                 )}
@@ -221,7 +221,7 @@ export function Assistant() {
                 className="w-7 h-7 flex items-center justify-center rounded-md text-faint hover:text-title hover:bg-surface-hover transition-all duration-200"
                 aria-label={t.labels.assistant.close}
               >
-                <X className="w-3.5 h-3.5" strokeWidth={1.5} />
+                <X className="w-3.5 h-3.5" strokeWidth={2} />
               </button>
             </div>
 
@@ -239,7 +239,7 @@ export function Assistant() {
                         onClick={() => handleSelect(item)}
                         className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-md text-subtle hover:text-title hover:bg-surface transition-all duration-200 group"
                       >
-                        <ChevronRight className="w-3 h-3 text-faint group-hover:text-brand shrink-0" strokeWidth={1.5} />
+                        <ChevronRight className="w-3 h-3 text-faint group-hover:text-brand shrink-0" strokeWidth={2} />
                         <span>
                           {isFa ? item.questionFa : item.question}
                         </span>
@@ -269,23 +269,23 @@ export function Assistant() {
                     onClick={handleBack}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.65rem] sm:text-xs font-medium text-subtle hover:text-title hover:bg-surface border border-border transition-all duration-200"
                   >
-                    {isFa ? (
-                      <>
-                        <ChevronRight className="w-3 h-3 rotate-180" strokeWidth={1.5} />
-                        {t.labels.assistant.moreQuestions}
-                      </>
-                    ) : (
-                      <>
-                        <ChevronLeft className="w-3 h-3" strokeWidth={1.5} />
-                        {t.labels.assistant.moreQuestions}
-                      </>
-                    )}
+{isFa ? (
+                        <>
+                          <ChevronRight className="w-3 h-3 rotate-180" strokeWidth={2} />
+                          {t.labels.assistant.moreQuestions}
+                        </>
+                      ) : (
+                        <>
+                          <ChevronLeft className="w-3 h-3" strokeWidth={2} />
+                          {t.labels.assistant.moreQuestions}
+                        </>
+                      )}
                   </button>
                   <button
                     onClick={handleEmail}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.65rem] sm:text-xs font-medium text-brand hover:bg-brand/10 border border-brand/20 transition-all duration-200"
                   >
-                    <Send className="w-3 h-3" strokeWidth={1.5} />
+                    <Send className="w-3 h-3" strokeWidth={2} />
                     {t.labels.assistant.emailButton}
                   </button>
                 </div>
@@ -294,7 +294,7 @@ export function Assistant() {
 
             {/* Input */}
             <form onSubmit={handleSubmit} className={`flex items-center gap-2 px-4 py-3 border-t border-border bg-surface ${isFa ? "font-['Tahoma',sans-serif]" : "font-mono"}`}>
-              <Search className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={1.5} />
+              <Search className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={2} />
               <input
                 ref={inputRef}
                 type="text"
@@ -308,7 +308,7 @@ export function Assistant() {
                 disabled={!input.trim()}
                 className="w-7 h-7 flex items-center justify-center rounded-md text-faint hover:text-brand disabled:opacity-30 transition-all duration-200"
               >
-                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                <ChevronRight className="w-4 h-4" strokeWidth={2} />
               </button>
             </form>
           </div>

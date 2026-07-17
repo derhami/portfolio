@@ -381,6 +381,40 @@ a:hover svg, button:hover svg {
 }
 
 /* ========================================
+   Icon Animations
+   ======================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px var(--brand/0.3); }
+  50% { box-shadow: 0 0 16px var(--brand/0.5); }
+}
+
+.animate-float {
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Menu icon hover bounce */
+.nav-icon-hover:hover svg {
+  animation: iconBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes iconBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.2); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* ========================================
    Shimmer Animation
    ======================================== */
 
@@ -396,4 +430,30 @@ a:hover svg, button:hover svg {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Liquid Glass Capsule Menu */
+.glass-capsule {
+  background: 
+    linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.1) 100%);
+  border: none;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 -1px 0 rgba(255,255,255,0.1);
+  backdrop-filter: url(#frosted) blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: url(#frosted) blur(24px) saturate(1.4);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.dark .glass-capsule {
+  background: 
+    linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.06) 100%);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(255,255,255,0.05);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }

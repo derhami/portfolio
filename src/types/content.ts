@@ -179,7 +179,13 @@ export interface LabelsContent {
   capsule: {
     sectionNav: string;
     toggleTheme: string;
+    themeLight: string;
+    themeDark: string;
     toggleLanguage: string;
+    langFa: string;
+    langEn: string;
+    openMenu: string;
+    closeMenu: string;
   };
 }
 

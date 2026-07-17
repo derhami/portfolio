@@ -43,19 +43,19 @@ export function Experience() {
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2.5 mb-1.5">
-                    <Briefcase className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={1.5} />
+                    <Briefcase className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={2} />
                     <h3 className="text-base sm:text-lg font-semibold text-title truncate">{item.company}</h3>
                   </div>
                   <p className="text-xs sm:text-sm text-subtle truncate pl-6">{item.role}</p>
                 </div>
                 <div className="text-right shrink-0">
                   <span className="flex items-center gap-1 text-xs sm:text-sm text-faint tabular-nums font-medium">
-                    <Clock className="w-3 h-3" strokeWidth={1.5} />
+                    <Clock className="w-3 h-3" strokeWidth={2} />
                     {item.period}
                   </span>
                   {item.location && (
                     <span className="flex items-center gap-1 text-[0.6rem] sm:text-[0.65rem] text-faint mt-0.5 justify-end">
-                      <MapPin className="w-3 h-3" strokeWidth={1.5} />
+                      <MapPin className="w-3 h-3" strokeWidth={2} />
                       {item.location}
                     </span>
                   )}

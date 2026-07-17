@@ -18,7 +18,7 @@ export function SectionTitle({ id, children, className = "" }: SectionTitleProps
 
   return (
     <div
-      className={`section-title flex items-center gap-3 mb-8 sm:mb-10 ${className}`}
+      className={`section-title flex items-center gap-3 mb-6 sm:mb-8 md:mb-10 ${className}`}
     >
       {index && (
         <span className="text-[0.55rem] font-semibold text-faint/50 tracking-[0.15em] tabular-nums select-none">
