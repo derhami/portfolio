@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
-import { Briefcase, History, Zap, Send, Sun, Moon, Globe, House } from "lucide-react";
+import { Briefcase, History, Send, Sun, Moon, Globe, House, User } from "lucide-react";
 
 const navIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
   home: House,
+  about: User,
   work: Briefcase,
   experience: History,
-  skills: Zap,
   contact: Send,
 };
 
@@ -22,7 +22,7 @@ export function CapsuleMenu() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["contact", "skills", "experience", "work", "hero"];
+      const sections = ["contact", "work", "experience", "about", "hero"];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
@@ -42,9 +42,9 @@ export function CapsuleMenu() {
 
   const items = [
     { id: "home", label: t.labels.nav.home, href: "#hero" },
-    { id: "work", label: t.labels.nav.work, href: "#work" },
+    { id: "about", label: t.labels.nav.about, href: "#about" },
     { id: "experience", label: t.labels.nav.experience, href: "#experience" },
-    { id: "skills", label: t.labels.nav.skills, href: "#skills" },
+    { id: "work", label: t.labels.nav.work, href: "#work" },
     { id: "contact", label: t.labels.nav.contact, href: "#contact" },
   ];
 

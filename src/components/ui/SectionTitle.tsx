@@ -2,9 +2,9 @@ import { type ReactNode } from "react";
 
 const sectionIndex: Record<string, string> = {
   about: "01",
-  work: "02",
-  experience: "03",
-  skills: "04",
+  experience: "02",
+  work: "03",
+  contact: "04",
 };
 
 interface SectionTitleProps {

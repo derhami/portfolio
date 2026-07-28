@@ -4,9 +4,8 @@ import { CapsuleMenu } from "@/components/sections/CapsuleMenu";
 import { Assistant } from "@/components/sections/Assistant";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
-import { Work } from "@/components/sections/Work";
 import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
+import { Work } from "@/components/sections/Work";
 import { Contact } from "@/components/sections/Contact";
 import { Seo } from "@/components/ui/Seo";
 
@@ -31,7 +30,7 @@ function AppInner() {
         }}
       />
 
-      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 md:max-w-2xl max-w-full">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 md:max-w-2xl max-w-full pb-32">
         <div className="section-snap">
           <Hero />
         </div>
@@ -39,13 +38,10 @@ function AppInner() {
           <About />
         </div>
         <div className="section-snap">
-          <Work />
-        </div>
-        <div className="section-snap">
           <Experience />
         </div>
         <div className="section-snap">
-          <Skills />
+          <Work />
         </div>
         <div className="section-snap">
           <Contact />

@@ -29,16 +29,14 @@ export interface HeroContent {
 
 export interface AboutContent {
   label: string;
+  subtitle: string;
   paragraphs: string[];
-}
-
-/* ========================================
-   Project — Localizable Content
-   ======================================== */
-
-export interface ProjectLink {
-  label: string;
-  url: string;
+  expertise: { title: string; icon: string }[];
+  portrait: {
+    src: string;
+    mobileSrc?: string;
+    alt: string;
+  };
 }
 
 export interface ProjectContent {
@@ -80,8 +78,6 @@ export interface ExperienceItem {
   company: string;
   role: string;
   period: string;
-  location?: string;
-  type?: string;
   description: string;
   keyCollabs?: string[];
   skills?: string[];
@@ -92,25 +88,6 @@ export interface ExperienceContent {
   items: ExperienceItem[];
 }
 
-/* ========================================
-   Skills
-   ======================================== */
-
-export interface SkillGroup {
-  title: string;
-  icon: string;
-  items: string[];
-}
-
-export interface SkillsContent {
-  label: string;
-  groups: SkillGroup[];
-}
-
-/* ========================================
-   Contact
-   ======================================== */
-
 export interface ContactLink {
   label: string;
   url: string;
@@ -119,22 +96,24 @@ export interface ContactLink {
 
 export interface ContactContent {
   headline: string;
+  subtitle: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
   email: string;
   phone: string;
   website: string;
   links: ContactLink[];
+  copyright: string;
+  note: string;
+  profileImage: string;
 }
-
-/* ========================================
-   Labels — All UI strings
-   ======================================== */
 
 export interface LabelsContent {
   nav: {
     home: string;
+    about: string;
     work: string;
     experience: string;
-    skills: string;
     contact: string;
   };
   modal: {
@@ -214,7 +193,6 @@ export interface Content {
   about: AboutContent;
   work: WorkContent;
   experience: ExperienceContent;
-  skills: SkillsContent;
   contact: ContactContent;
   labels: LabelsContent;
   seo: SeoContent;
