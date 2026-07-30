@@ -205,27 +205,42 @@ export const enContent: Content = {
       {
         label: "Telegram",
         url: "https://t.me/derhami",
-        icon: "message-circle",
-      },
-      {
-        label: "LinkedIn",
-        url: "https://linkedin.com/in/derhami",
-        icon: "link",
-      },
-      {
-        label: "Dribbble",
-        url: "https://dribbble.com/derhami",
-        icon: "heart",
+        icon: "telegram",
       },
       {
         label: "Instagram",
         url: "https://instagram.com/derhami",
-        icon: "globe",
+        icon: "instagram",
+      },
+      {
+        label: "LinkedIn",
+        url: "https://linkedin.com/in/derhami",
+        icon: "linkedin",
+      },
+      {
+        label: "GitHub",
+        url: "https://github.com/derhami",
+        icon: "github",
+      },
+      {
+        label: "Figma",
+        url: "https://figma.com/@derhami",
+        icon: "figma",
+      },
+      {
+        label: "Dribbble",
+        url: "https://dribbble.com/derhami",
+        icon: "dribbble",
+      },
+      {
+        label: "WhatsApp",
+        url: "https://wa.me/989334847452",
+        icon: "whatsapp",
       },
       {
         label: "Threads",
         url: "https://threads.net/@derhami",
-        icon: "link",
+        icon: "threads",
       },
     ],
     copyright: "Designed and built by Hamidreza Derhami.\n© 2026 All rights reserved.",

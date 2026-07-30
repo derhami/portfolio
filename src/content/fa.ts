@@ -205,27 +205,42 @@ export const faContent: Content = {
       {
         label: "تلگرام",
         url: "https://t.me/derhami",
-        icon: "message-circle",
-      },
-      {
-        label: "لینکدین",
-        url: "https://linkedin.com/in/derhami",
-        icon: "link",
-      },
-      {
-        label: "دریبل",
-        url: "https://dribbble.com/derhami",
-        icon: "heart",
+        icon: "telegram",
       },
       {
         label: "اینستاگرام",
         url: "https://instagram.com/derhami",
-        icon: "globe",
+        icon: "instagram",
+      },
+      {
+        label: "لینکدین",
+        url: "https://linkedin.com/in/derhami",
+        icon: "linkedin",
+      },
+      {
+        label: "گیت‌هاب",
+        url: "https://github.com/derhami",
+        icon: "github",
+      },
+      {
+        label: "فیگما",
+        url: "https://figma.com/@derhami",
+        icon: "figma",
+      },
+      {
+        label: "دریبل",
+        url: "https://dribbble.com/derhami",
+        icon: "dribbble",
+      },
+      {
+        label: "واتس‌اپ",
+        url: "https://wa.me/989334847452",
+        icon: "whatsapp",
       },
       {
         label: "تریدز",
         url: "https://threads.net/@derhami",
-        icon: "link",
+        icon: "threads",
       },
     ],
     copyright: "طراحی و توسعه توسط حمیدرضا درهمی\n© ۲۰۲۶ تمامی حقوق محفوظ است.",
