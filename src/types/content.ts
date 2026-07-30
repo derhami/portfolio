@@ -153,6 +153,8 @@ export interface LabelsContent {
     emailMessagePrefix: string;
     placeholder: string;
     backToQuestions: string;
+    showMore: string;
+    showLess: string;
     close: string;
   };
   capsule: {

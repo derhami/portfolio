@@ -1,9 +1,13 @@
+import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { Clock, Building2 } from "lucide-react";
+import { Clock, Building2 } from "@/components/ui/icons";
 
 const CURRENT_BLUE = "#0033FF";
+
+const lineTransition = { duration: 1.4, ease: [0.22, 0.03, 0.26, 1] as const };
+const dotTransition = { duration: 0.6, ease: [0.22, 0.03, 0.26, 1] as const };
 
 export function Experience() {
   const { t, dir } = useTranslation();
@@ -15,52 +19,55 @@ export function Experience() {
         <SectionTitle id="experience">{t.experience.label}</SectionTitle>
       </FadeIn>
 
-      <div className="space-y-6 md:space-y-8">
-        {items.map((item, i) => {
-          const isCurrent = i === items.length - 1;
+      <div className="relative">
+        {/* Static background line — visible on md+ */}
+        <div
+          className="hidden md:block absolute top-3 bottom-3 w-px bg-border"
+          style={{ [dir === "rtl" ? "right" : "left"]: "11px" }}
+        />
 
-          return (
-            <FadeIn key={item.id} delay={i * 0.1} variant="slideUp" duration={0.5}>
-              <div className="relative flex items-stretch gap-4 md:gap-6">
-                {/* Timeline dot — visible on md+ */}
-                <div className="hidden md:flex flex-col items-center shrink-0">
-                  <div
-                    className="w-3 h-3 rounded-full shrink-0 mt-[18px]"
-                    style={{
-                      backgroundColor: isCurrent ? CURRENT_BLUE : "var(--border)",
-                    }}
-                  />
-                  {/* Vertical line connecting dots */}
-                  {i < items.length - 1 && (
-                    <div className="w-[1.5px] flex-1 mt-2" style={{ backgroundColor: "var(--border)" }} />
-                  )}
-                </div>
+        {/* Animated foreground line — reveals top→bottom on scroll */}
+        <motion.div
+          className="hidden md:block absolute top-3 w-px"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          style={{ transformOrigin: "top", backgroundColor: "var(--brand)", [dir === "rtl" ? "right" : "left"]: "11px" }}
+          transition={lineTransition}
+        />
 
-                {/* Content card */}
-                <div className="flex-1 min-w-0">
-                  <div
-                    className="relative p-5 sm:p-6 rounded-xl border transition-all duration-200"
-                    style={{
-                      backgroundColor: "var(--card-bg)",
-                      borderColor: "var(--border)",
-                    }}
-                  >
-                    {/* Top accent line */}
-                    <div
-                      className="absolute top-0 left-6 right-6 h-px"
-                      style={{
-                        background: isCurrent
-                          ? `linear-gradient(90deg, ${CURRENT_BLUE}44, transparent)`
-                          : "linear-gradient(90deg, var(--border), transparent)",
-                      }}
+        <div className="space-y-6 md:space-y-8">
+          {items.map((item, i) => {
+            const isCurrent = i === items.length - 1;
+
+            return (
+              <FadeIn key={item.id} delay={i * 0.1} variant="slideUp" duration={0.5}>
+                <div className="relative flex items-stretch gap-4 md:gap-6" style={{ [dir === "rtl" ? "paddingRight" : "paddingLeft"]: "2.5rem" }}>
+                  {/* Timeline dot — visible on md+ */}
+                  <div className="hidden md:block absolute top-[18px]" style={{ [dir === "rtl" ? "right" : "left"]: "5px" }}>
+                    <motion.div
+                      className="w-3 h-3 rounded-full"
+                      initial={{ scale: 0, backgroundColor: "var(--border)" }}
+                      whileInView={{ scale: 1, backgroundColor: isCurrent ? CURRENT_BLUE : "var(--border)" }}
+                      viewport={{ once: true }}
+                      transition={{ ...dotTransition, delay: 0.2 }}
                     />
+                  </div>
 
+                  {/* Content card */}
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className="relative p-6 sm:p-7 rounded-xl border transition-all duration-200"
+                      style={{
+                        backgroundColor: "var(--card-bg)",
+                        borderColor: "var(--border)",
+                      }}
+                    >
                     {/* Header */}
-                    <div className="flex items-start justify-between gap-3 mb-2.5">
+                    <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2.5 mb-0.5">
-                          <Building2 className="w-3.5 h-3.5 text-faint shrink-0" strokeWidth={1.5} />
-                          <h3 className="text-sm sm:text-base font-semibold text-title truncate">
+                        <div className="flex items-center gap-2.5 mb-1">
+                          <h3 className="text-sm sm:text-base font-semibold text-title">
                             {item.company}
                           </h3>
                           {isCurrent && (
@@ -75,7 +82,7 @@ export function Experience() {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs sm:text-sm text-subtle truncate pl-6">{item.role}</p>
+                        <p className="text-xs sm:text-sm text-subtle">{item.role}</p>
                       </div>
                       <span className="flex items-center gap-1.5 text-xs text-faint tabular-nums shrink-0 pt-0.5">
                         <Clock className="w-3 h-3" strokeWidth={1.5} />
@@ -84,21 +91,27 @@ export function Experience() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm text-body leading-[1.7] mb-4 pl-6">
+                    <p className="text-xs sm:text-sm text-body leading-[1.8] mb-5">
                       {item.description}
                     </p>
 
                     {/* Key Collabs */}
                     {item.keyCollabs && item.keyCollabs.length > 0 && (
-                      <div className="mb-2.5 pl-6">
-                        <span className="text-[0.55rem] text-faint font-medium uppercase tracking-widest block mb-1">
+                      <div className="mb-4">
+                        <span className="flex items-center gap-1.5 text-[0.55rem] text-faint font-medium uppercase tracking-widest mb-2.5">
+                          <Building2 className="w-3 h-3" strokeWidth={1.5} />
                           {t.labels.experience.clients}
                         </span>
-                        <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+                        <div className="flex flex-wrap gap-1.5">
                           {item.keyCollabs.map((client) => (
                             <span
                               key={client}
-                              className="text-[0.6rem] text-subtle"
+                              className="px-2.5 py-1 text-[0.6rem] font-medium rounded-md"
+                              style={{
+                                color: "var(--subtle)",
+                                backgroundColor: "var(--surface)",
+                                border: "1px solid var(--border-subtle)",
+                              }}
                             >
                               {client}
                             </span>
@@ -109,11 +122,11 @@ export function Experience() {
 
                     {/* Skills tags */}
                     {item.skills && item.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 pl-6">
+                      <div className="flex flex-wrap gap-1.5">
                         {item.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="px-2 py-0.5 text-[0.55rem] text-faint rounded-sm"
+                            className="px-2 py-0.5 text-[0.5rem] text-faint rounded-sm"
                             style={{ backgroundColor: "var(--surface)" }}
                           >
                             {skill}
@@ -127,6 +140,7 @@ export function Experience() {
             </FadeIn>
           );
         })}
+      </div>
       </div>
     </section>
   );

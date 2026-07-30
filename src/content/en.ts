@@ -236,7 +236,7 @@ export const enContent: Content = {
     nav: {
       home: "Home",
       about: "About",
-      work: "Selected Work",
+      work: "Work",
       experience: "Experience",
       contact: "Contact",
     },
@@ -277,6 +277,8 @@ export const enContent: Content = {
       emailMessagePrefix: "---\nYour message:",
       placeholder: "Type a question...",
       backToQuestions: "Back to questions",
+      showMore: "Show more",
+      showLess: "Show less",
       close: "Close",
     },
     capsule: {

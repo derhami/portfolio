@@ -4,7 +4,7 @@ import { Image } from "@/components/ui/Image";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { ExternalLink, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, ArrowUpRight, ChevronLeft, ChevronRight } from "@/components/ui/icons";
 
 const ProjectModal = lazy(() =>
   import("@/components/ui/ProjectModal").then((m) => ({ default: m.ProjectModal }))
@@ -128,7 +128,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         onMouseEnter={() => setPaused(true)}
       >
         <button onClick={() => onOpenModal(currentSlug)} className="group w-full text-start focus-ring">
-          <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200 min-h-[50dvh] sm:min-h-[45dvh] md:min-h-[55dvh]">
+          <div className="relative overflow-hidden rounded-xl ring-1 ring-border group-hover:ring-border-subtle group-hover:shadow-lg group-hover:shadow-[var(--shadow-color)] transition-all duration-200 min-h-[35dvh] sm:min-h-[40dvh] md:min-h-[50dvh]">
             <Image
               src={projectMeta.coverImage}
               mobileSrc={projectMeta.mobileCover}
@@ -173,10 +173,10 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
               <h3 className="text-lg sm:text-xl font-semibold text-title">{projectContent.client}</h3>
               <span className="text-xs sm:text-sm text-faint tabular-nums">{projectMeta.year}</span>
             </div>
-            <p className="text-xs sm:text-sm text-subtle mb-1.5">
+            <p className="text-xs sm:text-sm text-subtle mb-1.5 line-clamp-1">
               {projectContent.title} — {projectContent.role}
             </p>
-            <p className="text-sm sm:text-base text-body leading-relaxed">
+            <p className="text-sm sm:text-base text-body leading-relaxed line-clamp-4">
               {projectContent.overview}
             </p>
           </div>
@@ -197,7 +197,7 @@ function GroupSlider({ slugs, onOpenModal }: GroupSliderProps) {
         </div>
       </button>
 
-      <div className="flex items-center justify-center gap-2 mt-8 sm:mt-10">
+      <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8">
         {slugs.map((_, i) => (
           <button
             key={i}
@@ -236,7 +236,7 @@ export function Work() {
   }, [activeSlug]);
 
   return (
-    <section id="work" className="py-16 sm:py-24 relative">
+    <section id="work" className="min-h-[100dvh] flex flex-col justify-center max-md:py-0 py-16 sm:py-24 md:pb-32 relative">
       <div
         className="absolute right-0 top-0 w-28 h-28 pointer-events-none opacity-[0.03]"
         style={{
@@ -246,7 +246,7 @@ export function Work() {
       />
 
       <FadeIn variant="fadeIn" duration={0.4}>
-        <SectionTitle id="work" className="mb-12 sm:mb-16">{t.work.label}</SectionTitle>
+        <SectionTitle id="work" className="mb-6 sm:mb-8">{t.work.label}</SectionTitle>
       </FadeIn>
 
       <FadeIn variant="scaleIn" duration={0.6} delay={0.1}>

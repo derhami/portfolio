@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef, useState } from "react";
 import { Image } from "@/components/ui/Image";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
-import { X, ExternalLink, ChevronRight, ChevronLeft, Folder, Tag, Building2 } from "lucide-react";
+import { X, ExternalLink, ChevronRight, ChevronLeft, Folder, Tag, Building2 } from "@/components/ui/icons";
 import type { ProjectSlug } from "@/content/config";
 
 interface ProjectModalProps {
@@ -285,8 +285,8 @@ export function ProjectModal({ isOpen, onClose, projectSlug, onNext }: ProjectMo
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 shrink-0"
                 style={{
-                  color: accent || "var(--brand)",
-                  background: accent ? `${accent}15` : "var(--brand-bg)",
+                  color: accent || "var(--subtle)",
+                  background: accent ? `${accent}15` : "var(--surface)",
                   border: `1px solid ${accent ? `${accent}30` : "var(--brand-border)"}`,
                 }}
               >

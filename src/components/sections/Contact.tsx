@@ -1,8 +1,6 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
-import { Image } from "@/components/ui/Image";
-import { Mail, Phone, Globe } from "lucide-react";
+import { Mail, Phone, Globe } from "@/components/ui/icons";
 
 function BrandIcon({ name, label, className }: { name: string; label: string; className?: string }) {
   const size = className || "w-4 h-4";
@@ -70,24 +68,9 @@ export function Contact() {
   const { t } = useTranslation();
   const { contact } = t;
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const ringY = useTransform(scrollYProgress, [0, 1], [0, -20]);
-
   return (
-    <section id="contact" ref={sectionRef} className="py-16 sm:py-24 relative overflow-hidden">
-      {/* Background — subtle gradient fade */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, transparent 0%, var(--bg) 100%)",
-        }}
-      />
-
-      <div className="relative max-w-[1100px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-        {/* Left — Content */}
+    <section id="contact" className="min-h-[100dvh] flex flex-col justify-center max-md:pb-0 md:pb-24 relative">
+      <div className="relative max-w-[1100px] mx-auto">
         <div className="flex-1 min-w-0">
           {/* Headline */}
           <StaggerFadeIn>
@@ -107,7 +90,7 @@ export function Contact() {
           <StaggerFadeIn delay={0.24}>
             <div className="flex flex-wrap gap-3 mb-10">
               <a
-                href="mailto:hello@hawid.ir"
+                href={`mailto:${contact.email}`}
                 className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-200 text-white"
                 style={{
                   background: "var(--brand)",
@@ -129,15 +112,15 @@ export function Contact() {
           {/* Contact info rows */}
           <StaggerFadeIn delay={0.36}>
             <div className="space-y-3 mb-8">
-              <a href="mailto:hello@hawid.ir" className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
+              <a href={`mailto:${contact.email}`} className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
                 <Mail className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
-                hello@hawid.ir
+                {contact.email}
               </a>
-              <a href="tel:+989334847452" className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
+              <a href={`tel:${contact.phone}`} className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
                 <Phone className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
-                +98 933 484 7452
+                {contact.phone}
               </a>
-              <a href="https://derhami.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
+              <a href={contact.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-body hover:text-title transition-colors duration-200 group">
                 <Globe className="w-4 h-4 text-faint group-hover:text-subtle transition-colors" strokeWidth={1.5} />
                 derhami.com
               </a>
@@ -161,73 +144,6 @@ export function Contact() {
               ))}
             </div>
           </StaggerFadeIn>
-        </div>
-
-        {/* Right — Visual Composition */}
-        <div className="hidden lg:block w-[340px] xl:w-[400px] shrink-0 relative h-[480px] xl:h-[540px]">
-          {/* Gradient ring */}
-          <motion.div
-            style={{ y: ringY }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <div className="w-[320px] h-[320px] xl:w-[360px] xl:h-[360px] rounded-full"
-              style={{
-                background: "radial-gradient(circle, var(--brand) 0%, transparent 65%)",
-                opacity: 0.05,
-                filter: "blur(40px)",
-              }}
-            />
-          </motion.div>
-
-          {/* Thin grid */}
-          <div
-            className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none opacity-[0.04]"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
-          </div>
-
-          {/* Animated glowing lines */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 540" fill="none">
-            <motion.line
-              x1="0" y1="100" x2="400" y2="100"
-              stroke="var(--brand)" strokeWidth="0.5" opacity="0.08"
-              animate={{ x: [0, 10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.line
-              x1="0" y1="320" x2="400" y2="320"
-              stroke="var(--brand)" strokeWidth="0.5" opacity="0.06"
-              animate={{ x: [0, -8, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.line
-              x1="180" y1="0" x2="180" y2="540"
-              stroke="var(--brand)" strokeWidth="0.5" opacity="0.04"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </svg>
-
-          {/* Glass panel with profile */}
-          <div className="absolute right-0 top-[15%] z-10 w-[220px] xl:w-[260px] rounded-2xl overflow-hidden backdrop-blur-xl border border-border/30 shadow-xl"
-            style={{
-              background: "var(--bg-overlay-light)",
-            }}
-          >
-            <Image
-              src={contact.profileImage}
-              alt="Contact"
-              fallback="Profile"
-              className="w-full aspect-[3/4] object-cover"
-            />
-          </div>
         </div>
       </div>
     </section>

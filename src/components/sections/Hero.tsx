@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { siteConfig } from "@/content/config";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { ArrowRight, ArrowLeft, Mail } from "lucide-react";
+import { ChevronRight, ChevronLeft, Mail } from "@/components/ui/icons";
 
 export function Hero() {
   const { t, dir } = useTranslation();
   const isRtl = dir === "rtl";
-  const PrimaryIcon = isRtl ? ArrowLeft : ArrowRight;
+  const PrimaryIcon = isRtl ? ChevronLeft : ChevronRight;
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function Hero() {
   const paragraphs = t.hero.description.split("\n\n").filter(Boolean);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center relative">
+    <section id="hero" className="min-h-screen flex flex-col justify-center max-md:pb-0 md:pb-24 relative">
       {/* Dot grid pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.035]"

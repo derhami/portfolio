@@ -1,22 +1,18 @@
 import { useState, useRef, useEffect, type ImgHTMLAttributes } from "react";
 import { Shimmer } from "@/components/ui/Shimmer";
+import { Folder, Document, Circle, Image2 } from "@/components/ui/icons";
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   fallback?: string;
   mobileSrc?: string;
 }
 
-const shimmerStyles = [
-  { icon: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z", label: "Folder" },
-  { icon: "M14.5 4h-5L7 7H4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7h-3z", label: "File" },
-  { icon: "M21 12a9 9 0 11-18 0 9 9 0 0118 0z", label: "Circle" },
-  { icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14", label: "Image" },
-];
+const shimmerIcons = [Folder, Document, Circle, Image2];
 
 export function Image({ src, alt, fallback, className, width, height, onLoad, mobileSrc, ...props }: ImageProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "loaded" | "error">("idle");
   const imgRef = useRef<HTMLImageElement>(null);
-  const shimmerRef = useRef(Math.floor(Math.random() * shimmerStyles.length));
+  const [shimmerIcon] = useState(() => Math.floor(Math.random() * shimmerIcons.length));
 
   useEffect(() => {
     if (!src) {
@@ -36,16 +32,14 @@ export function Image({ src, alt, fallback, className, width, height, onLoad, mo
   };
 
   if (status === "error" || !src) {
-    const s = shimmerStyles[shimmerRef.current];
+    const Icon = shimmerIcons[shimmerIcon];
     return (
       <div
         className={`flex flex-col items-center justify-center gap-2 bg-surface border border-border ${className || ""}`}
         role="img"
         aria-label={alt}
       >
-        <svg className="w-7 h-7 text-faint/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-          <path d={s.icon} />
-        </svg>
+        <Icon className="w-7 h-7 text-faint/40" strokeWidth={1} />
         <span className="text-faint/60 text-[0.55rem] select-none text-center px-2 leading-tight uppercase tracking-wider">
           {fallback || alt || "Image"}
         </span>

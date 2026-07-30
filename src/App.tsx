@@ -30,14 +30,14 @@ function AppInner() {
         }}
       />
 
-      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 md:max-w-2xl max-w-full pb-32">
+      <main className="max-w-2xl mx-auto px-5 sm:px-6 md:px-8 pb-32">
         <div className="section-snap">
           <Hero />
         </div>
         <div className="section-snap">
           <About />
         </div>
-        <div className="section-snap">
+        <div className="section-snap section-snap--auto">
           <Experience />
         </div>
         <div className="section-snap">

@@ -277,6 +277,8 @@ export const faContent: Content = {
       emailMessagePrefix: "---\nپیام شما:",
       placeholder: "تایپ کنید...",
       backToQuestions: "بازگشت به سوالات",
+      showMore: "نمایش بیشتر",
+      showLess: "نمایش کمتر",
       close: "بستن",
     },
     capsule: {

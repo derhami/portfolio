@@ -304,8 +304,15 @@ main {
     flex-direction: column;
     justify-content: center;
     padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-bottom: calc(2rem + 72px);
     position: relative;
+  }
+
+  .section-snap--auto {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    scroll-snap-align: none !important;
+    padding-bottom: 2rem !important;
   }
 }
 
@@ -317,10 +324,20 @@ main {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--bg);
   padding-top: 0.75rem;
   padding-bottom: 0.5rem;
   margin-bottom: 0;
+}
+
+/* ========================================
+   Mobile: prevent tap cursor on non-inputs
+   ======================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  a, button, [role="button"], [role="menuitem"] {
+    -webkit-tap-highlight-color: transparent;
+    caret-color: transparent;
+  }
 }
 
 /* ========================================
@@ -357,11 +374,11 @@ a svg, button svg {
               opacity 0.25s ease;
 }
 
-a:hover svg, button:hover svg {
+a:not(.capsule-item):hover svg, button:not(.capsule-item):hover svg {
   transform: scale(1.1);
 }
 
-.dark a:hover svg, .dark button:hover svg {
+.dark a:not(.capsule-item):hover svg, .dark button:not(.capsule-item):hover svg {
   filter: brightness(1.15) drop-shadow(0 0 4px rgba(59, 107, 247, 0.12));
 }
 
@@ -502,19 +519,27 @@ a:hover svg, button:hover svg {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.capsule-item {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.capsule-item:hover {
+  transform: translateY(-1px);
+}
+
 .capsule-item:hover .capsule-icon {
   animation: icon-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.capsule-item:active .capsule-icon {
-  transform: scale(0.9);
+.capsule-item:active {
+  transform: scale(0.95);
 }
 
 @keyframes icon-bounce {
   0% { transform: translateY(0); }
-  30% { transform: translateY(-3px); }
+  30% { transform: translateY(-2px); }
   50% { transform: translateY(0); }
-  70% { transform: translateY(-1.5px); }
+  70% { transform: translateY(-1px); }
   100% { transform: translateY(0); }
 }
 
